@@ -6,8 +6,7 @@ Because flux could be simpler (yay react)
 ![Language](http://img.shields.io/badge/Language-Javascript/JSX-000000.svg) &nbsp;
 ![Platform](http://img.shields.io/badge/Platform-Node-000000.svg) &nbsp;
 ![License](http://img.shields.io/badge/License-MIT-000055.svg) &nbsp;
-![Status](http://img.shields.io/travis/StoneCypher/flocks.svg) &nbsp;
-[![Issues](http://img.shields.io/github/issues/StoneCypher/htstub.svg)](https://github.com/StoneCypher/htstub/issues)
+![Status](http://img.shields.io/travis/StoneCypher/flocks.svg)
 
 
 
