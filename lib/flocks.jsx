@@ -85,11 +85,11 @@ var React = require('react'),
 
             if (typeof Request === 'object') {
 
-                if (toString.call(Request) === "[object Array]") {
+                if (toString.call(Request) === "[object Array]") {  // could just .isArray ; not sure if in shims
                     throw 'First argument to re-flock must be a plain object, a string, true, false, or null.  Received an array.';
                 }
 
-                for (var i in Request) {
+                for (var i in Request.keys()) {
                     CurrentData[i] = Request[i];
                 }
 
