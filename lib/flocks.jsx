@@ -27,10 +27,10 @@ var React = require('react'),
             }
 
             // root auto-handles self-if-no-parent
-            defaultingContext['root'] = ((this.context['root'] === undefined)? this : this.context['root']);
+            defaultingContext.root = ((this.context.root === undefined)? this : this.context.root);
 
             // root auto-handles depth too
-            defaultingContext['depth'] = ((this.context['depth'] === undefined)? 0 : this.context['depth']+1);
+            defaultingContext.depth = ((this.context.depth === undefined)? 0 : this.context.depth + 1);
 
             return defaultingContext;
 
@@ -41,7 +41,7 @@ var React = require('react'),
 
         var CurrentData    = {},
             UpdatesBlocked = false,
-            UpdateIfWanted = function() {
+            updateIfWanted = function() {
                 console.log('typeof TargetTag ' + typeof TargetTag);
                 React.renderComponent(RenderDescriptor(CurrentData), TargetTag);
             };
@@ -62,7 +62,7 @@ var React = require('react'),
 
             if (Request === null) {
                 CurrentData = {};
-                UpdateIfWanted();
+                updateIfWanted();
                 return;
             }
 
@@ -73,19 +73,19 @@ var React = require('react'),
 
             if (Request === true) {
                 UpdatesBlocked = false;
-                UpdateIfWanted();
+                updateIfWanted();
                 return;
             }
 
             if (typeof Request === 'string') {
                 CurrentData[Request] = maybeValue;
-                UpdateIfWanted();
+                updateIfWanted();
                 return;
             }
 
             if (typeof Request === 'object') {
 
-                if (toString.call(obj) === "[object Array]") {
+                if (toString.call(Request) === "[object Array]") {
                     throw 'First argument to re-flock must be a plain object, a string, true, false, or null.  Received an array.';
                 }
 
@@ -93,7 +93,7 @@ var React = require('react'),
                     CurrentData[i] = Request[i];
                 }
 
-                UpdateIfWanted();
+                updateIfWanted();
                 return;
             }
 
