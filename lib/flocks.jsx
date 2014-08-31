@@ -19,7 +19,7 @@ var React = require('react'),
         getChildContext: function() {
 
             var defaultingContext = {};
-            for (var i in flContextTypes) {
+            for (var i in flContextTypes.keys()) {
                 // root is a special case; so is depth
                 if ((i !== 'root') && (i !== 'depth')) {
                     defaultingContext[i] = (this.props[i] !== undefined)? this.props[i] : this.context[i];
@@ -41,6 +41,22 @@ var React = require('react'),
 
         var CurrentData    = {},
             UpdatesBlocked = false,
+
+            enforceString = function(On, Label) {
+                if (typeof On !== 'string') {
+                    throw Label;
+                }
+            },
+
+            enforceNonArrayObject = function(On, NonObjLabel, ArrayLabel) {
+                if (typeof On !== 'object') {
+                    throw NonObjLabel;
+                }
+                if (Object.prototype.toString.call(On) === "[object Array]") {
+                    throw ( ArrayLabel || NonObjLabel );
+                }
+            },
+
             updateIfWanted = function() {
                 console.log('typeof TargetTag ' + typeof TargetTag);
                 React.renderComponent(RenderDescriptor(CurrentData), TargetTag);
@@ -48,56 +64,46 @@ var React = require('react'),
 
         // todo whargarbl what're docs lol
 
-        // there are five call patterns to this function
-        // all changes are immediate unless updates are blocked
-        // it is expected that 5 will be used for initialization and 4 primarily for updates
+        return {
 
-        // 1 [null,           _:_]                - clear the flocks current data object.
-        // 2 [false,          _:_]                - block flock updates (useful for batch updating w/o thrashing)
-        // 3 [true,           _:_]                - unblock flock updates
-        // 4 [request:string, maybeValue:defined] - update this key to this maybeValue
-        // 5 [request:object, _:undefined]        - update all these keys to their values
-
-        return function(Request, maybeValue) {
-
-            if (Request === null) {
-                CurrentData = {};
+            set: function(Key, Value) {
+                enforceString(Key, 'Flock.to must take a string for its key');
+                CurrentData[Key] = Value;
                 updateIfWanted();
                 return;
-            }
+            },
 
-            if (Request === false) {
-                UpdatesBlocked = true;
-                return;
-            }
+            get: function(What) {
+                return (What === undefined)? CurrentData : CurrentData[What];
+            },
 
-            if (Request === true) {
-                UpdatesBlocked = false;
-                updateIfWanted();
-                return;
-            }
-
-            if (typeof Request === 'string') {
-                CurrentData[Request] = maybeValue;
-                updateIfWanted();
-                return;
-            }
-
-            if (typeof Request === 'object') {
-
-                if (toString.call(Request) === "[object Array]") {  // could just .isArray ; not sure if in shims
-                    throw 'First argument to re-flock must be a plain object, a string, true, false, or null.  Received an array.';
-                }
+            bulk: function(Request) {
+                enforceNonArrayObject(Request, 'Flocks.bulk takes an object', 'Flocks.bulk takes a non-array object');
 
                 for (var i in Request.keys()) {
                     CurrentData[i] = Request[i];
                 }
 
                 updateIfWanted();
+
+            },
+
+            clear: function() {
+                CurrentData = {};
+                updateIfWanted();
+                return;
+            },
+
+            lock: function() {
+                UpdatesBlocked = true;
+                return;
+            },
+
+            unlock: function() {
+                UpdatesBlocked = false;
+                updateIfWanted();
                 return;
             }
-
-            throw 'First argument to re-flock must be a plain object, a string, true, false, or null.  Received an unhandled type "' + (typeof Request) + '".';
 
         };
 
