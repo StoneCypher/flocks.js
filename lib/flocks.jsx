@@ -6,15 +6,15 @@
 var React = require('react'),
 
     flContextTypes = {
-        root : React.PropTypes.object,
-        depth : React.PropTypes.number,
-        updateFunc: React.PropTypes.func.isRequired
+        root       : React.PropTypes.object,
+        depth      : React.PropTypes.number,
+        updateFunc : React.PropTypes.func.isRequired
     },
 
     Mixin = {
 
-        contextTypes: flContextTypes,
-        childContextTypes: flContextTypes,
+        contextTypes      : flContextTypes,
+        childContextTypes : flContextTypes,
 
         getChildContext: function() {
 
@@ -37,10 +37,12 @@ var React = require('react'),
         }
     },
 
-    create = function(TargetTag, RenderDescriptor, Handler) {
+    create = function(TargetTag, RenderDescriptor, ProvidedHandler) {
 
-        var CurrentData    = {},
-            UpdatesBlocked = false,
+        var currentData    = {},
+            updatesBlocked = false,
+            dirty          = false,
+            handler        = ProvidedHandler || function() { return true; },
 
             enforceString = function(On, Label) {
                 if (typeof On !== 'string') {
@@ -58,8 +60,12 @@ var React = require('react'),
             },
 
             updateIfWanted = function() {
-                console.log('typeof TargetTag ' + typeof TargetTag);
-                React.renderComponent(RenderDescriptor(CurrentData), TargetTag);
+                if (updatesBlocked) {
+                    dirty = true;
+                } else {
+                    React.renderComponent(RenderDescriptor(currentData), TargetTag);
+                    dirty = false;
+                }
             };
 
         // todo whargarbl what're docs lol
@@ -72,26 +78,42 @@ var React = require('react'),
 
             set: function(Key, Value) {
                 enforceString(Key, 'Flock.to must take a string for its key');
-                CurrentData[Key] = Value;
+
+                var toHandle  = {};     // ... damnit json :|
+                toHandle[Key] = Value;
+
+                if (handler(toHandle)) {
+                    currentData[Key] = Value;
+                }
+
                 updateIfWanted();
                 return;
             },
 
             get: function(What) {
-                return (What === undefined)? CurrentData : CurrentData[What];
+                return (What === undefined)? currentData : currentData[What];
             },
 
-            bulk_set: function(Request) {
-                enforceNonArrayObject(Request, 'Flocks.bulk_set takes an object', 'Flocks.bulk takes a non-array object');
-                CurrentData = Request;
+            bulk_set: function(request) {
+                enforceNonArrayObject(request, 'Flocks.bulk_set takes an object', 'Flocks.bulk_set takes a non-array object');
+
+                if (handler(request)) {
+                    currentData = request;
+                }
+
                 updateIfWanted();
             },
 
-            bulk_update: function(Request) {
-                enforceNonArrayObject(Request, 'Flocks.bulk_update takes an object', 'Flocks.bulk takes a non-array object');
+            bulk_update: function(request) {
+                enforceNonArrayObject(request, 'Flocks.bulk_update takes an object', 'Flocks.bulk_update takes a non-array object');
 
-                for (var i in Request.keys()) {
-                    CurrentData[i] = Request[i];
+                var currentBase = currentData;
+                for (var i in request.keys()) {
+                    currentBase[i] = request[i];
+                }
+
+                if (handler(currentBase)) {
+                    currentData = currentBase;
                 }
 
                 updateIfWanted();
@@ -99,18 +121,20 @@ var React = require('react'),
             },
 
             clear: function() {
-                CurrentData = {};
+                if (handler({})) {
+                    currentData = {};
+                }
                 updateIfWanted();
                 return;
             },
 
             lock: function() {
-                UpdatesBlocked = true;
+                updatesBlocked = true;
                 return;
             },
 
             unlock: function() {
-                UpdatesBlocked = false;
+                updatesBlocked = false;
                 updateIfWanted();
                 return;
             }
