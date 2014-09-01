@@ -12,7 +12,7 @@
     "react.js",
     "flux",
     "flocks",
-    "flocks.js"
+    "flocks.js",
     "flock"
   ],
   "dependencies": {},

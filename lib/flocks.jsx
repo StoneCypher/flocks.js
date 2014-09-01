@@ -37,7 +37,7 @@ var React = require('react'),
         }
     },
 
-    create = function(TargetTag, RenderDescriptor) {
+    create = function(TargetTag, RenderDescriptor, Handler) {
 
         var CurrentData    = {},
             UpdatesBlocked = false,
@@ -66,6 +66,10 @@ var React = require('react'),
 
         return {
 
+            // need to honor Handler
+            // need set_path and get_path
+            // need announce
+
             set: function(Key, Value) {
                 enforceString(Key, 'Flock.to must take a string for its key');
                 CurrentData[Key] = Value;
@@ -77,8 +81,14 @@ var React = require('react'),
                 return (What === undefined)? CurrentData : CurrentData[What];
             },
 
-            bulk: function(Request) {
-                enforceNonArrayObject(Request, 'Flocks.bulk takes an object', 'Flocks.bulk takes a non-array object');
+            bulk_set: function(Request) {
+                enforceNonArrayObject(Request, 'Flocks.bulk_set takes an object', 'Flocks.bulk takes a non-array object');
+                CurrentData = Request;
+                updateIfWanted();
+            },
+
+            bulk_update: function(Request) {
+                enforceNonArrayObject(Request, 'Flocks.bulk_update takes an object', 'Flocks.bulk takes a non-array object');
 
                 for (var i in Request.keys()) {
                     CurrentData[i] = Request[i];
