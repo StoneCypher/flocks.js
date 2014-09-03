@@ -15,7 +15,9 @@
     "flocks.js",
     "flock"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "vows": "*"
+  },
   "engines": {
     "node": "*"
   },
