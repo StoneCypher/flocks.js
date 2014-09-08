@@ -44,8 +44,18 @@ var React = require('react'),
             dirty          = false,
             handler        = ProvidedHandler || function() { return true; },
 
+            isArray = function(maybeArray) {
+                return (Object.prototype.toString.call(maybeArray) === "[object Array]");
+            },
+
             enforceString = function(On, Label) {
                 if (typeof On !== 'string') {
+                    throw Label;
+                }
+            },
+
+            enforceArray = function(On, Label) {
+                if (isArray(On)) {
                     throw Label;
                 }
             },
@@ -54,7 +64,7 @@ var React = require('react'),
                 if (typeof On !== 'object') {
                     throw NonObjLabel;
                 }
-                if (Object.prototype.toString.call(On) === "[object Array]") {
+                if (isArray(On)) {
                     throw ( ArrayLabel || NonObjLabel );
                 }
             },
@@ -66,18 +76,31 @@ var React = require('react'),
                     React.renderComponent(RenderDescriptor(currentData), TargetTag);
                     dirty = false;
                 }
-            };
+            },
 
-        // todo whargarbl what're docs lol
+            pathDive = function(CurPath, CurTgt) {
+                if (CurPath.length === 0) { return CurTgt; }
+                var Idx = CurPath.shift();
+                return pathDive(CurPath, CurTgt[Idx]);
+            },
 
-        return {
+            // not yet tested
+            pathSet = function(CurPath, CurTgt, Val) {
+                var Idx  = CurPath.shift(),
+                    Held = CurTgt[Idx];
+                if (CurPath.length === 0) { 
+                    CurTgt[Idx] = Val;
+                    return Held;
+                }
+                return pathDive(CurPath, Held, Val);
+            },
 
-            // need to honor Handler
-            // need set_path and get_path
-            // need announce
+            setByPath = function(Path, Value) {
+                enforceArray(Path, 'Flock.path_set must take an array for its path');
+            },
 
-            set: function(Key, Value) {
-                enforceString(Key, 'Flock.to must take a string for its key');
+            setByKey = function(Key, Value) {
+                enforceString(Key, 'Flock.member_set must take a string for its key');
 
                 var toHandle  = {};     // ... damnit json :|
                 toHandle[Key] = Value;
@@ -88,8 +111,25 @@ var React = require('react'),
 
                 updateIfWanted();
                 return;
+            };
+
+        // todo whargarbl what're docs lol
+
+        return {
+
+            // need to honor Handler
+            // need set_path and get_path
+            // need announce
+
+            member_set: setByKey,
+
+            set: function(Key, Value) {
+                if      (typeof Key === 'string') { setByKey(Key, Value); }
+                else if (isArray(Key))            {}
+                else {}
             },
 
+            // get isn't subject to handling
             get: function(What) {
                 return (What === undefined)? currentData : currentData[What];
             },
@@ -107,13 +147,15 @@ var React = require('react'),
             bulk_update: function(request) {
                 enforceNonArrayObject(request, 'Flocks.bulk_update takes an object', 'Flocks.bulk_update takes a non-array object');
 
-                var currentBase = currentData;
-                for (var i in request.keys()) {
-                    currentBase[i] = request[i];
-                }
+                if (handler(request)) {
+                    var currentBase = currentData;
+                    for (var i in request.keys()) {
+                        currentBase[i] = request[i];
+                    }
 
-                if (handler(currentBase)) {
-                    currentData = currentBase;
+                    if (handler(currentBase)) {
+                        currentData = currentBase;
+                    }
                 }
 
                 updateIfWanted();
@@ -128,6 +170,7 @@ var React = require('react'),
                 return;
             },
 
+            // lock and unlock aren't subject to handling
             lock: function() {
                 updatesBlocked = true;
                 return;
