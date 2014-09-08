@@ -97,6 +97,7 @@ var React = require('react'),
 
             setByPath = function(Path, Value) {
                 enforceArray(Path, 'Flock.path_set must take an array for its path');
+                pathSet(Path, currentData, Value);
             },
 
             setByKey = function(Key, Value) {
@@ -125,8 +126,8 @@ var React = require('react'),
 
             set: function(Key, Value) {
                 if      (typeof Key === 'string') { setByKey(Key, Value); }
-                else if (isArray(Key))            {}
-                else {}
+                else if (isArray(Key))            { setByPath(Key, Value); }
+                else                              { throw "Flocks.set/2 key must be a string or an array"; }
             },
 
             // get isn't subject to handling
