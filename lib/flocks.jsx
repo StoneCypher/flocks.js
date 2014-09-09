@@ -131,6 +131,8 @@ var React = require('react'),
             },
 
             // get isn't subject to handling
+            // todo whargarbl need path version
+            // todo whargarbl need argument type guards
             get: function(What) {
                 return (What === undefined)? currentData : currentData[What];
             },
