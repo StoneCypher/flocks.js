@@ -1,0 +1,27 @@
+{
+  "author": "John Haugeland",
+  "name": "flocks.js",
+  "description": "Simpler state management for React.js",
+  "version": "0.0.1",
+  "repository": {
+    "url": "https://github.com/StoneCypher/flocks.js.git"
+  },
+  "keywords": [
+    "state",
+    "react",
+    "react.js",
+    "flux",
+    "flocks",
+    "flocks.js",
+    "flock"
+  ],
+  "dependencies": {
+    "vows": "*"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "scripts": {
+    "test": "vows test/* --spec"    
+  }
+}
