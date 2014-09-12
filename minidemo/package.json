@@ -6,22 +6,10 @@
   "repository": {
     "url": "https://github.com/StoneCypher/flocks.js.git"
   },
-  "keywords": [
-    "state",
-    "react",
-    "react.js",
-    "flux",
-    "flocks",
-    "flocks.js",
-    "flock"
-  ],
+  "keywords": [],
   "dependencies": {
-    "reactify": "^0.14.0"
+    "react": "*"
   },
-  "engines": {
-    "node": "*"
-  },
-  "scripts": {
-    "test": "vows test/* --spec"    
-  }
+  "engines": {},
+  "scripts": {}
 }
