@@ -16,7 +16,7 @@
     "flock"
   ],
   "dependencies": {
-    "vows": "*"
+    "reactify": "^0.14.0"
   },
   "engines": {
     "node": "*"
