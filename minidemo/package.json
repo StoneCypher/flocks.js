@@ -8,7 +8,7 @@
   },
   "keywords": [],
   "dependencies": {
-    "react": "*"
+    "react": "^0.11.1"
   },
   "engines": {},
   "scripts": {}
