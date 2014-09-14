@@ -8,7 +8,8 @@
   },
   "keywords": [],
   "dependencies": {
-    "react": "^0.11.1"
+    "react": "^0.11.1",
+    "flocks.js": "*"
   },
   "engines": {},
   "scripts": {}
