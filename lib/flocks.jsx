@@ -95,7 +95,6 @@ var flContextTypes = {
                 var parent = CurTgt;
 
                 for (var i = 0; i < CurPath.length-1; i += 1) {
-                    console.log(parent);
                     parent = parent[CurPath[i]];
                 }
 
@@ -106,11 +105,9 @@ var flContextTypes = {
                 var parent = CurTgt;
 
                 for (var i = 0; i < CurPath.length-1; i += 1) {
-                    console.log(parent);
                     parent = parent[CurPath[i]];
                 }
 
-                console.log('Setting ' + CurPath[CurPath.length-1] + ' to ' + JSON.stringify(Val));
                 parent[CurPath[CurPath.length-1]] = Val;
                 updateIfWanted();
             },
