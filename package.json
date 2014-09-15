@@ -2,7 +2,7 @@
   "author": "John Haugeland",
   "name": "flocks.js",
   "description": "Simpler state management for React.js",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "repository": {
     "url": "https://github.com/StoneCypher/flocks.js.git"
   },
