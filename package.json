@@ -16,9 +16,7 @@
     "flock"
   ],
   "dependencies": {
-    "vows": "*"
-  },
-  "devDependencies": {
+    "vows": "*",
     "node-jsx": "*"
   },
   "main": "lib/flocks.js",
