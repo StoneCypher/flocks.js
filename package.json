@@ -18,6 +18,7 @@
   "dependencies": {
     "vows": "*"
   },
+  "main": "lib/flocks.jsx",
   "engines": {
     "node": "*"
   },
