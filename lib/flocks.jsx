@@ -3,9 +3,11 @@
 
 'use strict';
 
-var React = require('react'),
+if (typeof React === 'undefined') {
+    var React = require('react');
+}
 
-    flContextTypes = {
+var flContextTypes = {
         root       : React.PropTypes.object,
         depth      : React.PropTypes.number,
         updateFunc : React.PropTypes.func.isRequired
@@ -191,9 +193,21 @@ var React = require('react'),
 
 
 
-module.exports = {
+
+
+var exports = {
 
     member: Mixin,
     create: create
 
 };
+
+
+
+
+
+if (typeof module !== 'undefined') {
+    module.exports = exports;
+} else {
+    window.flocksjs = exports;
+}
