@@ -1,0 +1,26 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'c:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'c:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'version',
+1 verbose cli   'patch',
+1 verbose cli   '-m',
+1 verbose cli   'try it the ph way' ]
+2 info using npm@1.4.14
+3 info using node@v0.10.29
+4 error Error: Git working directory not clean.
+4 error M lib/flocks.js
+4 error M package.json
+4 error     at c:\Program Files\nodejs\node_modules\npm\lib\version.js:98:35
+4 error     at ChildProcess.exithandler (child_process.js:645:7)
+4 error     at ChildProcess.emit (events.js:98:17)
+4 error     at maybeClose (child_process.js:755:16)
+4 error     at Process.ChildProcess._handle.onexit (child_process.js:822:5)
+5 error If you need help, you may report this *entire* log,
+5 error including the npm and node versions, at:
+5 error     <http://github.com/npm/npm/issues>
+6 error System Windows_NT 6.2.9200
+7 error command "c:\\Program Files\\nodejs\\node.exe" "c:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "version" "patch" "-m" "try it the ph way"
+8 error cwd c:\projects\flocks
+9 error node -v v0.10.29
+10 error npm -v 1.4.14
+11 verbose exit [ 1, true ]
