@@ -8,9 +8,9 @@ if (typeof React === 'undefined') {
 }
 
 var flContextTypes = {
-        root       : React.PropTypes.object,
-        depth      : React.PropTypes.number,
-        updateFunc : React.PropTypes.func.isRequired
+        root    : React.PropTypes.object,
+        depth   : React.PropTypes.number,
+        updater : React.PropTypes.object
     },
 
     Mixin = {
@@ -34,9 +34,9 @@ var flContextTypes = {
             // root auto-handles depth too
             defaultingContext.depth = ((this.context.depth === undefined)? 0 : this.context.depth + 1);
 
-            // updateFunc in props overrides contexts
-            if (typeof this.props.updateFunc !== 'undefined') {
-                defaultingContext.updateFunc = this.props.updateFunc;
+            // updater in props overrides contexts
+            if (typeof this.props.updater !== 'undefined') {
+                defaultingContext.updater = this.props.updater;
             }
 
             return defaultingContext;
