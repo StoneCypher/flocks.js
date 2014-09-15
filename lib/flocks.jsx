@@ -21,7 +21,7 @@ var flContextTypes = {
         getChildContext: function() {
 
             var defaultingContext = {};
-            for (var i in flContextTypes.keys()) {
+            for (var i in flContextTypes) {
                 // root is a special case; so is depth
                 if ((i !== 'root') && (i !== 'depth')) {
                     defaultingContext[i] = (this.props[i] !== undefined)? this.props[i] : this.context[i];
@@ -33,6 +33,11 @@ var flContextTypes = {
 
             // root auto-handles depth too
             defaultingContext.depth = ((this.context.depth === undefined)? 0 : this.context.depth + 1);
+
+            // updateFunc in props overrides contexts
+            if (typeof this.props.updateFunc !== 'undefined') {
+                defaultingContext.updateFunc = this.props.updateFunc;
+            }
 
             return defaultingContext;
 
@@ -50,6 +55,12 @@ var flContextTypes = {
                 return (Object.prototype.toString.call(maybeArray) === "[object Array]");
             },
 
+            isNonArrayObject = function(maybeArray) {
+                if (typeof maybeArray !== 'object')                                  { return false; }
+                if (Object.prototype.toString.call(maybeArray) === "[object Array]") { return false; }
+                return true;
+            },
+
             enforceString = function(On, Label) {
                 if (typeof On !== 'string') {
                     throw Label;
@@ -57,7 +68,7 @@ var flContextTypes = {
             },
 
             enforceArray = function(On, Label) {
-                if (isArray(On)) {
+                if (!(isArray(On))) {
                     throw Label;
                 }
             },
@@ -81,25 +92,40 @@ var flContextTypes = {
             },
 
             pathDive = function(CurPath, CurTgt) {
-                if (CurPath.length === 0) { return CurTgt; }
-                var Idx = CurPath.shift();
-                return pathDive(CurPath, CurTgt[Idx]);
+                var parent = CurTgt;
+
+                for (var i = 0; i < CurPath.length-1; i += 1) {
+                    console.log(parent);
+                    parent = parent[CurPath[i]];
+                }
+
+                return parent[CurPath[CurPath.length-1]];
             },
 
-            // not yet tested
             pathSet = function(CurPath, CurTgt, Val) {
-                var Idx  = CurPath.shift(),
-                    Held = CurTgt[Idx];
-                if (CurPath.length === 0) { 
-                    CurTgt[Idx] = Val;
-                    return Held;
+                var parent = CurTgt;
+
+                for (var i = 0; i < CurPath.length-1; i += 1) {
+                    console.log(parent);
+                    parent = parent[CurPath[i]];
                 }
-                return pathDive(CurPath, Held, Val);
+
+                console.log('Setting ' + CurPath[CurPath.length-1] + ' to ' + JSON.stringify(Val));
+                parent[CurPath[CurPath.length-1]] = Val;
+                updateIfWanted();
+            },
+
+            setByObject = function(NaObject) {
+                enforceNonArrayObject(NaObject, 'Flocks.bulk_set takes an object', 'Flocks.bulk_set takes a non-array object');
+                if (handler(NaObject)) {
+                    currentData = NaObject;
+                }
+                updateIfWanted();
             },
 
             setByPath = function(Path, Value) {
                 enforceArray(Path, 'Flock.path_set must take an array for its path');
-                pathSet(Path, currentData, Value);
+                return pathSet(Path, currentData, Value);
             },
 
             setByKey = function(Key, Value) {
@@ -127,9 +153,16 @@ var flContextTypes = {
             member_set: setByKey,
 
             set: function(Key, Value) {
-                if      (typeof Key === 'string') { setByKey(Key, Value); }
-                else if (isArray(Key))            { setByPath(Key, Value); }
-                else                              { throw "Flocks.set/2 key must be a string or an array"; }
+
+                if (typeof Key === 'string') {
+                    setByKey(Key, Value);
+                } else if (isArray(Key)) {
+                    setByPath(Key, Value);
+                } else if (isNonArrayObject(Key)) {
+                    setByObject(Key);
+                } else {
+                    throw "Flocks.set/2 key must be a string or an array";
+                }
             },
 
             // get isn't subject to handling
@@ -139,15 +172,7 @@ var flContextTypes = {
                 return (What === undefined)? currentData : currentData[What];
             },
 
-            bulk_set: function(request) {
-                enforceNonArrayObject(request, 'Flocks.bulk_set takes an object', 'Flocks.bulk_set takes a non-array object');
-
-                if (handler(request)) {
-                    currentData = request;
-                }
-
-                updateIfWanted();
-            },
+            bulk_set: setByObject,
 
             bulk_update: function(request) {
                 enforceNonArrayObject(request, 'Flocks.bulk_update takes an object', 'Flocks.bulk_update takes a non-array object');
