@@ -1,7 +1,7 @@
 flocks
 ======
 
-Because flux could be simpler (yay react)
+An opinionated flux alternative for React applications, focused on simplicity
 
 ![Language](http://img.shields.io/badge/Language-Javascript/JSX-000000.svg) &nbsp;
 ![Platform](http://img.shields.io/badge/Platform-Node-000000.svg) &nbsp;
