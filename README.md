@@ -51,7 +51,7 @@ Now, you just write your app as a single control, and keep state 100% *outside* 
 Example plox
 ------------
 
-One example is [flocks-mini-todo](https://github.com/StoneCypher/flocks-mini-todo).  More are coming soon.
+One example is [flocks-mini-todo](https://www.npmjs.org/package/flocks-mini-todo) ([github](https://github.com/StoneCypher/flocks-mini-todo)).  More are coming soon.
 
 
 
