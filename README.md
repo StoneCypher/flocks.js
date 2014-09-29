@@ -46,7 +46,12 @@ If you want that from inside the control, or even inside the heirarchy, that's f
 
 Now, you just write your app as a single control, and keep state 100% *outside* of the control heirarchy.  `:)`
 
-Example coming soon &trade;
+
+
+Example plox
+------------
+
+One example is [flocks-mini-todo](https://github.com/StoneCypher/flocks-mini-todo).  More are coming soon.
 
 
 
