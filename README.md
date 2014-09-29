@@ -6,6 +6,11 @@ An opinionated flux alternative for React applications, focused on simplicity
 ![Language](http://img.shields.io/badge/Language-Javascript/JSX-000000.svg) &nbsp;
 ![Platform](http://img.shields.io/badge/Platform-Node-000000.svg) &nbsp;
 ![License](http://img.shields.io/badge/License-MIT-000055.svg)
+![Status](http://img.shields.io/travis/StoneCypher/flocks.svg) &nbsp;
+
+[![NPM Downloads](http://img.shields.io/npm/dm/flocks.svg)](https://npmjs.org/package/flocks)
+
+![](https://nodei.co/npm/flocks.png?stars=true&downloads=true)
 
 
 
