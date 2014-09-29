@@ -1,12 +1,12 @@
 flocks
 ======
 
-An opinionated flux alternative for React applications, focused on simplicity
+A radically simpler alternative to Flux - opinionated React state and rendering management
 
 ![Language](http://img.shields.io/badge/Language-Javascript/JSX-000000.svg) &nbsp;
 ![Platform](http://img.shields.io/badge/Platform-Node-000000.svg) &nbsp;
-![License](http://img.shields.io/badge/License-MIT-000055.svg)
-![Status](http://img.shields.io/travis/StoneCypher/flocks.svg) &nbsp;
+![License](http://img.shields.io/badge/License-MIT-000055.svg) &nbsp;
+![Status](http://img.shields.io/travis/StoneCypher/flocks.svg)
 
 [![NPM Downloads](http://img.shields.io/npm/dm/flocks.svg)](https://npmjs.org/package/flocks)
 
