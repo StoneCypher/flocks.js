@@ -6,11 +6,11 @@ A radically simpler alternative to Flux - opinionated React state and rendering 
 ![Language](http://img.shields.io/badge/Language-Javascript/JSX-000000.svg) &nbsp;
 ![Platform](http://img.shields.io/badge/Platform-Node-000000.svg) &nbsp;
 ![License](http://img.shields.io/badge/License-MIT-000055.svg) &nbsp;
-![Status](http://img.shields.io/travis/StoneCypher/flocks.svg)
+![Status](http://img.shields.io/travis/StoneCypher/flocks.js.svg)
 
-[![NPM Downloads](http://img.shields.io/npm/dm/flocks.svg)](https://npmjs.org/package/flocks)
+[![NPM Downloads](http://img.shields.io/npm/dm/flocks.js.svg)](https://npmjs.org/package/flocks.js)
 
-![](https://nodei.co/npm/flocks.png?stars=true&downloads=true)
+![](https://nodei.co/npm/flocks.js.png?stars=true&downloads=true)
 
 
 
