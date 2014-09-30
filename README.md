@@ -52,6 +52,27 @@ Now, you just write your app as a single control, and keep state 100% *outside* 
 
 
 
+
+
+More clearly?
+-------------
+
+What Flocks actually does is to provide you with an update function.
+
+To get started, tell Flocks where the mount point is and what control to use.  Then, Flocks will create that control in place, and provide you an update function.  What you do with that function is up to you, though it's recommended that you pass it downwards, for use by your control and its children (and a mixin is provided to automate that, if you like.)
+
+Then, Flocks will update the top-level control when the state it manages changes, by applying each key to a prop in the top-level.
+
+The idea is that you're supposed to let Flocks manage the part of your application's state that gets visibly rendered.  (You can let it manage the whole state, if you want to; I do.  But you don't have to.)
+
+Once that's done, the whole shebang is just taken off your shoulders.  No update calls.  No dispatching.  No events.  No broadcasting.  No registration or deregistration.
+
+Just simple prop updates.  It's quite liberating.
+
+
+
+
+
 Example plox
 ------------
 
