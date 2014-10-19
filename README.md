@@ -19,7 +19,7 @@ A radically simpler alternative to Flux - opinionated React state and rendering 
 WARNING
 -------
 
-This is extreme pre-release software.  This is the right way forwards, but it's only just on the verge of ready, there may be API changes, and bugs should be expected.  Update soon.
+This is extreme pre-release software.  This is the right way forwards, but it's only just on the verge of ready, there may be API changes, and bugs should be expected.  Update soon!
 
 ***Please consider this an alpha product.***
 
