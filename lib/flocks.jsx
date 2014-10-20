@@ -44,12 +44,15 @@ var flContextTypes = {
         }
     },
 
-    create = function(TargetTag, RenderDescriptor, ProvidedHandler) {
+    create = function(Options) {
 
-        var currentData    = {},
-            updatesBlocked = false,
-            dirty          = false,
-            handler        = ProvidedHandler || function() { return true; },
+        var currentData      = {},
+            updatesBlocked   = false,
+            dirty            = false,
+
+            handler          = Options.handler || function() { return true; },
+            TargetTag        = Options.target,
+            RenderDescriptor = Options.control,
 
             isArray = function(maybeArray) {
                 return (Object.prototype.toString.call(maybeArray) === "[object Array]");
@@ -81,7 +84,7 @@ var flContextTypes = {
                     throw ( ArrayLabel || NonObjLabel );
                 }
             },
-
+*
             updateIfWanted = function() {
                 if (updatesBlocked) {
                     dirty = true;
