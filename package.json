@@ -15,9 +15,11 @@
     "flocks.js",
     "flock"
   ],
-  "dependencies": {
+  "devDependencies": {
     "vows": "*",
-    "enforce": "*",
+    "jsverify": "*"
+  },
+  "dependencies": {
     "node-jsx": "*"
   },
   "main": "lib/flocks.js",

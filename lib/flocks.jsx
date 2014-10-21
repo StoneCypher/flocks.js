@@ -4,7 +4,6 @@
 'use strict';
 
 var React   = require('react'),
-    Enforce = require('enforce'),
 
     flContextTypes = {
         root    : React.PropTypes.object,
@@ -43,13 +42,17 @@ var React   = require('react'),
         }
     },
 
+    alwaysTrue = function() { return true; },
+    noOp       = function() { return; },
+
     create = function(Options) {
 
         var currentData      = {},
             updatesBlocked   = false,
             dirty            = false,
 
-            handler          = Options.handler || function() { return true; },
+            handler          = Options.before || this.alwaysTrue,
+            finalizer        = Options.after  || this.noOp,
             TargetTag        = Options.target,
             RenderDescriptor = Options.control,
 
@@ -141,6 +144,9 @@ var React   = require('react'),
                 return;
             };
 
+        if (typeof target  === 'undefined') { throw 'flocks fatal error: must set a target'; }
+        if (typeof control === 'undefined') { throw 'flocks fatal error: must set a control'; }
+
         // todo whargarbl what're docs lol
 
         return {
@@ -153,15 +159,11 @@ var React   = require('react'),
 
             set: function(Key, Value) {
 
-                if (typeof Key === 'string') {
-                    setByKey(Key, Value);
-                } else if (isArray(Key)) {
-                    setByPath(Key, Value);
-                } else if (isNonArrayObject(Key)) {
-                    setByObject(Key);
-                } else {
-                    throw "Flocks.set/2 key must be a string or an array";
-                }
+                if      (typeof Key === 'string') { setByKey(Key, Value); }
+                else if (isArray(Key))            { setByPath(Key, Value); }
+                else if (isNonArrayObject(Key))   { setByObject(Key); }
+                else                              { throw "Flocks.set/2 key must be a string or an array"; }
+
             },
 
             // get isn't subject to handling
