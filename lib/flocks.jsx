@@ -3,11 +3,10 @@
 
 'use strict';
 
-if (typeof React === 'undefined') {
-    var React = require('react');
-}
+var React   = require('react'),
+    Enforce = require('enforce'),
 
-var flContextTypes = {
+    flContextTypes = {
         root    : React.PropTypes.object,
         depth   : React.PropTypes.number,
         updater : React.PropTypes.object
@@ -84,7 +83,7 @@ var flContextTypes = {
                     throw ( ArrayLabel || NonObjLabel );
                 }
             },
-*
+
             updateIfWanted = function() {
                 if (updatesBlocked) {
                     dirty = true;
@@ -231,8 +230,4 @@ var exports = {
 
 
 
-if (typeof module !== 'undefined') {
-    module.exports = exports;
-} else {
-    window.flocksjs = exports;
-}
+module.exports = exports;
