@@ -99,7 +99,10 @@ var flContextTypes = {
 
             updateIfWanted = function() {
 
-                if (!(handler(currentData, prevData))) { return false; }
+                if (!(handler(currentData, prevData))) {
+                    currentData = prevData;
+                    return false;
+                }
 
                 if (updatesBlocked) {
                     dirty = true;
