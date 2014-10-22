@@ -19,9 +19,9 @@ A radically simpler alternative to Flux - opinionated React state and rendering 
 WARNING
 -------
 
-This is extreme pre-release software.  This is the right way forwards, but it's only just on the verge of ready, there may be API changes, and bugs should be expected.  Update soon!
+This is pre-release software.  This is the right way forwards, but it's only just on the verge of ready, there may be API changes, and bugs should be expected.  Update soon!
 
-***Please consider this an alpha product.***
+***Please consider this a beta product.***
 
 
 
@@ -40,8 +40,8 @@ There's basically no boilerplate, and updating is easy.
 You know that whole thing in Flux where you have to create stores and dispatchers and constant files and decide how many of each there'll be and set up bindings and so on?
 
 ```javascript
-var Update = Flocks.create( document.getElementById('whatever'), YourControl );
-Update( { logged_in: true, user_name: "Bob Dobbs", icon: "http://..." } );
+var Update = Flocks.create({ target: document.getElementById('whatever'), control: YourControl });
+Update({ logged_in: true, user_name: "Bob Dobbs", icon: "http://..." });
 ```
 
 Done.
