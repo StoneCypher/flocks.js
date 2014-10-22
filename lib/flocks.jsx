@@ -7,6 +7,15 @@ if (typeof React === 'undefined') {
     var React = require('react');
 }
 
+var clone = function(obj) {
+        if (null === obj || "object" != typeof obj) return obj;
+        var copy = obj.constructor();
+        for (var attr in obj) {
+            if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+        }
+        return copy;
+    }; // oh, javascript :|
+
 var flContextTypes = {
         root       : React.PropTypes.object,
         depth      : React.PropTypes.number,
@@ -45,17 +54,15 @@ var flContextTypes = {
         }
     },
 
-    alwaysTrue = function() { return true; },
-    noOp       = function() { return; },
-
     create = function(Options) {
 
         var currentData      = {},
+            prevData         = {},
             updatesBlocked   = false,
             dirty            = false,
 
-            handler          = Options.before || this.alwaysTrue,
-            finalizer        = Options.after  || this.noOp,
+            handler          = Options.before || function() { return true; },
+            finalizer        = Options.after  || function() { return null; },
             TargetTag        = Options.target,
             RenderDescriptor = Options.control,
 
@@ -91,24 +98,22 @@ var flContextTypes = {
             },
 
             updateIfWanted = function() {
+
+                if (!(handler(currentData, prevData))) { return false; }
+
                 if (updatesBlocked) {
                     dirty = true;
+                    return null;
                 } else {
 
-                    var clone = function(obj) {
-                            if (null == obj || "object" != typeof obj) return obj;
-                            var copy = obj.constructor();
-                            for (var attr in obj) {
-                                if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
-                            }
-                            return copy;
-                        }, // oh, javascript :|
-
-                        cdata            = clone(currentData);
+                    var cdata            = clone(currentData);
                         cdata.flocks_ctx = currentData;
 
+                    prevData             = clone(currentData);
+
                     React.renderComponent(RenderDescriptor(cdata), TargetTag);
-                    dirty = false;
+                    dirty                = false;
+                    return true;
 
                 }
             },
@@ -131,7 +136,7 @@ var flContextTypes = {
                 }
 
                 parent[CurPath[CurPath.length-1]] = Val;
-                updateIfWanted();
+                return updateIfWanted();
             },
 
             setByObject = function(NaObject) {
@@ -139,7 +144,7 @@ var flContextTypes = {
                 if (handler(NaObject)) {
                     currentData = NaObject;
                 }
-                updateIfWanted();
+                return updateIfWanted();
             },
 
             setByPath = function(Path, Value) {
@@ -157,8 +162,7 @@ var flContextTypes = {
                     currentData[Key] = Value;
                 }
 
-                updateIfWanted();
-                return;
+                return updateIfWanted();
             };
 
         if (typeof TargetTag        === 'undefined') { throw 'flocks fatal error: must set a target'; }
@@ -206,7 +210,7 @@ var flContextTypes = {
                     }
                 }
 
-                updateIfWanted();
+                return updateIfWanted();
 
             },
 
@@ -214,20 +218,18 @@ var flContextTypes = {
                 if (handler({})) {
                     currentData = {};
                 }
-                updateIfWanted();
-                return;
+                return updateIfWanted();
             },
 
             // lock and unlock aren't subject to handling
             lock: function() {
                 updatesBlocked = true;
-                return;
+                return true;
             },
 
             unlock: function() {
                 updatesBlocked = false;
-                updateIfWanted();
-                return;
+                return updateIfWanted();
             }
 
         };
