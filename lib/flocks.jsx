@@ -61,8 +61,8 @@ var flContextTypes = {
             updatesBlocked   = false,
             dirty            = false,
 
-            handler          = Options.before || function() { return true; },
-            finalizer        = Options.after  || function() { return null; },
+            handler          = Options.before || function(C,P) { return true; },
+            finalizer        = Options.after  || function(C,P) { return null; },
             TargetTag        = Options.target,
             RenderDescriptor = Options.control,
 
@@ -111,6 +111,8 @@ var flContextTypes = {
 
                     var cdata            = clone(currentData);
                         cdata.flocks_ctx = currentData;
+
+                    finalizer(currentData, prevData);
 
                     prevData             = clone(currentData);
 
