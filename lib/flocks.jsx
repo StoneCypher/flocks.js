@@ -3,12 +3,15 @@
 
 'use strict';
 
-var React   = require('react'),
+if (typeof React === 'undefined') {
+    var React = require('react');
+}
 
-    flContextTypes = {
-        root    : React.PropTypes.object,
-        depth   : React.PropTypes.number,
-        updater : React.PropTypes.object
+var flContextTypes = {
+        root       : React.PropTypes.object,
+        depth      : React.PropTypes.number,
+        updater    : React.PropTypes.object,
+        flocks_ctx : React.PropTypes.object
     },
 
     Mixin = {
@@ -91,8 +94,22 @@ var React   = require('react'),
                 if (updatesBlocked) {
                     dirty = true;
                 } else {
-                    React.renderComponent(RenderDescriptor(currentData), TargetTag);
+
+                    var clone = function(obj) {
+                            if (null == obj || "object" != typeof obj) return obj;
+                            var copy = obj.constructor();
+                            for (var attr in obj) {
+                                if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+                            }
+                            return copy;
+                        }, // oh, javascript :|
+
+                        cdata            = clone(currentData);
+                        cdata.flocks_ctx = currentData;
+
+                    React.renderComponent(RenderDescriptor(cdata), TargetTag);
                     dirty = false;
+
                 }
             },
 
@@ -144,8 +161,8 @@ var React   = require('react'),
                 return;
             };
 
-        if (typeof target  === 'undefined') { throw 'flocks fatal error: must set a target'; }
-        if (typeof control === 'undefined') { throw 'flocks fatal error: must set a control'; }
+        if (typeof TargetTag        === 'undefined') { throw 'flocks fatal error: must set a target'; }
+        if (typeof RenderDescriptor === 'undefined') { throw 'flocks fatal error: must set a control'; }
 
         // todo whargarbl what're docs lol
 
@@ -232,4 +249,8 @@ var exports = {
 
 
 
-module.exports = exports;
+if (typeof module !== 'undefined') {
+    module.exports = exports;
+} else {
+    window.flocksjs = exports;
+}
