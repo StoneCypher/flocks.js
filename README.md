@@ -40,7 +40,9 @@ There's basically no boilerplate, and updating is easy.
 You know that whole thing in Flux where you have to create stores and dispatchers and constant files and decide how many of each there'll be and set up bindings and so on?
 
 ```javascript
-var Update = Flocks.create({ target: document.getElementById('whatever'), control: YourControl });
+var Target = document.getElementById('whatever'),
+    Update = Flocks.create({ target: Target, control: YourControl });
+
 Update({ logged_in: true, user_name: "Bob Dobbs", icon: "http://..." });
 ```
 
