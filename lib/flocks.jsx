@@ -1,5 +1,5 @@
 /** @jsx React.DOM */
-/* jshint node: true */
+/* jshint node: true, browser: true, newcap: false */
 
 'use strict';
 
@@ -13,12 +13,12 @@ if (typeof React === 'undefined') {
 
 var clone = function(obj) {
 
-        if (null === obj || "object" != typeof obj) return obj;
+        if (null === obj || "object" != typeof obj) { return obj; }
 
         var copy = obj.constructor();
 
         for (var attr in obj) {
-            if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+            if (obj.hasOwnProperty(attr)) { copy[attr] = obj[attr]; }
         }
 
         return copy;
