@@ -7,21 +7,29 @@ if (typeof React === 'undefined') {
     var React = require('react');
 }
 
+
+
+
+
 var clone = function(obj) {
+
         if (null === obj || "object" != typeof obj) return obj;
+
         var copy = obj.constructor();
+
         for (var attr in obj) {
             if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
         }
-        return copy;
-    }; // oh, javascript :|
 
-var flContextTypes = {
-        root       : React.PropTypes.object,
-        depth      : React.PropTypes.number,
-        updater    : React.PropTypes.object,
-        flocks_ctx : React.PropTypes.object
-    },
+        return copy;
+
+    }, // oh, javascript :|
+
+
+
+
+
+    flContextTypes = { updater : React.PropTypes.object },
 
     Mixin = {
 
@@ -31,18 +39,6 @@ var flContextTypes = {
         getChildContext: function() {
 
             var defaultingContext = {};
-            for (var i in flContextTypes) {
-                // root is a special case; so is depth
-                if ((i !== 'root') && (i !== 'depth')) {
-                    defaultingContext[i] = (this.props[i] !== undefined)? this.props[i] : this.context[i];
-                }
-            }
-
-            // root auto-handles self-if-no-parent
-            defaultingContext.root = ((this.context.root === undefined)? this : this.context.root);
-
-            // root auto-handles depth too
-            defaultingContext.depth = ((this.context.depth === undefined)? 0 : this.context.depth + 1);
 
             // updater in props overrides contexts
             if (typeof this.props.updater !== 'undefined') {
@@ -53,6 +49,10 @@ var flContextTypes = {
 
         }
     },
+
+
+
+
 
     create = function(Options) {
 
