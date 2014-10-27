@@ -13,10 +13,9 @@ if (typeof React === 'undefined') {
 
 var clone = function(obj) {
 
-        if (null === obj || "object" != typeof obj) { return obj; }
+        if ((null === obj) || ('object' != typeof obj)) { return obj; }
 
         var copy = obj.constructor();
-
         for (var attr in obj) {
             if (obj.hasOwnProperty(attr)) { copy[attr] = obj[attr]; }
         }
@@ -67,12 +66,12 @@ var clone = function(obj) {
             RenderDescriptor = Options.control,
 
             isArray = function(maybeArray) {
-                return (Object.prototype.toString.call(maybeArray) === "[object Array]");
+                return (Object.prototype.toString.call(maybeArray) === '[object Array]');
             },
 
             isNonArrayObject = function(maybeArray) {
                 if (typeof maybeArray !== 'object')                                  { return false; }
-                if (Object.prototype.toString.call(maybeArray) === "[object Array]") { return false; }
+                if (Object.prototype.toString.call(maybeArray) === '[object Array]') { return false; }
                 return true;
             },
 
@@ -188,7 +187,7 @@ var clone = function(obj) {
                 if      (typeof Key === 'string') { setByKey(Key, Value); }
                 else if (isArray(Key))            { setByPath(Key, Value); }
                 else if (isNonArrayObject(Key))   { setByObject(Key); }
-                else                              { throw "Flocks.set/2 key must be a string or an array"; }
+                else                              { throw 'Flocks.set/2 key must be a string or an array'; }
 
             },
 
