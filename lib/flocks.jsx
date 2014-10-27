@@ -231,6 +231,7 @@ var clone = function(obj) {
                 return true;
             },
 
+            // lock and unlock aren't subject to handling
             unlock: function() {
                 updatesBlocked = false;
                 return updateIfWanted();
