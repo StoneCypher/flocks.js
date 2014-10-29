@@ -16,6 +16,8 @@
     "flock"
   ],
   "devDependencies": {
+    "eslint": "*",
+    "jshint": "*",
     "vows": "*",
     "jsverify": "*"
   },
