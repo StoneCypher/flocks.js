@@ -28,20 +28,34 @@ var clone = function(obj) {
 
 
 
-    flContextTypes = { updater : React.PropTypes.object },
+    flContextTypes = {
+        flocks_updater : React.PropTypes.object,
+        flocks_context : React.PropTypes.object
+    },
 
     Mixin = {
 
         contextTypes      : flContextTypes,
         childContextTypes : flContextTypes,
 
+        componentWillMount: function() {
+            this.fctx = function() { return clone(this.context.flocks_context); };
+            this.fset = function() { return this.context.flocks_updater.set; };
+            this.fupd = function() { return this.context.flocks_updater; };
+        },
+
         getChildContext: function() {
 
             var defaultingContext = {};
 
             // updater in props overrides contexts
-            if (typeof this.props.updater !== 'undefined') {
-                defaultingContext.updater = this.props.updater;
+            if (typeof this.props.flocks_context !== 'undefined') {
+                defaultingContext.flocks_context = this.props.flocks_context;
+                delete defaultingContext.flocks_context.flocks_context;
+            }
+
+            if (typeof this.props.flocks_updater !== 'undefined') {
+                defaultingContext.flocks_updater = this.props.flocks_updater;
             }
 
             return defaultingContext;
@@ -57,7 +71,7 @@ var clone = function(obj) {
 
         var currentData      = {},
             prevData         = {},
-            updatesBlocked   = false,
+            updatesBlocked   = 0,
             dirty            = false,
 
             handler          = Options.before || function(C,P) { return true; },
@@ -108,8 +122,8 @@ var clone = function(obj) {
                         return false;
                     }
 
-                    var cdata            = clone(currentData);
-                        cdata.flocks_ctx = currentData;
+                    var cdata                = clone(currentData);
+                        cdata.flocks_context = currentData;
 
                     finalizer(currentData, prevData);
 
@@ -132,11 +146,16 @@ var clone = function(obj) {
                 return parent[CurPath[CurPath.length-1]];
             },
 
-            pathSet = function(CurPath, CurTgt, Val) {
-                var parent = CurTgt;
+            pathSet = function(CurPath, Val) {
 
-                for (var i = 0; i < CurPath.length-1; i += 1) {
-                    parent = parent[CurPath[i]];
+                var parent = currentData;
+
+                if (CurPath.length === 1) {
+                    parent[CurPath[0]] = Val;
+                } else {
+                    for (var i = 0; i < CurPath.length-1; i += 1) {
+                        parent = parent[CurPath[i]];
+                    }
                 }
 
                 parent[CurPath[CurPath.length-1]] = Val;
@@ -153,7 +172,7 @@ var clone = function(obj) {
 
             setByPath = function(Path, Value) {
                 enforceArray(Path, 'Flock.path_set must take an array for its path');
-                return pathSet(Path, currentData, Value);
+                return pathSet(Path, Value);
             },
 
             setByKey = function(Key, Value) {
@@ -182,13 +201,19 @@ var clone = function(obj) {
 
             member_set: setByKey,
 
-            set: function(Key, Value) {
+            set: function(Key, MaybeValue) {
 
-                if      (typeof Key === 'string') { setByKey(Key, Value); }
-                else if (isArray(Key))            { setByPath(Key, Value); }
+                if      (typeof Key === 'string') { setByKey(Key, MaybeValue); }
+                else if (isArray(Key))            { setByPath(Key, MaybeValue); }
                 else if (isNonArrayObject(Key))   { setByObject(Key); }
                 else                              { throw 'Flocks.set/2 key must be a string or an array'; }
 
+            },
+
+            init: function(InitObj) {
+                InitObj.flocks_context = clone(InitObj);
+                this.set(InitObj);
+                this.set('flocks_updater', this);
             },
 
             // get isn't subject to handling
@@ -227,14 +252,14 @@ var clone = function(obj) {
 
             // lock and unlock aren't subject to handling
             lock: function() {
-                updatesBlocked = true;
+                updatesBlocked += 1;
                 return true;
             },
 
             // lock and unlock aren't subject to handling
             unlock: function() {
-                updatesBlocked = false;
-                return updateIfWanted();
+                updatesBlocked -= 1;
+                return (updatesBlocked > 0)? updateIfWanted() : false;
             }
 
         };
