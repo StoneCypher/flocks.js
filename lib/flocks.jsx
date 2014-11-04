@@ -67,6 +67,57 @@ var clone = function(obj) {
 
 
 
+    isArray = function(maybeArray) {
+        return (Object.prototype.toString.call(maybeArray) === '[object Array]');
+    },
+
+
+
+
+
+    isNonArrayObject = function(maybeArray) {
+        if (typeof maybeArray !== 'object')                                  { return false; }
+        if (Object.prototype.toString.call(maybeArray) === '[object Array]') { return false; }
+        return true;
+    },
+
+
+
+
+
+    enforceString = function(On, Label) {
+        if (typeof On !== 'string') {
+            throw Label;
+        }
+    },
+
+
+
+
+
+    enforceArray = function(On, Label) {
+        if (!(isArray(On))) {
+            throw Label;
+        }
+    },
+
+
+
+
+
+    enforceNonArrayObject = function(On, NonObjLabel, ArrayLabel) {
+        if (typeof On !== 'object') {
+            throw NonObjLabel;
+        }
+        if (isArray(On)) {
+            throw ( ArrayLabel || NonObjLabel );
+        }
+    },
+
+
+
+
+
     create = function(Options) {
 
         var currentData      = {},
@@ -78,37 +129,6 @@ var clone = function(obj) {
             finalizer        = Options.after  || function(C,P) { return null; },
             TargetTag        = Options.target,
             RenderDescriptor = Options.control,
-
-            isArray = function(maybeArray) {
-                return (Object.prototype.toString.call(maybeArray) === '[object Array]');
-            },
-
-            isNonArrayObject = function(maybeArray) {
-                if (typeof maybeArray !== 'object')                                  { return false; }
-                if (Object.prototype.toString.call(maybeArray) === '[object Array]') { return false; }
-                return true;
-            },
-
-            enforceString = function(On, Label) {
-                if (typeof On !== 'string') {
-                    throw Label;
-                }
-            },
-
-            enforceArray = function(On, Label) {
-                if (!(isArray(On))) {
-                    throw Label;
-                }
-            },
-
-            enforceNonArrayObject = function(On, NonObjLabel, ArrayLabel) {
-                if (typeof On !== 'object') {
-                    throw NonObjLabel;
-                }
-                if (isArray(On)) {
-                    throw ( ArrayLabel || NonObjLabel );
-                }
-            },
 
             updateIfWanted = function() {
 
@@ -272,8 +292,14 @@ var clone = function(obj) {
 
 var exports = {
 
-    member: Mixin,
-    create: create
+    member                : Mixin,
+    create                : create,
+    clone                 : clone,
+    isArray               : isArray,
+    isNonArrayObject      : isNonArrayObject,
+    enforceString         : enforceString,
+    enforceArray          : enforceArray,
+    enforceNonArrayObject : enforceNonArrayObject
 
 };
 
