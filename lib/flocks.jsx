@@ -1,6 +1,16 @@
 /** @jsx React.DOM */
 /* jshint node: true, browser: true, newcap: false */
 
+/**
+ * The Flocks library module.
+ *
+ * @module Flocks
+ * @main   Flocks
+ */
+
+
+
+
 'use strict';
 
 if (typeof React === 'undefined') {
@@ -10,6 +20,12 @@ if (typeof React === 'undefined') {
 
 
 
+
+/**
+ * @method clone
+ * @for    Flocks
+ * @return {Object} Deep memberwise clone of an object
+ */
 
 var clone = function(obj) {
 
@@ -32,6 +48,15 @@ var clone = function(obj) {
         flocks_updater : React.PropTypes.object,
         flocks_context : React.PropTypes.object
     },
+
+
+
+
+
+    /**
+     * @class FlocksMixin
+     * @since 0.4.0
+     */
 
     Mixin = {
 
@@ -67,6 +92,12 @@ var clone = function(obj) {
 
 
 
+    /**
+     * @method isArray
+     * @for    Flocks
+     * @return {Boolean} Whether or not the argument is an `Array`
+     */
+
     isArray = function(maybeArray) {
         return (Object.prototype.toString.call(maybeArray) === '[object Array]');
     },
@@ -74,6 +105,12 @@ var clone = function(obj) {
 
 
 
+
+    /**
+     * @method isNonArrayObject
+     * @for    Flocks
+     * @return {Boolean} Whether or not the argument is an `Object`, but also not an `Array`
+     */
 
     isNonArrayObject = function(maybeArray) {
         if (typeof maybeArray !== 'object')                                  { return false; }
@@ -84,6 +121,12 @@ var clone = function(obj) {
 
 
 
+
+    /**
+     * @method enforceString
+     * @for    Flocks
+     * @return {undefined} Throw if the first argument isn't a `String`; otherwise return
+     */
 
     enforceString = function(On, Label) {
         if (typeof On !== 'string') {
@@ -211,7 +254,14 @@ var clone = function(obj) {
         if (typeof TargetTag        === 'undefined') { throw 'flocks fatal error: must set a target'; }
         if (typeof RenderDescriptor === 'undefined') { throw 'flocks fatal error: must set a control'; }
 
-        // todo whargarbl what're docs lol
+
+
+
+
+        /**
+         * @class Flocks
+         * @since 0.1.1
+         */
 
         return {
 
