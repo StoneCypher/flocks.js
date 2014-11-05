@@ -23,7 +23,7 @@ gulp.task('build',  ['test','docs']);
 gulp.task('test',   ['vows']);
 
 gulp.task('sloc', ['build'], function(){
-  gulp.src(['gulpfile.js'])
+  gulp.src(['gulpfile.js', 'lib/*.js', 'lib/*.jsx', 'test/*.js'])
     .pipe(sloc());
 });
 
