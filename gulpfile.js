@@ -1,6 +1,7 @@
 global.errorMessage = '';
 
 var gulp            = require('gulp'),
+    shell           = require('gulp-shell'),
     clean           = require('gulp-clean'),
     yuidoc          = require('gulp-yuidoc'),
     stripDomComment = require('gulp-strip-react-dom-comment'),
@@ -17,12 +18,11 @@ gulp.task('docs', ['clean'], function() {
     .pipe(gulp.dest('./doc'));
 });
 
-gulp.task('vows', function() {
-  // todo whargarbl
-});
+gulp.task('vows',   shell.task("vows test/* --spec -s"));
+gulp.task('eslint', shell.task("eslint test/enforce-tests.js -c node_modules/sc-eslint/sc-eslint-config.json"));
 
 gulp.task('build',  ['test','docs']);
-gulp.task('test',   ['vows']);
+gulp.task('test',   ['vows', 'eslint']);
 
 gulp.task('sloc', ['build'], function(){
   gulp.src(['gulpfile.js', 'lib/*.js', 'lib/*.jsx', 'test/*.js'])
