@@ -10,9 +10,9 @@ gulp.task('clean', function() {
 });
 
 gulp.task('docs', ['clean'], function() {
-  gulp.src('./assets/js/**/*.js')  // todo wrong
+  gulp.src('./lib/*.js')  // todo wrong
     .pipe(yuidoc())
-    .pipe(gulp.dest("./doc"));
+    .pipe(gulp.dest('./doc'));
 });
 
 gulp.task('vows', function() {
