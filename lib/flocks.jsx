@@ -151,7 +151,8 @@ var clone = function(obj) {
 
 
     enforceNonArrayObject = function(On, NonObjLabel, ArrayLabel) {
-        Label = Label || 'Argument must be a non-array object';
+        NonObjLabel = NonObjLabel || 'Argument must be a non-array object';
+        ArrayLabel  = ArrayLabel  || 'Argument must be a non-array object';
         if (typeof On !== 'object') {
             throw NonObjLabel;
         }
