@@ -1,16 +1,18 @@
 global.errorMessage = '';
 
-var gulp      = require('gulp'),
-    clean     = require('gulp-clean'),
-    yuidoc    = require('gulp-yuidoc'),
-    sloc      = require('gulp-sloc');
+var gulp            = require('gulp'),
+    clean           = require('gulp-clean'),
+    yuidoc          = require('gulp-yuidoc'),
+    stripDomComment = require('gulp-strip-react-dom-comment'),
+    sloc            = require('gulp-sloc');
 
 gulp.task('clean', function() {
   return gulp.src(['./doc'], {read: false}).pipe(clean());
 });
 
 gulp.task('docs', ['clean'], function() {
-  gulp.src('./lib/*.js')  // todo wrong
+  gulp.src(['./lib/*.js', './lib/*.jsx'])  // todo wrong
+    .pipe(stripDomComment())
     .pipe(yuidoc())
     .pipe(gulp.dest('./doc'));
 });

@@ -26,6 +26,7 @@
     "jsverify": "*"
   },
   "dependencies": {
+    "gulp-strip-react-dom-comment": "*",
     "node-jsx": "*"
   },
   "main": "lib/flocks.js",
