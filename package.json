@@ -23,6 +23,7 @@
     "eslint": "*",
     "jshint": "*",
     "vows": "*",
+    "react": "*",
     "jsverify": "*"
   },
   "dependencies": {
