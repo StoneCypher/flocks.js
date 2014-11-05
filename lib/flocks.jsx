@@ -129,6 +129,7 @@ var clone = function(obj) {
      */
 
     enforceString = function(On, Label) {
+        Label = Label || 'Argument must be a string';
         if (typeof On !== 'string') {
             throw Label;
         }
@@ -139,6 +140,7 @@ var clone = function(obj) {
 
 
     enforceArray = function(On, Label) {
+        Label = Label || 'Argument must be an array';
         if (!(isArray(On))) {
             throw Label;
         }
@@ -149,6 +151,7 @@ var clone = function(obj) {
 
 
     enforceNonArrayObject = function(On, NonObjLabel, ArrayLabel) {
+        Label = Label || 'Argument must be a non-array object';
         if (typeof On !== 'object') {
             throw NonObjLabel;
         }
