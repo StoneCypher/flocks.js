@@ -26,7 +26,7 @@ gulp.task('test',   ['vows']);
 
 gulp.task('sloc', ['build'], function(){
   gulp.src(['gulpfile.js', 'lib/*.js', 'lib/*.jsx', 'test/*.js'])
-    .pipe(sloc());
+    .pipe(sloc({tolerant: true}));
 });
 
 gulp.task('default', ['sloc','test']);
