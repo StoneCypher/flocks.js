@@ -16,6 +16,10 @@
     "flock"
   ],
   "devDependencies": {
+    "gulp": "*",
+    "gulp-clean": "*",
+    "gulp-sloc": "*",
+    "gulp-yuidoc": "*",
     "eslint": "*",
     "jshint": "*",
     "vows": "*",
