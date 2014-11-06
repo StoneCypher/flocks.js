@@ -1,3 +1,6 @@
+
+
+
 global.errorMessage = '';
 
 var gulp            = require('gulp'),
@@ -5,7 +8,8 @@ var gulp            = require('gulp'),
     clean           = require('gulp-clean'),
     yuidoc          = require('gulp-yuidoc'),
     stripDomComment = require('gulp-strip-react-dom-comment'),
-    sloc            = require('gulp-sloc');
+    sloc            = require('gulp-sloc'),
+    eslint_task     = require('sc-eslint/estask.js');
 
 gulp.task('clean', function() {
   return gulp.src(['./doc'], {read: false}).pipe(clean());
@@ -18,8 +22,10 @@ gulp.task('docs', ['clean'], function() {
     .pipe(gulp.dest('./doc'));
 });
 
-gulp.task('vows',   shell.task("vows test/* --spec -s"));
-gulp.task('eslint', shell.task("eslint test/enforce-tests.js -c node_modules/sc-eslint/sc-eslint-config.json"));
+var lintconfig = { target: "gulpfile.js test/enforce-tests.js" };
+gulp.task('lint', eslint_task(lintconfig));
+
+gulp.task('vows', shell.task("vows test/* --spec -s"));
 
 gulp.task('build',  ['test','docs']);
 gulp.task('test',   ['vows', 'eslint']);
