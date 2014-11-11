@@ -4,14 +4,14 @@
 "use strict";
 
 var gulp            = require("gulp"),
+    lint            = require("sc-eslint/estask.js"),
     shell           = require("gulp-shell"),
     clean           = require("gulp-clean"),
     yuidoc          = require("gulp-yuidoc"),
     stripDomComment = require("gulp-strip-react-dom-comment"),
-    sloc            = require("gulp-sloc"),
-    linttask        = require("sc-eslint/estask.js");
+    sloc            = require("gulp-sloc");
 
-global.errorMessage = "";
+lint.gulpreg(gulp, { "targets" : "gulpfile.js lib/flocks.js lib/flocks.jsx" });
 
 gulp.task("clean", function() {
   return gulp.src(["./doc"], {"read" : false}).pipe(clean());
@@ -23,10 +23,6 @@ gulp.task("docs", ["clean"], function() {
     .pipe(yuidoc())
     .pipe(gulp.dest("./doc"));
 });
-
-gulp.task("lint", linttask({
-  "targets" : "gulpfile.js lib/flocks.js test/enforce-tests.js"
-}));
 
 gulp.task("vows", shell.task("vows test/* --spec -s"));
 
