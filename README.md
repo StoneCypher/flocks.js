@@ -12,6 +12,8 @@ A radically simpler alternative to Flux - opinionated React state and rendering 
 
 ![](https://nodei.co/npm/flocks.js.png?stars=true&downloads=true)
 
+This is a replacement for flux, not an implementation of it.  As such, this library is unrelated to [flox](https://github.com/foss-haas/flox/).
+
 
 
 
