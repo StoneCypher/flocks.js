@@ -11,8 +11,6 @@ var gulp            = require("gulp"),
     stripDomComment = require("gulp-strip-react-dom-comment"),
     sloc            = require("gulp-sloc");
 
-lint.gulpreg(gulp, { "targets" : "gulpfile.js lib/flocks.js lib/flocks.jsx" });
-
 gulp.task("clean", function() {
   return gulp.src(["./doc"], {"read" : false}).pipe(clean());
 });
@@ -24,14 +22,16 @@ gulp.task("docs", ["clean"], function() {
     .pipe(gulp.dest("./doc"));
 });
 
+lint.gulpreg(gulp, { "targets" : "gulpfile.js lib/flocks.js lib/flocks.jsx" });
+
 gulp.task("vows", shell.task("vows test/* --spec -s"));
 
-gulp.task("build",  ["test", "docs"]);
 gulp.task("test",   ["vows", "lint"]);
+gulp.task("build",  ["test", "docs"]);
 
 gulp.task("sloc", ["build"], function() {
   gulp.src(["gulpfile.js", "lib/*.js", "lib/*.jsx", "test/*.js"])
     .pipe(sloc({"tolerant" : true}));
 });
 
-gulp.task("default", ["sloc", "test"]);
+gulp.task("default", ["test", "sloc"]);
