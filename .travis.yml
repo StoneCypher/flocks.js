@@ -1,6 +1,11 @@
 language: node_js
 notifications:
-  irc: "irc.blitzed.org#stonecypher-builds"
+  irc:
+    channels:
+      - "irc.freenode.com#flocksjs"
+      - "irc.blitzed.org#stonecypher-builds"
+    template:
+      - "%{repository} %{build_number} (%{commit}) : %{message} %{foo} "
   recipients:
     - stonecypher@gmail.com
 node_js:
