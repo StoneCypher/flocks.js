@@ -2,7 +2,7 @@ language: node_js
 notifications:
   irc:
     channels:
-      - "irc.freenode.com#flocksjs"
+      - "irc.freenode.net#flocksjs"
       - "irc.blitzed.org#stonecypher-builds"
     template:
       - "%{repository} %{build_number} (%{commit}) : %{message} %{foo} "
