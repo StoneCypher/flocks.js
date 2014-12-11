@@ -2,7 +2,7 @@
   "author": "John Haugeland",
   "name": "flocks.js",
   "description": "Simpler state management for React.js",
-  "version": "0.11.1",
+  "version": "0.12.0",
   "repository": {
     "url": "https://github.com/StoneCypher/flocks.js.git"
   },
@@ -29,10 +29,9 @@
   },
   "dependencies": {
     "sc-eslint": "*",
-    "gulp-strip-react-dom-comment": "*",
-    "node-jsx": "*"
+    "gulp-strip-react-dom-comment": "*"
   },
-  "main": "lib/flocks.js",
+  "main": "lib/flocks.jsx",
   "engines": {
     "node": "*"
   },
