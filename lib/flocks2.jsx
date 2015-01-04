@@ -100,9 +100,11 @@ if (typeof React === 'undefined') {
             return null;
         }
 
+        flocksLog('   - Flocks2 update passed');
         React.render( React.createFactory(GH2)( {flocks2context: nextProps} ), document.body );
         dirty = false;
 
+        flocksLog('   - Flocks2 update complete; finalizing');
         finalizer();
         return true;
 
