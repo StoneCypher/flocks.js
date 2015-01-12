@@ -55,8 +55,20 @@ if (typeof React === 'undefined') {
 
 
 
-    function flocksLog(X) {
-//      console.log(X);  // later make this disableable, whargarbl
+    function flocksLog(Level, Message) {
+
+        if (typeof Level === 'string') {
+            if (member(Level, ['warn','debug','error','log','info','exception','assert'])) {
+                console[Level]('Flocks2 [' + Level + '] ' + Message.toString());
+            } else {
+                console.log('Flocks2 [Unknown level] ' + Message.toString());
+            }
+        } else if (nextFCtx.flocks_config === undefined) {
+            console.log('Flocks2 pre-config [' + Level.toString() + '] ' + Message.toString());
+        } else if (nextFCtx.flocks_config.log_level >= Level) {
+            console.log('Flocks2 [' + Level.toString() + '] ' + Message.toString());
+        }
+
     }
 
 
@@ -100,7 +112,7 @@ if (typeof React === 'undefined') {
     function setByKey(Key, MaybeValue) {
         enforceString(Key, "Flocks2 set/2 must take a string for its key");
         nextFCtx[Key] = MaybeValue;
-        flocksLog("   - Flocks2 setByKey \"" + Key + "\"");
+        flocksLog(1, "   - Flocks2 setByKey \"" + Key + "\"");
         attemptUpdate();
     }
 
@@ -108,12 +120,12 @@ if (typeof React === 'undefined') {
 
 
 
-    function setByPath(Key, MaybeValue) { flocksLog('   - Flocks2 setByPath stub'  ); attemptUpdate(); }
-    function setByObject(Key, MaybeValue) { flocksLog('   - Flocks2 setByObject stub'); attemptUpdate(); }
+    function setByPath(Key, MaybeValue)   { flocksLog(0, '   - Flocks2 setByPath stub'  ); attemptUpdate(); }
+    function setByObject(Key, MaybeValue) { flocksLog(0, '   - Flocks2 setByObject stub'); attemptUpdate(); }
 
     function set(Key, MaybeValue) {
 
-        flocksLog(' - Flocks2 multi-set');
+        flocksLog(3, ' - Flocks2 multi-set');
 
         if      (typeof Key === 'string') { setByKey(Key, MaybeValue); }
         else if (isArray(Key))            { setByPath(Key, MaybeValue); }
@@ -128,7 +140,7 @@ if (typeof React === 'undefined') {
 
     function clone(obj, loglabel) {
 
-        flocksLog( ' + Flocks2 cloning ' + (loglabel? loglabel : JSON.stringify(obj).substring(0,100) ) );
+        flocksLog(3, ' + Flocks2 cloning ' + (loglabel? loglabel : JSON.stringify(obj).substring(0,100) ) );
 
         if ((null === obj) || ('object' != typeof obj)) { return obj; }
 
@@ -145,28 +157,40 @@ if (typeof React === 'undefined') {
 
 
 
+    // ... lol
+    function member(Item, Array) {
+        return (!!(~( Array.indexOf(Item) )));
+    }
+
+
+
+
+
     function attemptUpdate() {
 
-        flocksLog(' - Flocks2 attempting update');
+        flocksLog(3, ' - Flocks2 attempting update');
         dirty = true;
 
         if (!(initialized)) {
-            flocksLog(' x Flocks2 skipped update: root is not initialized');
+            flocksLog(1, ' x Flocks2 skipped update: root is not initialized');
             return null;
         }
 
         if (updateBlocks) {
-            flocksLog(' x Flocks2 skipped update: lock count updateBlocks is non-zero');
+            flocksLog(1, ' x Flocks2 skipped update: lock count updateBlocks is non-zero');
             return null;
         }
-/*
+
+/* whargarbl see issue #9 https://github.com/StoneCypher/flocks.js/issues/9
+
         if (deepCompare(nextFCtx, prevFCtx)) {
-            flocksLog(' x Flocks2 skipped update: no update to state');
+            flocksLog(2, ' x Flocks2 skipped update: no update to state');
             return true;
         }
 */
+
         if (!(handler(nextFCtx))) {
-            flocksLog('   ! Flocks2 rolling back update: handler rejected propset');
+            flocksLog(0, '   ! Flocks2 rolling back update: handler rejected propset');
             nextFCtx = prevFCtx;
             dirty    = false;
             return null;
@@ -174,11 +198,11 @@ if (typeof React === 'undefined') {
 
         prevFCtx = nextFCtx;
 
-        flocksLog('   - Flocks2 update passed');
+        flocksLog(3, '   - Flocks2 update passed');
         React.render( React.createFactory(tagtype)( { flocks2context: nextFCtx } ), document.body );
         dirty = false;
 
-        flocksLog('   - Flocks2 update complete; finalizing');
+        flocksLog(3, '   - Flocks2 update complete; finalizing');
         finalizer();
         return true;
 
@@ -198,31 +222,33 @@ if (typeof React === 'undefined') {
             stub         = function() { window.alert('whargarbl stub'); attemptUpdate(); },
             updater      = { get: stub, set: set, override: stub, clear: stub, update: stub, lock: stub, unlock: stub };
 
-        tagtype          = FlocksConfig.control,
-        nextFCtx         = FlocksData;
+        FlocksConfig.log_level   = FlocksConfig.log_level || -1;
+        tagtype                  = FlocksConfig.control;
+        FlocksData.flocks_config = FlocksConfig;
+        nextFCtx                 = FlocksData;
 
-        flocksLog('Flocks2 root creation begins');
+        flocksLog(1, 'Flocks2 root creation begins');
 
-        if (!(tagtype))             { throw 'Flocks2 fatal error: must provide a control in create/2 FlocksConfig'; }
-        if (FlocksConfig.handler)   { handler   = FlocksConfig.handler;   flocksLog(' - Flocks2 handler assigned'  ); }
-        if (FlocksConfig.finalizer) { finalizer = FlocksConfig.finalizer; flocksLog(' - Flocks2 finalizer assigned'); }
+        if (!(tagtype))             { throw 'Flocks2 fatal error: must provide a control in create/2 FlocksConfig';      }
+        if (FlocksConfig.handler)   { handler   = FlocksConfig.handler;   flocksLog(3, ' - Flocks2 handler assigned'  ); }
+        if (FlocksConfig.finalizer) { finalizer = FlocksConfig.finalizer; flocksLog(3, ' - Flocks2 finalizer assigned'); }
 
         if (FlocksConfig.preventAutoContext) {
-            flocksLog(' - Flocks2 skipping auto-context');
+            flocksLog(2, ' - Flocks2 skipping auto-context');
         } else {
-            flocksLog(' - Flocks2 engaging auto-context');
+            flocksLog(2, ' - Flocks2 engaging auto-context');
             this.fctx = clone(nextFCtx);
         }
 
-        flocksLog('Flocks2 creation finished; initializing');
+        flocksLog(3, 'Flocks2 creation finished; initializing');
         initialized = true;
         attemptUpdate();
 
-        flocksLog('Flocks2 expose updater');
+        flocksLog(3, 'Flocks2 expose updater');
         this.fupd = updater;
         this.fset = updater.set;
 
-        flocksLog('Flocks2 initialization finished');
+        flocksLog(3, 'Flocks2 initialization finished');
 
         return updater;
 
@@ -239,9 +265,9 @@ if (typeof React === 'undefined') {
 
         componentWillMount: function() {
 
-            flocksLog(' - Flocks2 component will mount: ' + this.constructor.displayName);
-            flocksLog(typeof this.props.flocks2context   === 'undefined'? '   - No F2 Context Prop' : '   - F2 Context Prop found');
-            flocksLog(typeof this.context.flocks2context === 'undefined'? '   - No F2 Context'      : '   - F2 Context found');
+            flocksLog(1, ' - Flocks2 component will mount: ' + this.constructor.displayName);
+            flocksLog(3, typeof this.props.flocks2context   === 'undefined'? '   - No F2 Context Prop' : '   - F2 Context Prop found');
+            flocksLog(3, typeof this.context.flocks2context === 'undefined'? '   - No F2 Context'      : '   - F2 Context found');
 
             if (this.props.flocks2context) {
                 this.context.flocks2context = this.props.flocks2context;
@@ -275,7 +301,9 @@ if (typeof React === 'undefined') {
         enforceString         : enforceString,
 /*
         enforceArray          : enforceArray,
-        enforceNonArrayObject : enforceNonArrayObject
+        enforceNonArrayObject : enforceNonArrayObject,
+
+        member                : member
 */
     };
 
