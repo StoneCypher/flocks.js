@@ -25,7 +25,7 @@ This is pre-release software.  This is the right way forwards, but it's only jus
 
 
 
-The hell is this?
+What the hell is this?
 -----------------
 
 So [flux](http://facebook.github.io/flux/) is pretty cool.  But, I wanted something simpler, because I wanted to move faster.  So, I created flocks - a flux alternative.
