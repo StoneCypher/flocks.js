@@ -2,10 +2,17 @@
   "author": "John Haugeland",
   "name": "flocks.js",
   "description": "Simpler state management for React.js",
-  "version": "0.13.2",
+  "version": "0.14.0",
+  "homepage": "http://flocks.rocks/",
   "repository": {
     "url": "https://github.com/StoneCypher/flocks.js.git"
   },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://choosealicense.com/licenses/mit/"
+    }
+  ],
   "keywords": [
     "state",
     "react",
@@ -14,8 +21,49 @@
     "flocks",
     "flocks.js",
     "flock",
-    "StoneCypher"
+    "StoneCypher",
+    "app",
+    "application",
+    "application layer",
+    "om",
+    "cortex",
+    "crap.js"
   ],
+  "npmName": "flocks.js",
+  "npmFileMap": [
+    {
+      "basePath": "/lib/",
+      "files": [
+        "flocks.jsx"
+      ]
+    }
+  ],
+  "author": {
+    "name": "John Haugeland",
+    "email": "stonecypher@gmail.com",
+    "url": "http://fullof.bs/"
+  },
+  "maintainers": [
+    {
+      "name": "John Hauegland",
+      "email": "stonecypher@gmail.com",
+      "url": "http://fullof.bs/"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/StoneCypher/flocks.js"
+    }
+  ],
+  "autoupdate": {
+    "source": "git",
+    "target": "git://github.com/StoneCypher/flocks.js",
+    "basePath": "",
+    "files": [
+      "lib/flocks.jsx"
+    ]
+  },
   "devDependencies": {
     "gulp": "*",
     "gulp-clean": "*",
