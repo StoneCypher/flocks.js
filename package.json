@@ -1,9 +1,9 @@
 {
   "author": "John Haugeland",
   "name": "flocks.js",
-  "filename": "flocks.jsx",
+  "filename": "flocks.js",
   "description": "Simpler state management for React.js",
-  "version": "0.14.2",
+  "version": "0.14.3",
   "homepage": "http://flocks.rocks/",
   "repository": {
     "url": "https://github.com/StoneCypher/flocks.js.git"
@@ -33,9 +33,10 @@
   "npmName": "flocks.js",
   "npmFileMap": [
     {
-      "basePath": "/lib/",
+      "basePath": "/dist/",
       "files": [
-        "flocks.jsx"
+        "flocks.js",
+        "flocks.min.js"
       ]
     }
   ],
@@ -62,7 +63,8 @@
     "target": "git://github.com/StoneCypher/flocks.js",
     "basePath": "",
     "files": [
-      "lib/flocks.jsx"
+      "dist/flocks.js",
+      "dist/flocks.min.js"
     ]
   },
   "devDependencies": {
@@ -80,7 +82,7 @@
   "dependencies": {
     "react": "*"
   },
-  "main": "lib/flocks.jsx",
+  "main": "lib/flocks.js",
   "engines": {
     "node": "*"
   },
