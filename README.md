@@ -41,9 +41,18 @@ You know that whole thing in Flux where you have to create stores and dispatcher
 
 ```javascript
 var Target = document.getElementById('whatever'),
-    Update = Flocks.create({ target: Target, control: YourControl });
+    Config = {
+      target: Target,
+      control: YourControl
+    },
+    Data = {
+      logged_in: true,
+      user_name: "Bob Dobbs",
+      icon: "http://..."
+    },
+    Update = Flocks.create(Config, Data);
 
-Update({ logged_in: true, user_name: "Bob Dobbs", icon: "http://..." });
+Update.set("user_name", "JR \"Bob\" Dobbs");
 ```
 
 Done.
