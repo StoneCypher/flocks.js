@@ -70,15 +70,15 @@
     "gulp-clean": "*",
     "gulp-shell": "*",
     "gulp-sloc": "*",
+    "gulp-strip-react-dom-comment": "*",
     "gulp-yuidoc": "*",
     "jshint": "*",
+    "sc-eslint": "*",
     "vows": "*",
-    "react": "*",
     "jsverify": "*"
   },
   "dependencies": {
-    "sc-eslint": "*",
-    "gulp-strip-react-dom-comment": "*"
+    "react": "*"
   },
   "main": "lib/flocks.jsx",
   "engines": {
