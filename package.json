@@ -3,7 +3,7 @@
   "name": "flocks.js",
   "filename": "flocks.js",
   "description": "Simpler state management for React.js",
-  "version": "0.14.3",
+  "version": "0.14.4",
   "homepage": "http://flocks.rocks/",
   "repository": {
     "url": "https://github.com/StoneCypher/flocks.js.git"
@@ -28,7 +28,8 @@
     "application layer",
     "om",
     "cortex",
-    "crap.js"
+    "crap.js",
+    "react-component"
   ],
   "npmName": "flocks.js",
   "npmFileMap": [
