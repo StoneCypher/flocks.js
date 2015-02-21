@@ -64,7 +64,7 @@ if (typeof React === 'undefined') {
             } else {
                 console.log('Flocks2 [Unknown level] ' + Message.toString());
             }
-        } else if (nextFCtx.flocks_config === undefined) {
+        } else if (isUndefined(nextFCtx.flocks_config)) {
             console.log('Flocks2 pre-config [' + Level.toString() + '] ' + Message.toString());
         } else if (nextFCtx.flocks_config.log_level >= Level) {
             console.log('Flocks2 [' + Level.toString() + '] ' + Message.toString());
@@ -97,9 +97,15 @@ if (typeof React === 'undefined') {
 
 
     function isArray(maybeArray) {
-
         return (Object.prototype.toString.call(maybeArray) === '[object Array]');
+    }
 
+
+
+
+
+    function isUndefined(maybeUndefined) {
+        return (typeof maybeUndefined === 'undefined');
     }
 
 
@@ -273,8 +279,8 @@ if (typeof React === 'undefined') {
         componentWillMount: function() {
 
             flocksLog(1, ' - Flocks2 component will mount: ' + this.constructor.displayName);
-            flocksLog(3, typeof this.props.flocks2context   === 'undefined'? '   - No F2 Context Prop' : '   - F2 Context Prop found');
-            flocksLog(3, typeof this.context.flocks2context === 'undefined'? '   - No F2 Context'      : '   - F2 Context found');
+            flocksLog(3, isUndefined(this.props.flocks2context)   ? '   - No F2 Context Prop' : '   - F2 Context Prop found');
+            flocksLog(3, isUndefined(this.context.flocks2context) ? '   - No F2 Context'      : '   - F2 Context found');
 
             if (this.props.flocks2context) {
                 this.context.flocks2context = this.props.flocks2context;
@@ -298,7 +304,7 @@ if (typeof React === 'undefined') {
 
     function atLeastFlocks(OriginalList) {
 
-        if (typeof OriginalList === 'undefined') {
+        if (isUndefined(OriginalList)) {
             return [ Mixin ];
         }
 
@@ -338,6 +344,7 @@ if (typeof React === 'undefined') {
         clone                 : clone,
 
         isArray               : isArray,
+        isUndefined           : isUndefined,
         isNonArrayObject      : isNonArrayObject,
 
         enforceString         : enforceString,
