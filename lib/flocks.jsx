@@ -96,6 +96,16 @@ if (typeof React === 'undefined') {
 
 
 
+    function enforceNonArrayObject(On, Label) {
+        if (!isNonArrayObject(On)) {
+            throw Label || 'Argument must be a non-array object';
+        }
+    }
+
+
+
+
+
     function isArray(maybeArray) {
         return (Object.prototype.toString.call(maybeArray) === '[object Array]');
     }
@@ -349,9 +359,8 @@ if (typeof React === 'undefined') {
 
         enforceString         : enforceString,
         enforceArray          : enforceArray,
-/*
         enforceNonArrayObject : enforceNonArrayObject,
-*/
+
         atLeastFlocks         : atLeastFlocks
 
     };

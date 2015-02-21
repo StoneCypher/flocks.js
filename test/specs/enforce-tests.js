@@ -91,13 +91,12 @@ vows.describe("Enforcement clauses").addBatch({
             "throws neg for undefined" : undefined,
             "throws neg for functions" : function() { return 2; }
         })
-    }
+    },
 
 
 
 
 
-/* whargarbl
     "enforceNonArrayObject" : {
         "working normally" : posify(flocks.enforceNonArrayObject, {
             "{hello:\"world\"}" : { "hello" : "world" },
@@ -115,6 +114,5 @@ vows.describe("Enforcement clauses").addBatch({
             "throws neg for functions" : function() { return 2; }
         })
     }
-*/
 
 }).export(module);
