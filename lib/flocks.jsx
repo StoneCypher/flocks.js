@@ -334,14 +334,14 @@ if (typeof React === 'undefined') {
         plumbing              : Mixin,
         createClass           : createClass,
 
-        create                : create,
+        mount                 : create,
         clone                 : clone,
 
         isArray               : isArray,
         isNonArrayObject      : isNonArrayObject,
 
         enforceString         : enforceString,
-        enforceArray          : enforceArray
+        enforceArray          : enforceArray,
 /*
         enforceNonArrayObject : enforceNonArrayObject,
 */
