@@ -265,6 +265,18 @@ if (typeof React === 'undefined') {
 
 
 
+    function atLeastFlocks(OriginalList) {
+
+        if (typeof OriginalList === 'undefined') {
+            return 'todo whargarbl';
+        }
+
+    }
+
+
+
+
+
     var Mixin = {
 
         contextTypes      : flocks2_ctxs,
@@ -309,9 +321,9 @@ if (typeof React === 'undefined') {
         enforceArray          : enforceArray
 /*
         enforceNonArrayObject : enforceNonArrayObject,
-
-        member                : member
 */
+        atLeastFlocks         : atLeastFlocks
+
     };
 
 
