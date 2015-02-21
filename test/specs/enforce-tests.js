@@ -5,7 +5,7 @@
 
 var vows   = require("vows"),
     assert = require("assert"),
-    flocks = require("../lib/flocks.jsx");
+    flocks = require("../../lib/flocks.jsx");
 
 
 
@@ -74,7 +74,6 @@ vows.describe("Enforcement clauses").addBatch({
 
 
 
-/* whargarbl
     "enforceArray"          : {
         "working normally" : posify(flocks.enforceArray, {
             "[1,2,3]"         : [1,2,3],
@@ -92,8 +91,8 @@ vows.describe("Enforcement clauses").addBatch({
             "throws neg for undefined" : undefined,
             "throws neg for functions" : function() { return 2; }
         })
-    },
-*/
+    }
+
 
 
 
