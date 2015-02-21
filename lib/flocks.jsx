@@ -59,7 +59,7 @@ if (typeof React === 'undefined') {
     function flocksLog(Level, Message) {
 
         if (typeof Level === 'string') {
-            if (member(Level, ['warn','debug','error','log','info','exception','assert'])) {
+            if (array_member(Level, ['warn','debug','error','log','info','exception','assert'])) {
                 console[Level]('Flocks2 [' + Level + '] ' + Message.toString());
             } else {
                 console.log('Flocks2 [Unknown level] ' + Message.toString());
@@ -166,7 +166,7 @@ if (typeof React === 'undefined') {
 
 
     // ... lol
-    function member(Item, Array) {
+    function array_member(Item, Array) {
         return (!!(~( Array.indexOf(Item, 0) )));
     }
 
@@ -296,22 +296,57 @@ if (typeof React === 'undefined') {
 
 
 
+    function atLeastFlocks(OriginalList) {
+
+        if (typeof OriginalList === 'undefined') {
+            return [ Mixin ];
+        }
+
+        if (isArray(OriginalList)) {
+            if (array_member(Mixin, OriginalList)) {
+                return OriginalList;
+            } else {
+                var NewList = clone(OriginalList);
+                NewList.push(Mixin);
+                return NewList;
+            }
+        }
+
+        throw 'Original mixin list must be an array or undefined!';
+
+    }
+
+
+
+
+
+    function createClass(spec) {
+        spec.mixins = atLeastFlocks(spec.mixins);
+        return React.createClass(spec);
+    }
+
+
+
+
+
     var exports = {
 
         plumbing              : Mixin,
-        create                : create,
+        createClass           : createClass,
+
+        mount                 : create,
         clone                 : clone,
 
         isArray               : isArray,
         isNonArrayObject      : isNonArrayObject,
 
         enforceString         : enforceString,
-        enforceArray          : enforceArray
+        enforceArray          : enforceArray,
 /*
         enforceNonArrayObject : enforceNonArrayObject,
-
-        member                : member
 */
+        atLeastFlocks         : atLeastFlocks
+
     };
 
 
