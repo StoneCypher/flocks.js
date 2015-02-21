@@ -44,8 +44,8 @@ if (typeof React === 'undefined') {
 
         tagtype      = undefined,
 
-        handler      = function() { return true; },
-        finalizer    = function() { return true; },
+        handler      = function(Ignored) { return true; },
+        finalizer    = function()        { return true; },
 
         prevFCtx     = {},
         nextFCtx     = {},
@@ -121,16 +121,16 @@ if (typeof React === 'undefined') {
 
 
 
-    function setByPath(Key, MaybeValue)   { flocksLog(0, '   - Flocks2 setByPath stub'  ); attemptUpdate(); }
-    function setByObject(Key, MaybeValue) { flocksLog(0, '   - Flocks2 setByObject stub'); attemptUpdate(); }
+//  function setByPath(Key, MaybeValue)   { flocksLog(0, '   - Flocks2 setByPath stub'  ); attemptUpdate(); }
+//  function setByObject(Key, MaybeValue) { flocksLog(0, '   - Flocks2 setByObject stub'); attemptUpdate(); }
 
     function set(Key, MaybeValue) {
 
         flocksLog(3, ' - Flocks2 multi-set');
 
         if      (typeof Key === 'string') { setByKey(Key, MaybeValue); }
-        else if (isArray(Key))            { setByPath(Key, MaybeValue); }
-        else if (isNonArrayObject(Key))   { setByObject(Key); }
+//      else if (isArray(Key))            { setByPath(Key, MaybeValue); }
+//      else if (isNonArrayObject(Key))   { setByObject(Key); }
         else                              { throw 'Flocks2 set/1,2 key must be a string or an array'; }
 
     }
@@ -139,7 +139,7 @@ if (typeof React === 'undefined') {
 
 
 
-    function clone(obj, loglabel) {
+    function clone(obj) {
 
         if ((null === obj) || ('object' != typeof obj)) { return obj; }
 
@@ -158,7 +158,7 @@ if (typeof React === 'undefined') {
 
     // ... lol
     function member(Item, Array) {
-        return (!!(~( Array.indexOf(Item) )));
+        return (!!(~( Array.indexOf(Item, 0) )));
     }
 
 
@@ -296,7 +296,7 @@ if (typeof React === 'undefined') {
         isArray               : isArray,
         isNonArrayObject      : isNonArrayObject,
 
-        enforceString         : enforceString,
+        enforceString         : enforceString
 /*
         enforceArray          : enforceArray,
         enforceNonArrayObject : enforceNonArrayObject,
@@ -312,7 +312,7 @@ if (typeof React === 'undefined') {
     if (typeof module !== 'undefined') {
         module.exports = exports;
     } else {
-        window.flocksjs2 = exports;
+        window.flocks = exports;
     }
 
 
