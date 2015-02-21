@@ -88,6 +88,6 @@
     "node": "*"
   },
   "scripts": {
-    "test": "vows test/* --spec"
+    "test": "vows test/specs/* --spec"
   }
 }
