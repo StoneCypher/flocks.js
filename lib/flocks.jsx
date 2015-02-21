@@ -1,3 +1,4 @@
+
 /** @jsx React.DOM */
 /* jshint node: true, browser: true, newcap: false */
 
@@ -139,8 +140,6 @@ if (typeof React === 'undefined') {
 
 
     function clone(obj, loglabel) {
-
-        flocksLog(3, ' + Flocks2 cloning ' + (loglabel? loglabel : JSON.stringify(obj).substring(0,100) ) );
 
         if ((null === obj) || ('object' != typeof obj)) { return obj; }
 
