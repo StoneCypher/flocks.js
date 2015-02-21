@@ -289,7 +289,7 @@ if (typeof React === 'undefined') {
     var exports = {
 
         member                : Mixin,
-        create                : create,
+        mount                 : create,
         clone                 : clone,
 
         isArray               : isArray,
