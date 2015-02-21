@@ -1,47 +1,14 @@
 
+/* jshint node: true */
 /* eslint-env node */
 
 "use strict";
 
-var vows   = require("vows"),
+var th     = require("./_test_helper.js"),
+
+    vows   = require("vows"),
     assert = require("assert"),
     flocks = require("../../lib/flocks.jsx");
-
-
-
-
-
-function negify(func, reqResult, argList) {
-
-    var Res = {};
-
-    Object.keys(argList).map(function (AK) {
-        Res[AK] = function() {
-            assert.throws(function() { func(argList[AK]); }, reqResult);
-        };
-    });
-
-    return Res;
-
-}
-
-
-
-
-
-function posify(func, argList) {
-
-    var Res = {};
-
-    Object.keys(argList).map(function (AK) {
-        Res[AK] = function() {
-            assert.doesNotThrow(function() { func(argList[AK]); }, "whargarbl");
-        };
-    });
-
-    return Res;
-
-}
 
 
 
@@ -50,13 +17,13 @@ function posify(func, argList) {
 vows.describe("Enforcement clauses").addBatch({
 
     "enforceString"         : {
-        "working normally" : posify(flocks.enforceString, {
+        "working normally" : th.posify(flocks.enforceString, {
             "hello world"  : "hello world",
             "empty string" : "",
             "unicode"      : "\u62b5\u5f92"
         }),
 
-        "catching"         : negify(
+        "catching"         : th.negify(
             flocks.enforceString, "Argument must be a string", {
                 "throws neg for booleans"  : true,
                 "throws neg for integers"  : 123,
@@ -75,13 +42,13 @@ vows.describe("Enforcement clauses").addBatch({
 
 
     "enforceArray"          : {
-        "working normally" : posify(flocks.enforceArray, {
+        "working normally" : th.posify(flocks.enforceArray, {
             "[1,2,3]"         : [1,2,3],
             "empty array"     : [],
             "[1,\"2\",false]" : [1,"2",false]
         }),
 
-        "catching"         : negify(flocks.enforceArray, "Argument must be an array", {
+        "catching"         : th.negify(flocks.enforceArray, "Argument must be an array", {
             "throws neg for strings"   : "string",
             "throws neg for booleans"  : true,
             "throws neg for integers"  : 123,
@@ -98,13 +65,13 @@ vows.describe("Enforcement clauses").addBatch({
 
 
     "enforceNonArrayObject" : {
-        "working normally" : posify(flocks.enforceNonArrayObject, {
+        "working normally" : th.posify(flocks.enforceNonArrayObject, {
             "{hello:\"world\"}" : { "hello" : "world" },
             "empty object"      : {},
             "null"              : null
         }),
 
-        "catching"         : negify(flocks.enforceNonArrayObject, "Argument must be a non-array object", {
+        "catching"         : th.negify(flocks.enforceNonArrayObject, "Argument must be a non-array object", {
             "throws neg for strings"   : "string",
             "throws neg for arrays"    : ["a",1],
             "throws neg for booleans"  : true,
