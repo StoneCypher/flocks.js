@@ -8,36 +8,38 @@ var th     = require("./_test_helper.js"),
 
     vows   = require("vows"),
     assert = require("assert"),
+    verify = require("jsverify"),
     flocks = require("../../lib/flocks.jsx");
 
 
 
 
 
-vows.describe("Enforcement clauses").addBatch({
+vows.describe("Type identification clauses").addBatch({
 
-    "isArray" : {
-        "working normally" : th.posify(flocks.enforceString, {
-            "hello world"  : "hello world",
-            "empty string" : "",
-            "unicode"      : "\u62b5\u5f92"
+  'isArray' : {
+
+    'Positive': {
+      'empty'            : function(topic) { assert.equal (flocks.isArray( []              ), true); },
+      'int non-empty'    : function(topic) { assert.equal (flocks.isArray( [1,2]           ), true); },
+      'mixed non-empty'  : function(topic) { assert.equal (flocks.isArray( ['1',2.0,false] ), true); },
+      'nested non-empty' : function(topic) { assert.equal (flocks.isArray( [[],[]]         ), true); },
+
+      '+ property'       : function(topic) { verify.assert(
+        verify.forall(verify.array(), function(mA) {
+          return flocks.isArray(mA);
         })
-/*
-        ,
+      ); }
 
-        "catching"         : th.negify(
-            flocks.enforceString, "Argument must be a string", {
-                "throws neg for booleans"  : true,
-                "throws neg for integers"  : 123,
-                "throws neg for floats"    : 12.3,
-                "throws neg for arrays"    : ["a",1],
-                "throws neg for objects"   : {"a" : 1},
-                "throws neg for null"      : null,
-                "throws neg for undefined" : undefined,
-                "throws neg for functions" : function() { return 2; }
-            }
-        )
-*/
     },
+
+    'Negative': {
+      'object' : function(topic) { assert.equal (flocks.isArray( {a:[]} ), false); },
+      'int'    : function(topic) { assert.equal (flocks.isArray( 1      ), false); },
+      'bool'   : function(topic) { assert.equal (flocks.isArray( false  ), false); },
+      'string' : function(topic) { assert.equal (flocks.isArray( '[]'   ), false); }
+    }
+
+  }
 
 }).export(module);

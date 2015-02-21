@@ -7,7 +7,6 @@
 var th     = require("./_test_helper.js"),
 
     vows   = require("vows"),
-    assert = require("assert"),
     flocks = require("../../lib/flocks.jsx");
 
 

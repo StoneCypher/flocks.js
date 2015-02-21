@@ -24,7 +24,7 @@ gulp.task("docs", ["clean"], function() {
 
 lint.gulpreg(gulp, { "targets" : "gulpfile.js lib/flocks.js lib/flocks.jsx" });
 
-gulp.task("vows", shell.task("vows test/* --spec -s"));
+gulp.task("vows", shell.task("npm test"));
 
 gulp.task("test",   ["vows", "lint"]);
 gulp.task("build",  ["test", "docs"]);
