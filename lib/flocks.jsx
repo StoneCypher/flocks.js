@@ -77,9 +77,18 @@ if (typeof React === 'undefined') {
 
 
     function enforceString(On, Label) {
-        Label = Label || 'Argument must be a string';
         if (typeof On !== 'string') {
-            throw Label;
+            throw Label || 'Argument must be a string';
+        }
+    }
+
+
+
+
+
+    function enforceArray(On, Label) {
+        if (!isArray(On)) {
+            throw Label || 'Argument must be an array';
         }
     }
 
@@ -289,16 +298,16 @@ if (typeof React === 'undefined') {
 
     var exports = {
 
-        member                : Mixin,
+        plumbing              : Mixin,
         create                : create,
         clone                 : clone,
 
         isArray               : isArray,
         isNonArrayObject      : isNonArrayObject,
 
-        enforceString         : enforceString
+        enforceString         : enforceString,
+        enforceArray          : enforceArray
 /*
-        enforceArray          : enforceArray,
         enforceNonArrayObject : enforceNonArrayObject,
 
         member                : member
