@@ -170,6 +170,29 @@ if (typeof React === 'undefined') {
 
 
 
+    function getByPath(Path, Target) {
+
+        if (!(isArray(Path)))  { throw 'path must be an array!'; }
+
+        if (Path.length === 0) {
+            return Target;
+        }
+
+        if (Path.length === 1) {
+            return Target[Path[0]];
+        }
+
+        if (['string','number'].indexOf(typeof Path[0]) !== -1) {
+            var NextPath = Path.splice(1, Number.MAX_VALUE);
+            return getByPath(NextPath, Target[Path[0]]);
+        }
+
+    }
+
+
+
+
+
     function update(SparseObject) {
 
         console.log('update - whargarbl stub');
@@ -284,6 +307,7 @@ if (typeof React === 'undefined') {
 
             updater      = {
                 get      : stub,
+                get_path : getByPath,
                 set      : set,
                 override : stub,
                 clear    : stub,
@@ -315,11 +339,12 @@ if (typeof React === 'undefined') {
         attemptUpdate();
 
         flocksLog(3, 'Flocks2 expose updater');
-        this.fupd    = updater;
-        this.fset    = updater.set;
-        this.flock   = updater.lock;
-        this.funlock = updater.unlock;
-        this.fupdate = updater.update;
+        this.fupd     = updater;
+        this.fset     = updater.set;
+        this.fgetpath = updater.get_path;
+        this.flock    = updater.lock;
+        this.funlock  = updater.unlock;
+        this.fupdate  = updater.update;
 
         flocksLog(3, 'Flocks2 initialization finished');
 
@@ -346,11 +371,13 @@ if (typeof React === 'undefined') {
                 this.context.flocks2context = this.props.flocks2context;
             }
 
-            this.fupdate = function(Obj) { update(Obj); };
-            this.fset    = function(K,V) { set(K,V); };
-            this.flock   = function()    { lock(); };
-            this.funlock = function()    { unlock(); };
-            this.fctx    = this.context.flocks2context;
+            this.fupdate  = function(Obj) { return update(Obj); };
+            this.fset     = function(K,V) { return set(K,V); };
+            this.fgetpath = function(P,T) { return getByPath(P,T); };
+            this.flock    = function()    { return lock(); };
+            this.funlock  = function()    { return unlock(); };
+
+            this.fctx     = this.context.flocks2context;
 
         },
 
