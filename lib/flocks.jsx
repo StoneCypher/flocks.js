@@ -7,6 +7,7 @@
  *
  * @module Flocks
  * @main   Flocks
+ * @class  Flocks
  */
 
 
@@ -42,7 +43,7 @@ if (typeof React === 'undefined') {
         updateBlocks = 0,
         dirty        = false,
 
-        tagtype      = undefined,
+        tagtype,
 
         handler      = function(Ignored) { return true; },
         finalizer    = function()        { return true; },
@@ -59,13 +60,16 @@ if (typeof React === 'undefined') {
     function flocksLog(Level, Message) {
 
         if (typeof Level === 'string') {
+
             if (array_member(Level, ['warn','debug','error','log','info','exception','assert'])) {
                 console[Level]('Flocks2 [' + Level + '] ' + Message.toString());
             } else {
                 console.log('Flocks2 [Unknown level] ' + Message.toString());
             }
+
         } else if (isUndefined(nextFCtx.flocks_config)) {
             console.log('Flocks2 pre-config [' + Level.toString() + '] ' + Message.toString());
+
         } else if (nextFCtx.flocks_config.log_level >= Level) {
             console.log('Flocks2 [' + Level.toString() + '] ' + Message.toString());
         }
@@ -136,27 +140,61 @@ if (typeof React === 'undefined') {
 
 
     function setByKey(Key, MaybeValue) {
+
         enforceString(Key, "Flocks2 set/2 must take a string for its key");
         nextFCtx[Key] = MaybeValue;
         flocksLog(1, "   - Flocks2 setByKey \"" + Key + "\"");
         attemptUpdate();
+
     }
 
 
 
 
 
-//  function setByPath(Key, MaybeValue)   { flocksLog(0, '   - Flocks2 setByPath stub'  ); attemptUpdate(); }
-//  function setByObject(Key, MaybeValue) { flocksLog(0, '   - Flocks2 setByObject stub'); attemptUpdate(); }
+//  function setByPath(Key, MaybeValue)   { flocksLog(0, '   - Flocks2 setByPath stub'  ); attemptUpdate(); }     // whargarbl todo
+//  function setByObject(Key, MaybeValue) { flocksLog(0, '   - Flocks2 setByObject stub'); attemptUpdate(); }     // whargarbl todo
 
     function set(Key, MaybeValue) {
 
         flocksLog(3, ' - Flocks2 multi-set');
 
         if      (typeof Key === 'string') { setByKey(Key, MaybeValue); }
-//      else if (isArray(Key))            { setByPath(Key, MaybeValue); }
-//      else if (isNonArrayObject(Key))   { setByObject(Key); }
+//      else if (isArray(Key))            { setByPath(Key, MaybeValue); }    // whargarbl todo
+//      else if (isNonArrayObject(Key))   { setByObject(Key); }              // whargarbl todo
         else                              { throw 'Flocks2 set/1,2 key must be a string or an array'; }
+
+    }
+
+
+
+
+
+    function update(SparseObject) {
+
+        console.log('update - whargarbl stub');
+        enforceNonArrayObject(SparseObject, 'Flocks2 update/1 must take a plain object');
+
+    }
+
+
+
+
+
+    function lock() {
+        ++updateBlocks;
+    }
+
+
+
+
+
+    function unlock() {
+
+        if (updateBlocks <= 0) { throw 'unlock()ed with no lock!'; }
+
+        --updateBlocks;
+        attemptUpdate();
 
     }
 
@@ -243,7 +281,16 @@ if (typeof React === 'undefined') {
 
             target       = FlocksConfig.target || document.body,
             stub         = function() { window.alert('whargarbl stub'); attemptUpdate(); },
-            updater      = { get: stub, set: set, override: stub, clear: stub, update: stub, lock: stub, unlock: stub };
+
+            updater      = {
+                get      : stub,
+                set      : set,
+                override : stub,
+                clear    : stub,
+                update   : update,
+                lock     : lock,
+                unlock   : unlock
+            };
 
         FlocksConfig.log_level   = FlocksConfig.log_level || -1;
         tagtype                  = FlocksConfig.control;
@@ -268,8 +315,11 @@ if (typeof React === 'undefined') {
         attemptUpdate();
 
         flocksLog(3, 'Flocks2 expose updater');
-        this.fupd = updater;
-        this.fset = updater.set;
+        this.fupd    = updater;
+        this.fset    = updater.set;
+        this.flock   = updater.lock;
+        this.funlock = updater.unlock;
+        this.fupdate = updater.update;
 
         flocksLog(3, 'Flocks2 initialization finished');
 
@@ -296,8 +346,11 @@ if (typeof React === 'undefined') {
                 this.context.flocks2context = this.props.flocks2context;
             }
 
-            this.fset = function(X,Y) { set(X,Y); };
-            this.fctx = this.context.flocks2context;
+            this.fupdate = function(Obj) { update(Obj); };
+            this.fset    = function(K,V) { set(K,V); };
+            this.flock   = function()    { lock(); };
+            this.funlock = function()    { unlock(); };
+            this.fctx    = this.context.flocks2context;
 
         },
 
