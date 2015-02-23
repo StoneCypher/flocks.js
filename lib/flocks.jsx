@@ -170,6 +170,36 @@ if (typeof React === 'undefined') {
 
 
 
+    function setByPath(Path, Target, NewVal) {
+
+        var OldVal;  // it gets hoisted anyway, so it triggers eslint warnings when inlined
+                     // might as well be explicit about it
+
+        if (!(isArray(Path)))  { throw 'Path must be an array!'; }
+
+        if (Path.length === 0) {
+            OldVal = Target;
+            Target = NewVal;
+            return OldVal;
+        }
+
+        if (Path.length === 1) {
+            OldVal = Target[Path[0]];
+            Target[Path[0]] = NewVal;
+            return OldVal;
+        }
+
+        if (['string','number'].indexOf(typeof Path[0]) !== -1) {
+            var NextPath = Path.splice(1, Number.MAX_VALUE);
+            return path_set(NextPath, Target[Path[0]], NewVal);
+        }
+
+    }
+
+
+
+
+
     function getByPath(Path, Target) {
 
         if (!(isArray(Path)))  { throw 'path must be an array!'; }
@@ -307,10 +337,12 @@ if (typeof React === 'undefined') {
 
             updater      = {
                 get      : stub,
-                get_path : getByPath,
-                set      : set,
                 override : stub,
                 clear    : stub,
+
+                get_path : getByPath,
+                set      : set,
+                set_path : setByPath,
                 update   : update,
                 lock     : lock,
                 unlock   : unlock
@@ -372,8 +404,9 @@ if (typeof React === 'undefined') {
             }
 
             this.fupdate  = function(Obj) { return update(Obj); };
-            this.fset     = function(K,V) { return set(K,V); };
             this.fgetpath = function(P,T) { return getByPath(P,T); };
+            this.fset     = function(K,V) { return set(K,V); };
+            this.fsetpath = function(P,V) { return set(K,V); };
             this.flock    = function()    { return lock(); };
             this.funlock  = function()    { return unlock(); };
 
@@ -426,6 +459,8 @@ if (typeof React === 'undefined') {
 
 
     var exports = {
+
+        version               : '0.15.4',
 
         plumbing              : Mixin,
         createClass           : createClass,
