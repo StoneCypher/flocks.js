@@ -152,7 +152,6 @@ if (typeof React === 'undefined') {
 
 
 
-//  function setByPath(Key, MaybeValue)   { flocksLog(0, '   - Flocks2 setByPath stub'  ); attemptUpdate(); }     // whargarbl todo
 //  function setByObject(Key, MaybeValue) { flocksLog(0, '   - Flocks2 setByObject stub'); attemptUpdate(); }     // whargarbl todo
 
     function set(Key, MaybeValue) {
@@ -160,7 +159,7 @@ if (typeof React === 'undefined') {
         flocksLog(3, ' - Flocks2 multi-set');
 
         if      (typeof Key === 'string') { setByKey(Key, MaybeValue); }
-//      else if (isArray(Key))            { setByPath(Key, MaybeValue); }    // whargarbl todo
+        else if (isArray(Key))            { setByPath(Key, MaybeValue); }
 //      else if (isNonArrayObject(Key))   { setByObject(Key); }              // whargarbl todo
         else                              { throw 'Flocks2 set/1,2 key must be a string or an array'; }
 
