@@ -224,6 +224,7 @@ if (typeof React === 'undefined') {
 
     function update(SparseObject) {
 
+        // whargarbl todo
         console.log('update - whargarbl stub');
         enforceNonArrayObject(SparseObject, 'Flocks2 update/1 must take a plain object');
 
@@ -335,9 +336,9 @@ if (typeof React === 'undefined') {
             stub         = function() { window.alert('whargarbl stub'); attemptUpdate(); },
 
             updater      = {
-                get      : stub,
-                override : stub,
-                clear    : stub,
+                get      : stub,          // whargarbl todo
+                override : stub,          // whargarbl todo
+                clear    : stub,          // whargarbl todo
 
                 get_path : getByPath,
                 set      : set,
