@@ -22,7 +22,7 @@ gulp.task("docs", ["clean"], function() {
     .pipe(gulp.dest("./doc"));
 });
 
-lint.gulpreg(gulp, { "targets" : "gulpfile.js lib/flocks.js lib/flocks.jsx" });
+lint.gulpreg(gulp, { "targets" : "gulpfile.js lib/flocks.jsx dist/flocks.js" });
 
 gulp.task("vows", shell.task("npm test"));
 

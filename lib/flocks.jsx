@@ -17,8 +17,8 @@
 // if it's in a <script> it's defined already
 // otherwise assume commonjs
 
-if (typeof React === 'undefined') {
-    var React = require('react');
+if (typeof React === "undefined") {
+    var React = require("react");
 }
 
 
@@ -33,7 +33,7 @@ if (typeof React === 'undefined') {
 
 
 
-    'use strict';
+    "use strict";
 
 
 
@@ -59,19 +59,19 @@ if (typeof React === 'undefined') {
 
     function flocksLog(Level, Message) {
 
-        if (typeof Level === 'string') {
+        if (typeof Level === "string") {
 
-            if (array_member(Level, ['warn','debug','error','log','info','exception','assert'])) {
-                console[Level]('Flocks2 [' + Level + '] ' + Message.toString());
+            if (array_member(Level, ["warn","debug","error","log","info","exception","assert"])) {
+                console[Level]("Flocks2 [" + Level + "] " + Message.toString());
             } else {
-                console.log('Flocks2 [Unknown level] ' + Message.toString());
+                console.log("Flocks2 [Unknown level] " + Message.toString());
             }
 
         } else if (isUndefined(nextFCtx.flocks_config)) {
-            console.log('Flocks2 pre-config [' + Level.toString() + '] ' + Message.toString());
+            console.log("Flocks2 pre-config [" + Level.toString() + "] " + Message.toString());
 
         } else if (nextFCtx.flocks_config.log_level >= Level) {
-            console.log('Flocks2 [' + Level.toString() + '] ' + Message.toString());
+            console.log("Flocks2 [" + Level.toString() + "] " + Message.toString());
         }
 
     }
@@ -81,8 +81,8 @@ if (typeof React === 'undefined') {
 
 
     function enforceString(On, Label) {
-        if (typeof On !== 'string') {
-            throw Label || 'Argument must be a string';
+        if (typeof On !== "string") {
+            throw Label || "Argument must be a string";
         }
     }
 
@@ -92,7 +92,7 @@ if (typeof React === 'undefined') {
 
     function enforceArray(On, Label) {
         if (!isArray(On)) {
-            throw Label || 'Argument must be an array';
+            throw Label || "Argument must be an array";
         }
     }
 
@@ -102,7 +102,7 @@ if (typeof React === 'undefined') {
 
     function enforceNonArrayObject(On, Label) {
         if (!isNonArrayObject(On)) {
-            throw Label || 'Argument must be a non-array object';
+            throw Label || "Argument must be a non-array object";
         }
     }
 
@@ -111,7 +111,7 @@ if (typeof React === 'undefined') {
 
 
     function isArray(maybeArray) {
-        return (Object.prototype.toString.call(maybeArray) === '[object Array]');
+        return (Object.prototype.toString.call(maybeArray) === "[object Array]");
     }
 
 
@@ -119,7 +119,7 @@ if (typeof React === 'undefined') {
 
 
     function isUndefined(maybeUndefined) {
-        return (typeof maybeUndefined === 'undefined');
+        return (typeof maybeUndefined === "undefined");
     }
 
 
@@ -128,8 +128,8 @@ if (typeof React === 'undefined') {
 
     function isNonArrayObject(maybeArray) {
 
-        if (typeof maybeArray !== 'object')                                  { return false; }
-        if (Object.prototype.toString.call(maybeArray) === '[object Array]') { return false; }
+        if (typeof maybeArray !== "object")                                  { return false; }
+        if (Object.prototype.toString.call(maybeArray) === "[object Array]") { return false; }
 
         return true;
 
@@ -152,16 +152,16 @@ if (typeof React === 'undefined') {
 
 
 
-//  function setByObject(Key, MaybeValue) { flocksLog(0, '   - Flocks2 setByObject stub'); attemptUpdate(); }     // whargarbl todo
+//  function setByObject(Key, MaybeValue) { flocksLog(0, "   - Flocks2 setByObject stub"); attemptUpdate(); }     // whargarbl todo
 
     function set(Key, MaybeValue) {
 
-        flocksLog(3, ' - Flocks2 multi-set');
+        flocksLog(3, " - Flocks2 multi-set");
 
-        if      (typeof Key === 'string') { setByKey(Key, MaybeValue); }
+        if      (typeof Key === "string") { setByKey(Key, MaybeValue); }
         else if (isArray(Key))            { setByPath(Key, MaybeValue); }
 //      else if (isNonArrayObject(Key))   { setByObject(Key); }              // whargarbl todo
-        else                              { throw 'Flocks2 set/1,2 key must be a string or an array'; }
+        else                              { throw "Flocks2 set/1,2 key must be a string or an array"; }
 
     }
 
@@ -174,7 +174,7 @@ if (typeof React === 'undefined') {
         var OldVal;  // it gets hoisted anyway, so it triggers eslint warnings when inlined
                      // might as well be explicit about it
 
-        if (!(isArray(Path)))  { throw 'Path must be an array!'; }
+        if (!(isArray(Path)))  { throw "Path must be an array!"; }
 
         if (Path.length === 0) {
             OldVal = Target;
@@ -188,7 +188,7 @@ if (typeof React === 'undefined') {
             return OldVal;
         }
 
-        if (['string','number'].indexOf(typeof Path[0]) !== -1) {
+        if (["string","number"].indexOf(typeof Path[0]) !== -1) {
             var NextPath = Path.splice(1, Number.MAX_VALUE);
             return path_set(NextPath, Target[Path[0]], NewVal);
         }
@@ -201,7 +201,7 @@ if (typeof React === 'undefined') {
 
     function getByPath(Path, Target) {
 
-        if (!(isArray(Path)))  { throw 'path must be an array!'; }
+        if (!(isArray(Path)))  { throw "path must be an array!"; }
 
         if (Path.length === 0) {
             return Target;
@@ -211,7 +211,7 @@ if (typeof React === 'undefined') {
             return Target[Path[0]];
         }
 
-        if (['string','number'].indexOf(typeof Path[0]) !== -1) {
+        if (["string","number"].indexOf(typeof Path[0]) !== -1) {
             var NextPath = Path.splice(1, Number.MAX_VALUE);
             return getByPath(NextPath, Target[Path[0]]);
         }
@@ -225,8 +225,8 @@ if (typeof React === 'undefined') {
     function update(SparseObject) {
 
         // whargarbl todo
-        console.log('update - whargarbl stub');
-        enforceNonArrayObject(SparseObject, 'Flocks2 update/1 must take a plain object');
+        console.log("update - whargarbl stub");
+        enforceNonArrayObject(SparseObject, "Flocks2 update/1 must take a plain object");
 
     }
 
@@ -244,7 +244,7 @@ if (typeof React === 'undefined') {
 
     function unlock() {
 
-        if (updateBlocks <= 0) { throw 'unlock()ed with no lock!'; }
+        if (updateBlocks <= 0) { throw "unlock()ed with no lock!"; }
 
         --updateBlocks;
         attemptUpdate();
@@ -257,7 +257,7 @@ if (typeof React === 'undefined') {
 
     function clone(obj) {
 
-        if ((null === obj) || ('object' != typeof obj)) { return obj; }
+        if ((null === obj) || ("object" != typeof obj)) { return obj; }
 
         var copy = obj.constructor();
         for (var attr in obj) {
@@ -283,29 +283,29 @@ if (typeof React === 'undefined') {
 
     function attemptUpdate() {
 
-        flocksLog(3, ' - Flocks2 attempting update');
+        flocksLog(3, " - Flocks2 attempting update");
         dirty = true;
 
         if (!(initialized)) {
-            flocksLog(1, ' x Flocks2 skipped update: root is not initialized');
+            flocksLog(1, " x Flocks2 skipped update: root is not initialized");
             return null;
         }
 
         if (updateBlocks) {
-            flocksLog(1, ' x Flocks2 skipped update: lock count updateBlocks is non-zero');
+            flocksLog(1, " x Flocks2 skipped update: lock count updateBlocks is non-zero");
             return null;
         }
 
 /* whargarbl see issue #9 https://github.com/StoneCypher/flocks.js/issues/9
 
         if (deepCompare(nextFCtx, prevFCtx)) {
-            flocksLog(2, ' x Flocks2 skipped update: no update to state');
+            flocksLog(2, " x Flocks2 skipped update: no update to state");
             return true;
         }
 */
 
         if (!(handler(nextFCtx))) {
-            flocksLog(0, '   ! Flocks2 rolling back update: handler rejected propset');
+            flocksLog(0, "   ! Flocks2 rolling back update: handler rejected propset");
             nextFCtx = prevFCtx;
             dirty    = false;
             return null;
@@ -313,11 +313,11 @@ if (typeof React === 'undefined') {
 
         prevFCtx = nextFCtx;
 
-        flocksLog(3, '   - Flocks2 update passed');
+        flocksLog(3, "   - Flocks2 update passed");
         React.render( React.createFactory(tagtype)( { flocks2context: nextFCtx } ), document.body );
         dirty = false;
 
-        flocksLog(3, '   - Flocks2 update complete; finalizing');
+        flocksLog(3, "   - Flocks2 update complete; finalizing");
         finalizer();
         return true;
 
@@ -333,7 +333,7 @@ if (typeof React === 'undefined') {
             FlocksData   = iFlocksData   || {},
 
             target       = FlocksConfig.target || document.body,
-            stub         = function() { window.alert('whargarbl stub'); attemptUpdate(); },
+            stub         = function() { window.alert("whargarbl stub"); attemptUpdate(); },
 
             updater      = {
                 get      : stub,          // whargarbl todo
@@ -353,24 +353,24 @@ if (typeof React === 'undefined') {
         FlocksData.flocks_config = FlocksConfig;
         nextFCtx                 = FlocksData;
 
-        flocksLog(1, 'Flocks2 root creation begins');
+        flocksLog(1, "Flocks2 root creation begins");
 
-        if (!(tagtype))             { throw 'Flocks2 fatal error: must provide a control in create/2 FlocksConfig';      }
-        if (FlocksConfig.handler)   { handler   = FlocksConfig.handler;   flocksLog(3, ' - Flocks2 handler assigned'  ); }
-        if (FlocksConfig.finalizer) { finalizer = FlocksConfig.finalizer; flocksLog(3, ' - Flocks2 finalizer assigned'); }
+        if (!(tagtype))             { throw "Flocks2 fatal error: must provide a control in create/2 FlocksConfig";      }
+        if (FlocksConfig.handler)   { handler   = FlocksConfig.handler;   flocksLog(3, " - Flocks2 handler assigned"  ); }
+        if (FlocksConfig.finalizer) { finalizer = FlocksConfig.finalizer; flocksLog(3, " - Flocks2 finalizer assigned"); }
 
         if (FlocksConfig.preventAutoContext) {
-            flocksLog(2, ' - Flocks2 skipping auto-context');
+            flocksLog(2, " - Flocks2 skipping auto-context");
         } else {
-            flocksLog(2, ' - Flocks2 engaging auto-context');
+            flocksLog(2, " - Flocks2 engaging auto-context");
             this.fctx = clone(nextFCtx);
         }
 
-        flocksLog(3, 'Flocks2 creation finished; initializing');
+        flocksLog(3, "Flocks2 creation finished; initializing");
         initialized = true;
         attemptUpdate();
 
-        flocksLog(3, 'Flocks2 expose updater');
+        flocksLog(3, "Flocks2 expose updater");
         this.fupd     = updater;
         this.fset     = updater.set;
         this.fgetpath = updater.get_path;
@@ -378,7 +378,7 @@ if (typeof React === 'undefined') {
         this.funlock  = updater.unlock;
         this.fupdate  = updater.update;
 
-        flocksLog(3, 'Flocks2 initialization finished');
+        flocksLog(3, "Flocks2 initialization finished");
 
         return updater;
 
@@ -395,9 +395,9 @@ if (typeof React === 'undefined') {
 
         componentWillMount: function() {
 
-            flocksLog(1, ' - Flocks2 component will mount: ' + this.constructor.displayName);
-            flocksLog(3, isUndefined(this.props.flocks2context)   ? '   - No F2 Context Prop' : '   - F2 Context Prop found');
-            flocksLog(3, isUndefined(this.context.flocks2context) ? '   - No F2 Context'      : '   - F2 Context found');
+            flocksLog(1, " - Flocks2 component will mount: " + this.constructor.displayName);
+            flocksLog(3, isUndefined(this.props.flocks2context)   ? "   - No F2 Context Prop" : "   - F2 Context Prop found");
+            flocksLog(3, isUndefined(this.context.flocks2context) ? "   - No F2 Context"      : "   - F2 Context found");
 
             if (this.props.flocks2context) {
                 this.context.flocks2context = this.props.flocks2context;
@@ -441,7 +441,7 @@ if (typeof React === 'undefined') {
             }
         }
 
-        throw 'Original mixin list must be an array or undefined!';
+        throw "Original mixin list must be an array or undefined!";
 
     }
 
@@ -460,23 +460,23 @@ if (typeof React === 'undefined') {
 
     var exports = {
 
-        version               : '0.15.4',
+        "version"               : "0.15.4",
 
-        plumbing              : Mixin,
-        createClass           : createClass,
+        "plumbing"              : Mixin,
+        "createClass"           : createClass,
 
-        mount                 : create,
-        clone                 : clone,
+        "mount"                 : create,
+        "clone"                 : clone,
 
-        isArray               : isArray,
-        isUndefined           : isUndefined,
-        isNonArrayObject      : isNonArrayObject,
+        "isArray"               : isArray,
+        "isUndefined"           : isUndefined,
+        "isNonArrayObject"      : isNonArrayObject,
 
-        enforceString         : enforceString,
-        enforceArray          : enforceArray,
-        enforceNonArrayObject : enforceNonArrayObject,
+        "enforceString"         : enforceString,
+        "enforceArray"          : enforceArray,
+        "enforceNonArrayObject" : enforceNonArrayObject,
 
-        atLeastFlocks         : atLeastFlocks
+        "atLeastFlocks"         : atLeastFlocks
 
     };
 
@@ -484,7 +484,7 @@ if (typeof React === 'undefined') {
 
 
 
-    if (typeof module !== 'undefined') {
+    if (typeof module !== "undefined") {
         module.exports = exports;
     } else {
         window.flocks = exports;
