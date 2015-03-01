@@ -151,7 +151,7 @@ gulp.task("publish", ["default", "tag", "push"], function() {
 
 
 
-gulp.task("add", function() {
+gulp.task("add", ["default"], function() {
 
   return gulp.src([
       // can't just glob exclude because of node's broken depth nonsense
@@ -175,14 +175,14 @@ gulp.task("add", function() {
 
 
 
-gulp.task("tag", ["default"], function() {
+gulp.task("tag", ["default", "add"], function() {
 
   var version = flocks.version,
       message = argv.m;
 
-  git.commit("Version " + version + ": " + message);
-  git.add(gulp.src);
-  git.tag(version, version + ": " + message, function(error) { if (error) { throw error; } });
+  return gulp.src('./git-test/*')
+    .pipe(git.commit("Version " + version + ": " + message))
+    .pipe(git.tag(version, version + ": " + message, function(error) { if (error) { throw error; } }));
 
 });
 
@@ -192,6 +192,6 @@ gulp.task("tag", ["default"], function() {
 
 gulp.task("push", ["tag"], function() {
 
-  git.push("origin", "master", {"args": "--tags"}, function(error) { if (error) { throw error; } });
+  git.push("origin", "master", {"args" : "--tags"}, function(error) { if (error) { throw error; } });
 
 });
