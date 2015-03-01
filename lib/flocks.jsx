@@ -514,7 +514,7 @@ if (typeof React === "undefined") {
 
     exports = {
 
-        "version"               : "0.16.0",
+        "version"               : "0.16.1",
 
         "plumbing"              : Mixin,
         "createClass"           : createClass,

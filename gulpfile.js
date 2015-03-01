@@ -32,7 +32,7 @@ var gulp            = require("gulp"),
 
 
 gulp.task("clean", function() {
-  return gulp.src(["./doc", "./dist"], {"read" : false}).pipe(clean());
+  return gulp.src(["./doc", "./dist", "./reports"], {"read" : false}).pipe(clean());
 });
 
 
@@ -72,10 +72,12 @@ gulp.task("minify", ["clean","transpile"], function() {
 
 
 gulp.task("transpile", ["clean"], function() {
+
   return gulp.src("lib/flocks.jsx")
     .pipe(jsx())
     .pipe(rename("flocks.js"))
     .pipe(gulp.dest("dist"));
+
 });
 
 
@@ -84,13 +86,13 @@ gulp.task("transpile", ["clean"], function() {
 
 gulp.task("vows", shell.task("npm test"));
 
-gulp.task("test", ["minify", "vows", "lint"]);
+gulp.task("test", ["build", "vows", "lint"]);
 
 
 
 
 
-gulp.task("build",  ["test", "docs"]);
+gulp.task("build",  ["minify"]);
 
 
 
@@ -110,12 +112,21 @@ gulp.task("bump", function() {
 
 
 gulp.task("sloc", ["build"], function() {
-  gulp.src(["gulpfile.js", "lib/*.js", "lib/*.jsx", "test/*.js"])
+
+  gulp.src(["gulpfile.js", "bower.json", "package.json", "lib/flocks.jsx", "test/specs/*.js"])
     .pipe(sloc({"tolerant" : true}));
+
+  gulp.src(["gulpfile.js", "bower.json", "package.json", "lib/flocks.jsx", "test/specs/*.js"])
+    .pipe(sloc({
+      "tolerant"   : true,
+      "reportType" : "json"
+    }))
+    .pipe(gulp.dest("./reports"));
+
 });
 
 
 
 
 
-gulp.task("default", ["test", "sloc"]);
+gulp.task("default", ["test", "docs", "sloc"]);
