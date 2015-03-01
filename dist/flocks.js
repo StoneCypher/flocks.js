@@ -1,3 +1,4 @@
+
 /** @jsx React.DOM */
 /* jshint node: true, browser: true, newcap: false */
 /* eslint-env node,browser */
@@ -470,7 +471,7 @@ if (typeof React === "undefined") {
 
     var exports = {
 
-        "version"               : "0.15.5",
+        "version"               : "0.15.7",
 
         "plumbing"              : Mixin,
         "createClass"           : createClass,
