@@ -25,7 +25,8 @@ var gulp            = require("gulp"),
     closureCompiler = require("gulp-closure-compiler"),
     sloc            = require("gulp-sloc"),
     rename          = require("gulp-rename"),
-    flocks          = require("./lib/flocks.jsx");
+    flocks          = require("./lib/flocks.jsx"),
+    argv            = require("yargs").argv;
 
 
 
@@ -39,7 +40,7 @@ gulp.task("clean", function() {
 
 
 
-gulp.task("docs", ["clean"], function() {
+gulp.task("docs", ["clean", "bump"], function() {
   gulp.src(["./lib/*.js", "./lib/*.jsx"])
     .pipe(stripDomComment())
     .pipe(yuidoc()
@@ -111,6 +112,7 @@ gulp.task("bump", function() {
 
 
 
+
 gulp.task("sloc", ["build"], function() {
 
   gulp.src(["gulpfile.js", "bower.json", "package.json", "lib/flocks.jsx", "test/specs/*.js"])
@@ -130,3 +132,39 @@ gulp.task("sloc", ["build"], function() {
 
 
 gulp.task("default", ["test", "docs", "sloc"]);
+
+
+
+
+
+gulp.task("publish", ["default", "tag", "push"], function() {
+
+  var version = flocks.version,
+      message = "message";
+
+  console.log("should publish -a " + version + " -m \"" + message + "\" here");
+
+});
+
+
+
+
+
+gulp.task("tag", ["default"], function() {
+
+  var version = flocks.version,
+      message = argv.m;
+
+  console.log("git tag -a " + version + " -m \"Version " + version + ": " + message + "\"");
+
+});
+
+
+
+
+
+gulp.task("push", ["tag"], function() {
+
+  console.log("should push here");
+
+});

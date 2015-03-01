@@ -82,7 +82,8 @@
     "jsverify": "*",
     "node-jsx": "*",
     "sc-eslint": "*",
-    "vows": "*"
+    "vows": "*",
+    "yargs": "*"
   },
   "dependencies": {
     "react": "*"
