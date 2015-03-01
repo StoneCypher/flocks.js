@@ -155,6 +155,7 @@ gulp.task("tag", ["default"], function() {
   var version = flocks.version,
       message = argv.m;
 
+  shell("git add . -A && git commit -m \"Version " + version + ": " + message + "\"");
   shell("git tag -a " + version + " -m \"Version " + version + ": " + message + "\"");
 
 });
