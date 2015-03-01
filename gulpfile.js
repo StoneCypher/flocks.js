@@ -79,7 +79,7 @@ gulp.task("transpile", ["clean"], function() {
 
 gulp.task("vows", shell.task("npm test"));
 
-gulp.task("test",   ["transpile", "vows", "lint"]);
+gulp.task("test", ["minify", "vows", "lint"]);
 
 
 
