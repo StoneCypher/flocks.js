@@ -1,5 +1,6 @@
 
 /* jshint node: true */
+/* eslint vars-on-top:0 */
 /* eslint-env node, browser */
 
 "use strict";
@@ -7,6 +8,11 @@
 
 
 
+
+require("node-jsx").install({
+  "extension" : ".jsx",
+  "harmony"   : true
+});
 
 var gulp            = require("gulp"),
     bump            = require("gulp-bump"),
@@ -19,7 +25,6 @@ var gulp            = require("gulp"),
     closureCompiler = require("gulp-closure-compiler"),
     sloc            = require("gulp-sloc"),
     rename          = require("gulp-rename"),
-    nodejsx         = require("node-jsx").install({"extension" : ".jsx", "harmony" : true}),
     flocks          = require("./lib/flocks.jsx");
 
 
@@ -56,10 +61,10 @@ lint.gulpreg(gulp, {
 gulp.task("minify", ["clean","transpile"], function() {
   return gulp.src("dist/flocks.js")
     .pipe(closureCompiler({
-      compilerPath : 'bower_components/closure-compiler/compiler.jar',
-      fileName     : './dist/flocks.min.js'
+      "compilerPath" : "bower_components/closure-compiler/compiler.jar",
+      "fileName"     : "./dist/flocks.min.js"
     }))
-    .pipe(gulp.dest('.'));
+    .pipe(gulp.dest("."));
 });
 
 
@@ -97,7 +102,7 @@ gulp.task("bump", function() {
     .pipe(bump({
       "version" : flocks.version
     }))
-    .pipe(gulp.dest('./'));
+    .pipe(gulp.dest("./"));
 
 });
 

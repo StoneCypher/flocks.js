@@ -1,6 +1,7 @@
 
 /** @jsx React.DOM */
 /* jshint node: true, browser: true, newcap: false */
+/* eslint max-statements: 0, no-else-return: 0, brace-style: 0 */
 /* eslint-env node,browser */
 
 /**
@@ -18,9 +19,11 @@
 // if it's in a <script> it's defined already
 // otherwise assume commonjs
 
+/* eslint-disable no-use-before-define, vars-on-top */
 if (typeof React === "undefined") {
     var React = require("react");
 }
+/* eslint-enable no-use-before-define, vars-on-top */
 
 
 
@@ -40,19 +43,34 @@ if (typeof React === "undefined") {
 
 
 
-    var initialized  = false,
+    var Mixin,
+        exports,
+
+        initialized  = false,
         updateBlocks = 0,
-        dirty        = false,
 
         tagtype,
 
+        /* eslint-disable no-unused-vars */
+        dirty        = false,
         handler      = function(Ignored) { return true; },
-        finalizer    = function()        { return true; },
+        /* eslint-ensable no-unused-vars */
+
+        finalizer    = function() { return true; },
 
         prevFCtx     = {},
         nextFCtx     = {},
 
-        flocks2_ctxs = { flocks2context: React.PropTypes.object };
+        flocks2Ctxs  = { "flocks2context" : React.PropTypes.object };
+
+
+
+
+
+    // ... lol
+    function arrayMember(Item, Array) {
+        return (!!(~( Array.indexOf(Item, 0) )));
+    }
 
 
 
@@ -91,18 +109,64 @@ if (typeof React === "undefined") {
 
         if (typeof Level === "string") {
 
-            if (array_member(Level, ["warn","debug","error","log","info","exception","assert"])) {
+            if (arrayMember(Level, ["warn","debug","error","log","info","exception","assert"])) {
                 console[Level]("Flocks2 [" + Level + "] " + Message.toString());
             } else {
                 console.log("Flocks2 [Unknown level] " + Message.toString());
             }
 
-        } else if (isUndefined(nextFCtx.flocks_config)) {
+        } else if (isUndefined(nextFCtx.flocks2Config)) {
             console.log("Flocks2 pre-config [" + Level.toString() + "] " + Message.toString());
 
-        } else if (nextFCtx.flocks_config.log_level >= Level) {
+        } else if (nextFCtx.flocks2Config.log_level >= Level) {
             console.log("Flocks2 [" + Level.toString() + "] " + Message.toString());
         }
+
+    }
+
+
+
+
+
+    function attemptUpdate() {
+
+        flocksLog(3, " - Flocks2 attempting update");
+        dirty = true;
+
+        if (!(initialized)) {
+            flocksLog(1, " x Flocks2 skipped update: root is not initialized");
+            return null;
+        }
+
+        if (updateBlocks) {
+            flocksLog(1, " x Flocks2 skipped update: lock count updateBlocks is non-zero");
+            return null;
+        }
+
+/* todo see issue #9 https://github.com/StoneCypher/flocks.js/issues/9
+
+        if (deepCompare(nextFCtx, prevFCtx)) {
+            flocksLog(2, " x Flocks2 skipped update: no update to state");
+            return true;
+        }
+*/
+
+        if (!(handler(nextFCtx))) {
+            flocksLog(0, "   ! Flocks2 rolling back update: handler rejected propset");
+            nextFCtx = prevFCtx;
+            dirty    = false;
+            return null;
+        }
+
+        prevFCtx = nextFCtx;
+
+        flocksLog(3, "   - Flocks2 update passed");
+        React.render( React.createFactory(tagtype)( { "flocks2context" : nextFCtx } ), document.body );
+        dirty = false;
+
+        flocksLog(3, "   - Flocks2 update complete; finalizing");
+        finalizer();
+        return true;
 
     }
 
@@ -153,15 +217,23 @@ if (typeof React === "undefined") {
 
 
 
-//  function setByObject(Key, MaybeValue) { flocksLog(0, "   - Flocks2 setByObject stub"); attemptUpdate(); }     // whargarbl todo
+// todo
+//  function setByObject(Key, MaybeValue) {
+//    flocksLog(0, "   - Flocks2 setByObject stub");
+//    attemptUpdate();
+//  }
+
+
+
+
 
     function set(Key, MaybeValue) {
 
         flocksLog(3, " - Flocks2 multi-set");
 
-        if      (typeof Key === "string") { setByKey(Key, MaybeValue); }
+        if (typeof Key === "string") { setByKey(Key, MaybeValue); }
 //      else if (isArray(Key))            { setByPath(Key, MaybeValue); }
-//      else if (isNonArrayObject(Key))   { setByObject(Key); }              // whargarbl todo
+//      else if (isNonArrayObject(Key))   { setByObject(Key); }              // todo
         else                              { throw "Flocks2 set/1,2 key must be a string or an array"; }
 
     }
@@ -172,7 +244,8 @@ if (typeof React === "undefined") {
 
     function setByPath(Path, Target, NewVal) {
 
-        var OldVal;  // it gets hoisted anyway, so it triggers eslint warnings when inlined
+        var NextPath,
+            OldVal;  // it gets hoisted anyway, so it triggers eslint warnings when inlined
                      // might as well be explicit about it
 
         if (!(isArray(Path)))  { throw "Path must be an array!"; }
@@ -190,8 +263,8 @@ if (typeof React === "undefined") {
         }
 
         if (["string","number"].indexOf(typeof Path[0]) !== -1) {
-            var NextPath = Path.splice(1, Number.MAX_VALUE);
-            return path_set(NextPath, Target[Path[0]], NewVal);
+            NextPath = Path.splice(1, Number.MAX_VALUE);
+            return setByPath(NextPath, Target[Path[0]], NewVal);
         }
 
     }
@@ -201,6 +274,8 @@ if (typeof React === "undefined") {
 
 
     function getByPath(Path, Target) {
+
+        var NextPath;
 
         if (!(isArray(Path)))  { throw "path must be an array!"; }
 
@@ -213,7 +288,7 @@ if (typeof React === "undefined") {
         }
 
         if (["string","number"].indexOf(typeof Path[0]) !== -1) {
-            var NextPath = Path.splice(1, Number.MAX_VALUE);
+            NextPath = Path.splice(1, Number.MAX_VALUE);
             return getByPath(NextPath, Target[Path[0]]);
         }
 
@@ -225,8 +300,8 @@ if (typeof React === "undefined") {
 
     function update(SparseObject) {
 
-        // whargarbl todo
-        console.log("update - whargarbl stub");
+        // todo
+        console.log("ERROR: stub called!");
         enforceNonArrayObject(SparseObject, "Flocks2 update/1 must take a plain object");
 
     }
@@ -258,69 +333,16 @@ if (typeof React === "undefined") {
 
     function clone(obj) {
 
-        if ((null === obj) || ("object" != typeof obj)) { return obj; }
+        var copy = obj.constructor(),
+            attr;
 
-        var copy = obj.constructor();
-        for (var attr in obj) {
+        if ((obj === null) || (typeof obj !== "object")) { return obj; }
+
+        for (attr in obj) {
             if (obj.hasOwnProperty(attr)) { copy[attr] = obj[attr]; }
         }
 
         return copy;
-
-    }
-
-
-
-
-
-    // ... lol
-    function array_member(Item, Array) {
-        return (!!(~( Array.indexOf(Item, 0) )));
-    }
-
-
-
-
-
-    function attemptUpdate() {
-
-        flocksLog(3, " - Flocks2 attempting update");
-        dirty = true;
-
-        if (!(initialized)) {
-            flocksLog(1, " x Flocks2 skipped update: root is not initialized");
-            return null;
-        }
-
-        if (updateBlocks) {
-            flocksLog(1, " x Flocks2 skipped update: lock count updateBlocks is non-zero");
-            return null;
-        }
-
-/* whargarbl see issue #9 https://github.com/StoneCypher/flocks.js/issues/9
-
-        if (deepCompare(nextFCtx, prevFCtx)) {
-            flocksLog(2, " x Flocks2 skipped update: no update to state");
-            return true;
-        }
-*/
-
-        if (!(handler(nextFCtx))) {
-            flocksLog(0, "   ! Flocks2 rolling back update: handler rejected propset");
-            nextFCtx = prevFCtx;
-            dirty    = false;
-            return null;
-        }
-
-        prevFCtx = nextFCtx;
-
-        flocksLog(3, "   - Flocks2 update passed");
-        React.render( React.createFactory(tagtype)( { flocks2context: nextFCtx } ), document.body );
-        dirty = false;
-
-        flocksLog(3, "   - Flocks2 update complete; finalizing");
-        finalizer();
-        return true;
 
     }
 
@@ -334,25 +356,25 @@ if (typeof React === "undefined") {
             FlocksData   = iFlocksData   || {},
 
             target       = FlocksConfig.target || document.body,
-            stub         = function() { window.alert("whargarbl stub"); attemptUpdate(); },
+            stub         = function() { console.log("ERROR: stub called!"); attemptUpdate(); }, // todo
 
             updater      = {
-                get      : stub,          // whargarbl todo
-                override : stub,          // whargarbl todo
-                clear    : stub,          // whargarbl todo
+                "get"      : stub,          // todo
+                "override" : stub,          // todo
+                "clear"    : stub,          // todo
 
-                get_path : getByPath,
-                set      : set,
-                set_path : setByPath,
-                update   : update,
-                lock     : lock,
-                unlock   : unlock
+                "get_path" : getByPath,
+                "set"      : set,
+                "set_path" : setByPath,
+                "update"   : update,
+                "lock"     : lock,
+                "unlock"   : unlock
             };
 
-        FlocksConfig.log_level   = FlocksConfig.log_level || -1;
-        tagtype                  = FlocksConfig.control;
-        FlocksData.flocks_config = FlocksConfig;
-        nextFCtx                 = FlocksData;
+        FlocksConfig["log_level"] = FlocksConfig["log_level"] || -1;
+        tagtype                   = FlocksConfig.control;
+        FlocksData.flocks2Config  = FlocksConfig;
+        nextFCtx                  = FlocksData;
 
         flocksLog(1, "Flocks2 root creation begins");
 
@@ -399,16 +421,22 @@ if (typeof React === "undefined") {
 
 
 
-    var Mixin = {
+    Mixin = {
 
-        contextTypes      : flocks2_ctxs,
-        childContextTypes : flocks2_ctxs,
+        "contextTypes"       : flocks2Ctxs,
+        "childContextTypes"  : flocks2Ctxs,
 
-        componentWillMount: function() {
+        "componentWillMount" : function() {
 
             flocksLog(1, " - Flocks2 component will mount: " + this.constructor.displayName);
-            flocksLog(3, isUndefined(this.props.flocks2context)   ? "   - No F2 Context Prop" : "   - F2 Context Prop found");
-            flocksLog(3, isUndefined(this.context.flocks2context) ? "   - No F2 Context"      : "   - F2 Context found");
+
+            flocksLog(3, isUndefined(this.props.flocks2context)?
+                           "   - No F2 Context Prop"
+                         : "   - F2 Context Prop found");
+
+            flocksLog(3, isUndefined(this.context.flocks2context)?
+                           "   - No F2 Context"
+                         : "   - F2 Context found");
 
             if (this.props.flocks2context) {
                 this.context.flocks2context = this.props.flocks2context;
@@ -417,7 +445,7 @@ if (typeof React === "undefined") {
             this.fupdate  = function(Obj) { return update(Obj); };
             this.fgetpath = function(P,T) { return getByPath(P,T); };
             this.fset     = function(K,V) { return set(K,V); };
-            this.fsetpath = function(P,V) { return set(K,V); };
+            this.fsetpath = function(P,V) { return set(P,V); };
             this.flock    = function()    { return lock(); };
             this.funlock  = function()    { return unlock(); };
 
@@ -425,7 +453,7 @@ if (typeof React === "undefined") {
 
         },
 
-        getChildContext: function() {
+        "getChildContext"    : function() {
             return this.context;
         }
 
@@ -438,15 +466,17 @@ if (typeof React === "undefined") {
 
     function atLeastFlocks(OriginalList) {
 
+        var NewList;
+
         if (isUndefined(OriginalList)) {
             return [ Mixin ];
         }
 
         if (isArray(OriginalList)) {
-            if (array_member(Mixin, OriginalList)) {
+            if (arrayMember(Mixin, OriginalList)) {
                 return OriginalList;
             } else {
-                var NewList = clone(OriginalList);
+                NewList = clone(OriginalList);
                 NewList.push(Mixin);
                 return NewList;
             }
@@ -469,9 +499,9 @@ if (typeof React === "undefined") {
 
 
 
-    var exports = {
+    exports = {
 
-        "version"               : "0.15.10",
+        "version"               : "0.15.11",
 
         "plumbing"              : Mixin,
         "createClass"           : createClass,
