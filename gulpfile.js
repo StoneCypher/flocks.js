@@ -155,7 +155,7 @@ gulp.task("tag", ["default"], function() {
   var version = flocks.version,
       message = argv.m;
 
-  console.log("git tag -a " + version + " -m \"Version " + version + ": " + message + "\"");
+  shell("git tag -a " + version + " -m \"Version " + version + ": " + message + "\"");
 
 });
 
@@ -165,6 +165,6 @@ gulp.task("tag", ["default"], function() {
 
 gulp.task("push", ["tag"], function() {
 
-  console.log("should push here");
+  shell("echo starting && git push origin && git push origin --tags && echo done");
 
 });
