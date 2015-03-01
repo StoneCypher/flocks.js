@@ -58,6 +58,35 @@ if (typeof React === "undefined") {
 
 
 
+    function isArray(maybeArray) {
+        return (Object.prototype.toString.call(maybeArray) === "[object Array]");
+    }
+
+
+
+
+
+    function isUndefined(maybeUndefined) {
+        return (typeof maybeUndefined === "undefined");
+    }
+
+
+
+
+
+    function isNonArrayObject(maybeArray) {
+
+        if (typeof maybeArray !== "object")                                  { return false; }
+        if (Object.prototype.toString.call(maybeArray) === "[object Array]") { return false; }
+
+        return true;
+
+    }
+
+
+
+
+
     function flocksLog(Level, Message) {
 
         if (typeof Level === "string") {
@@ -105,35 +134,6 @@ if (typeof React === "undefined") {
         if (!isNonArrayObject(On)) {
             throw Label || "Argument must be a non-array object";
         }
-    }
-
-
-
-
-
-    function isArray(maybeArray) {
-        return (Object.prototype.toString.call(maybeArray) === "[object Array]");
-    }
-
-
-
-
-
-    function isUndefined(maybeUndefined) {
-        return (typeof maybeUndefined === "undefined");
-    }
-
-
-
-
-
-    function isNonArrayObject(maybeArray) {
-
-        if (typeof maybeArray !== "object")                                  { return false; }
-        if (Object.prototype.toString.call(maybeArray) === "[object Array]") { return false; }
-
-        return true;
-
     }
 
 
@@ -356,9 +356,19 @@ if (typeof React === "undefined") {
 
         flocksLog(1, "Flocks2 root creation begins");
 
-        if (!(tagtype))             { throw "Flocks2 fatal error: must provide a control in create/2 FlocksConfig";      }
-        if (FlocksConfig.handler)   { handler   = FlocksConfig.handler;   flocksLog(3, " - Flocks2 handler assigned"  ); }
-        if (FlocksConfig.finalizer) { finalizer = FlocksConfig.finalizer; flocksLog(3, " - Flocks2 finalizer assigned"); }
+        if (!(tagtype)) {
+            throw "Flocks2 fatal error: must provide a control in create/2 FlocksConfig";
+        }
+
+        if (FlocksConfig.handler) {
+            handler = FlocksConfig.handler;
+            flocksLog(3, " - Flocks2 handler assigned");
+        }
+
+        if (FlocksConfig.finalizer) {
+            finalizer = FlocksConfig.finalizer;
+            flocksLog(3, " - Flocks2 finalizer assigned");
+        }
 
         if (FlocksConfig.preventAutoContext) {
             flocksLog(2, " - Flocks2 skipping auto-context");
@@ -461,7 +471,7 @@ if (typeof React === "undefined") {
 
     var exports = {
 
-        "version"               : "0.15.4",
+        "version"               : "0.15.5",
 
         "plumbing"              : Mixin,
         "createClass"           : createClass,
