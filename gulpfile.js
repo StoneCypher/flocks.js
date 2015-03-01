@@ -189,6 +189,6 @@ gulp.task("tag", ["default", "add"], function() {
 
 gulp.task("push", ["tag"], function() {
 
-  git.push("origin", "master", {"args" : "tags"}, function(error) { if (error) { throw error; } });
+  git.push("origin", "master", {"args" : "--tags"}, function(error) { if (error) { throw error; } });
 
 });
