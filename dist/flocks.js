@@ -217,32 +217,7 @@ if (typeof React === "undefined") {
 
 
 
-// todo
-//  function setByObject(Key, MaybeValue) {
-//    flocksLog(0, "   - Flocks2 setByObject stub");
-//    attemptUpdate();
-//  }
-
-
-
-
-
-    function set(Key, MaybeValue) {
-
-        flocksLog(3, " - Flocks2 multi-set");
-
-        if (typeof Key === "string") { setByKey(Key, MaybeValue); }
-//      else if (isArray(Key))            { setByPath(Key, MaybeValue); }
-//      else if (isNonArrayObject(Key))   { setByObject(Key); }              // todo
-        else                              { throw "Flocks2 set/1,2 key must be a string or an array"; }
-
-    }
-
-
-
-
-
-    function setByPath(Path, Target, NewVal) {
+    function setTargetByPath(Path, Target, NewVal) {
 
         var NextPath,
             OldVal;  // it gets hoisted anyway, so it triggers eslint warnings when inlined
@@ -264,8 +239,46 @@ if (typeof React === "undefined") {
 
         if (["string","number"].indexOf(typeof Path[0]) !== -1) {
             NextPath = Path.splice(1, Number.MAX_VALUE);
-            return setByPath(NextPath, Target[Path[0]], NewVal);
+            return setTargetByPath(NextPath, Target[Path[0]], NewVal);
         }
+
+    }
+
+
+
+
+
+    function setByPath(Path, NewVal) {
+
+        enforceArray(Path, "Flocks2 setByPathh/2 must take an array for its key");
+        flocksLog(1, "   - Flocks2 setByPath \"" + Path.join("|") + "\"");
+        setTargetByPath(Path, nextFCtx, NewVal);
+        attemptUpdate();
+
+    }
+
+
+
+
+
+// todo
+//  function setByObject(Key, MaybeValue) {
+//    flocksLog(0, "   - Flocks2 setByObject stub");
+//    attemptUpdate();
+//  }
+
+
+
+
+
+    function set(Key, MaybeValue) {
+
+        flocksLog(3, " - Flocks2 multi-set");
+
+        if (typeof Key === "string")      { setByKey(Key, MaybeValue); }
+        else if (isArray(Key))            { setByPath(Key, MaybeValue); }
+//      else if (isNonArrayObject(Key))   { setByObject(Key); }              // todo
+        else                              { throw "Flocks2 set/1,2 key must be a string or an array"; }
 
     }
 
@@ -501,7 +514,7 @@ if (typeof React === "undefined") {
 
     exports = {
 
-        "version"               : "0.15.11",
+        "version"               : "0.16.0",
 
         "plumbing"              : Mixin,
         "createClass"           : createClass,
