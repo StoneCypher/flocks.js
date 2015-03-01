@@ -15,6 +15,7 @@ require("node-jsx").install({
 });
 
 var gulp            = require("gulp"),
+    git             = require("gulp-git"),
     bump            = require("gulp-bump"),
     lint            = require("sc-eslint/estask.js"),
     shell           = require("gulp-shell"),
@@ -150,13 +151,38 @@ gulp.task("publish", ["default", "tag", "push"], function() {
 
 
 
+gulp.task("add", function() {
+
+  return gulp.src([
+      // can't just glob exclude because of node's broken depth nonsense
+      "./gulpfile.js",
+      "./bower.json",
+      "./package.json",
+      "./README.md",
+      "./LICENSE",
+      "./dist/**/*",
+      "./lib/**/*",
+      "./reports/**/*",
+      "./test/**/*"
+    ], {
+      "read" : false
+    })
+    .pipe(git.add({"args" : "-A"}));
+
+});
+
+
+
+
+
 gulp.task("tag", ["default"], function() {
 
   var version = flocks.version,
       message = argv.m;
 
-  shell("git add . -A && git commit -m \"Version " + version + ": " + message + "\"");
-  shell("git tag -a " + version + " -m \"Version " + version + ": " + message + "\"");
+  git.commit("Version " + version + ": " + message);
+  git.add(gulp.src);
+  git.tag(version, version + ": " + message, function(error) { if (error) { throw error; } });
 
 });
 
@@ -166,6 +192,6 @@ gulp.task("tag", ["default"], function() {
 
 gulp.task("push", ["tag"], function() {
 
-  shell("echo starting && git push origin && git push origin --tags && echo done");
+  git.push("origin", "master", {"args": "--tags"}, function(error) { if (error) { throw error; } });
 
 });

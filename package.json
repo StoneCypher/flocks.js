@@ -7,7 +7,7 @@
   "name": "flocks.js",
   "filename": "flocks.js",
   "description": "Simpler state management for React.js",
-  "version": "0.16.6",
+  "version": "0.16.10",
   "homepage": "http://flocks.rocks/",
   "repository": {
     "url": "https://github.com/StoneCypher/flocks.js.git"
@@ -72,9 +72,10 @@
     "gulp-bump": "*",
     "gulp-clean": "*",
     "gulp-closure-compiler": "*",
-    "gulp-shell": "*",
+    "gulp-git": "*",
     "gulp-jsx": "*",
     "gulp-rename": "*",
+    "gulp-shell": "*",
     "gulp-sloc": "*",
     "gulp-strip-react-dom-comment": "*",
     "gulp-yuidoc": "*",
