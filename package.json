@@ -1,9 +1,13 @@
 {
-  "author": "John Haugeland",
+  "author": {
+    "name": "John Haugeland",
+    "email": "stonecypher@gmail.com",
+    "url": "http://fullof.bs/"
+  },
   "name": "flocks.js",
   "filename": "flocks.js",
   "description": "Simpler state management for React.js",
-  "version": "0.15.7",
+  "version": "0.15.9",
   "homepage": "http://flocks.rocks/",
   "repository": {
     "url": "https://github.com/StoneCypher/flocks.js.git"
@@ -41,11 +45,6 @@
       ]
     }
   ],
-  "author": {
-    "name": "John Haugeland",
-    "email": "stonecypher@gmail.com",
-    "url": "http://fullof.bs/"
-  },
   "maintainers": [
     {
       "name": "John Hauegland",
@@ -70,16 +69,20 @@
   },
   "devDependencies": {
     "gulp": "*",
+    "gulp-bump": "*",
     "gulp-clean": "*",
+    "gulp-closure-compiler": "*",
     "gulp-shell": "*",
     "gulp-jsx": "*",
+    "gulp-rename": "*",
     "gulp-sloc": "*",
     "gulp-strip-react-dom-comment": "*",
     "gulp-yuidoc": "*",
     "jshint": "*",
+    "jsverify": "*",
+    "node-jsx": "*",
     "sc-eslint": "*",
-    "vows": "*",
-    "jsverify": "*"
+    "vows": "*"
   },
   "dependencies": {
     "react": "*"
