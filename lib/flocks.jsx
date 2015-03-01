@@ -1,6 +1,7 @@
 
 /** @jsx React.DOM */
 /* jshint node: true, browser: true, newcap: false */
+/* eslint-env node,browser */
 
 /**
  * The Flocks library module.
