@@ -140,10 +140,7 @@ gulp.task("default", ["test", "docs", "sloc"]);
 
 gulp.task("publish", ["default", "tag", "push"], function() {
 
-  var version = flocks.version,
-      message = "message";
-
-  console.log("should publish -a " + version + " -m \"" + message + "\" here");
+  shell("npm publish");
 
 });
 
