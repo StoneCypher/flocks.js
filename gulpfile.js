@@ -3,16 +3,33 @@
 /* eslint vars-on-top:0 */
 /* eslint-env node, browser */
 
+/**
+ * Flocks gulpfile.
+ *
+ * @module gulpfile
+ * @main   gulp
+ * @class  gulpfile
+ */
+
 "use strict";
 
 
 
 
+/**
+ * This unbound blockless step installs the node-jsx loader to convert statics.
+ * This is not actually a method and cannot be called.
+ *
+ * @method requireNodeJsx
+ */
 
 require("node-jsx").install({
   "extension" : ".jsx",
   "harmony"   : true
 });
+
+
+
 
 var gulp            = require("gulp"),
     git             = require("gulp-git"),
@@ -33,6 +50,16 @@ var gulp            = require("gulp"),
 
 
 
+/**
+ * <tt>gulp clean</tt> will remove the <tt>./doc</tt>, <tt>./dist</tt>,
+ * and <tt>./reports</tt> directories, in the expectation that they will be
+ * remade by the gulp process.
+ *
+ * <tt>clean</tt> has no dependencies.
+ *
+ * @method clean
+ */
+
 gulp.task("clean", function() {
   return gulp.src(["./doc", "./dist", "./reports"], {"read" : false}).pipe(clean());
 });
@@ -41,16 +68,34 @@ gulp.task("clean", function() {
 
 
 
+/**
+ * <tt>gulp docs</tt> will generate the documentation through <tt>yuidoc</tt>.
+ *
+ * <tt>docs</tt> will invoke <tt>clean</tt> and <tt>bump</tt>.
+ *
+ * @method docs
+ */
+
 gulp.task("docs", ["clean", "bump"], function() {
-  gulp.src(["./lib/*.js", "./lib/*.jsx"])
+  gulp.src(["./lib/*.js", "./lib/*.jsx", "./gulpfile.js"])
     .pipe(stripDomComment())
-    .pipe(yuidoc()
-    .pipe(gulp.dest("./doc")));
+    .pipe(yuidoc())
+    .pipe(gulp.dest("./doc"));
 });
 
 
 
 
+
+/**
+ * <tt>gulp lint</tt> will run the linting engine on the <tt>gulpfile</tt>,
+ * on <tt>lib/flocks.jsx</tt>, and on <tt>dist/flocks.js</tt>.  Obviously the
+ * minified version is not linted.  <tt>:D</tt>
+ *
+ * <tt>lint</tt> has no dependencies.
+ *
+ * @method lint
+ */
 
 lint.gulpreg(gulp, {
   "targets" : "gulpfile.js lib/flocks.jsx dist/flocks.js"
