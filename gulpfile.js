@@ -127,6 +127,16 @@ gulp.task("minify", ["clean","transpile"], function() {
 
 
 
+/**
+ * <tt>gulp transpile</tt> will uses <tt>gulp-jsx</tt> to convert the flocks
+ * library <tt>flocks.jsx</tt> file to its <tt>flocks.js</tt> form for
+ * publishing on the CDN.
+ *
+ * <tt>transpile</tt> will invoke <tt>clean</tt>.
+ *
+ * @method transpile
+ */
+
 gulp.task("transpile", ["clean"], function() {
 
   return gulp.src("lib/flocks.jsx")
