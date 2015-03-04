@@ -105,6 +105,15 @@ lint.gulpreg(gulp, {
 
 
 
+/**
+ * <tt>gulp minify</tt> will run post-transpiled <tt>flocks.js</tt>
+ * through <tt>closure compiler</tt> to produce <tt>flocks.min.js</tt>.
+ *
+ * <tt>minify</tt> will invoke <tt>clean</tt> and <tt>transpile</tt>.
+ *
+ * @method minify
+ */
+
 gulp.task("minify", ["clean","transpile"], function() {
   return gulp.src("dist/flocks.js")
     .pipe(closureCompiler({
