@@ -128,7 +128,7 @@ gulp.task("minify", ["clean","transpile"], function() {
 
 
 /**
- * <tt>gulp transpile</tt> will uses <tt>gulp-jsx</tt> to convert the flocks
+ * <tt>gulp transpile</tt> will use <tt>gulp-jsx</tt> to convert the flocks
  * library <tt>flocks.jsx</tt> file to its <tt>flocks.js</tt> form for
  * publishing on the CDN.
  *
@@ -150,13 +150,42 @@ gulp.task("transpile", ["clean"], function() {
 
 
 
+/**
+ * <tt>gulp vows</tt> will uses <tt>gulp-shell</tt> to issue the
+ * command <tt>npm test</tt> to run the <tt>vows</tt> tests on gulp.  This is
+ * done with an <tt>npm</tt> script so that other tooling will pick it up
+ * automatically.
+ *
+ * This is a support task; you should <tt>gulp test</tt> instead.
+ *
+ * <tt>vows</tt> has no dependencies.
+ *
+ * @method vows
+ */
+
 gulp.task("vows", shell.task("npm test"));
+
+
+
+
+
+/**
+ * <tt>gulp test</tt> invokes <tt>build</tt>, <tt>vows</tt>, and <tt>lint</tt>.
+ *
+ * @method test
+ */
 
 gulp.task("test", ["build", "vows", "lint"]);
 
 
 
 
+
+/**
+ * <tt>gulp build</tt> invokes <tt>minify</tt>.
+ *
+ * @method build
+ */
 
 gulp.task("build",  ["minify"]);
 
