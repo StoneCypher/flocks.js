@@ -245,11 +245,24 @@ gulp.task("sloc", ["build"], function() {
 
 
 
+/**
+ * <tt>gulp default</tt> (or just <tt>gulp</tt>) will invoke <tt>test</tt>, <tt>docs</tt>,
+ * and <tt>sloc</tt>.
+ *
+ * @method default
+ */
+
 gulp.task("default", ["test", "docs", "sloc"]);
 
 
 
 
+
+/**
+ * <tt>gulp publish</tt> invokes <tt>default</tt>, <tt>tag</tt>, and <tt>push</tt>.
+ *
+ * @method publish
+ */
 
 gulp.task("publish", ["default", "tag", "push"], function() {
 
@@ -260,6 +273,19 @@ gulp.task("publish", ["default", "tag", "push"], function() {
 
 
 
+
+/**
+ * <tt>gulp add</tt> manually adds the <tt>./lib</tt>, the <tt>./dist</tt>,
+ * the <tt>./reports</tt>, and the <tt>./test</tt> trees, as well as the
+ * files <tt>gulpfile.js</tt>, <tt>bower.json</tt>, <tt>package.json</tt>,
+ * and the standard <tt>README</tt> and <tt>LICENSE</tt>.
+ *
+ * The reason for these monkeyshines, instead of an <tt>add .</tt> with an
+ * exclusion, is that the NPM path depth bug prevents the exclusion from working
+ * correctly on windows (gee thanks node.)
+ *
+ * @method add
+ */
 
 gulp.task("add", ["default"], function() {
 
