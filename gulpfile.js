@@ -199,6 +199,8 @@ gulp.task("build",  ["minify"]);
  * the <tt>package.json</tt> and <tt>bower.json</tt> files to match the version
  * number emitted by the library.
  *
+ * <tt>bump</tt> has no dependencies.
+ *
  * @method bump
  */
 
@@ -215,6 +217,15 @@ gulp.task("bump", function() {
 
 
 
+
+/**
+ * <tt>gulp sloc</tt> runs the <tt>gulp-sloc</tt> plugin twice - once to show
+ * the sloc report, and once to dump it to disk in <tt>./reports</tt>.
+ *
+ * <tt>sloc</tt> will invoke <tt>build</tt>.
+ *
+ * @method sloc
+ */
 
 gulp.task("sloc", ["build"], function() {
 
