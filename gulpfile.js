@@ -182,7 +182,8 @@ gulp.task("test", ["build", "vows", "lint"]);
 
 
 /**
- * <tt>gulp build</tt> invokes <tt>minify</tt>.
+ * <tt>gulp build</tt> invokes <tt>minify</tt>.  Other build steps will be here
+ * soon.
  *
  * @method build
  */
@@ -192,6 +193,14 @@ gulp.task("build",  ["minify"]);
 
 
 
+
+/**
+ * <tt>gulp bump</tt> uses <tt>gulp-bump</tt> to set the version number of
+ * the <tt>package.json</tt> and <tt>bower.json</tt> files to match the version
+ * number emitted by the library.
+ *
+ * @method bump
+ */
 
 gulp.task("bump", function() {
 
