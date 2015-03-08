@@ -1,11 +1,23 @@
 
 /** @jsx React.DOM */
+
 /* jshint node: true, browser: true, newcap: false */
+
 /* eslint max-statements: 0, no-else-return: 0, brace-style: 0 */
 /* eslint-env node,browser */
 
 /**
- * The Flocks library module.
+ * The Flocks library module.  Load this module and use either the
+ * flocks <tt>flocks.createClass</tt> wrapper or the <tt>flocks plumbing</tt>
+ * mixin to create <tt>flocks controls</tt>.  Place them into your document
+ * using <tt>flocks.mount</tt>, and use the returned function or the data and
+ * method that the mixin provides, <tt>this.fctx</tt> and <tt>this.fset()</tt>
+ * respectively, to read and write to the <tt>flocks state</tt>.
+ *
+ * And suddenly you're done.
+ *
+ * Please see the <a href="http://flocks.rocks/what_is_flocks.html" target="_blank">tutorials</a>
+ * for more information.
  *
  * @module flocks
  * @main   createClass
@@ -384,10 +396,10 @@ if (typeof React === "undefined") {
                 "unlock"   : unlock
             };
 
-        FlocksConfig["log_level"] = FlocksConfig["log_level"] || -1;
-        tagtype                   = FlocksConfig.control;
-        FlocksData.flocks2Config  = FlocksConfig;
-        nextFCtx                  = FlocksData;
+        FlocksConfig.log_level   = FlocksConfig.log_level || -1;
+        tagtype                  = FlocksConfig.control;
+        FlocksData.flocks2Config = FlocksConfig;
+        nextFCtx                 = FlocksData;
 
         flocksLog(1, "Flocks2 root creation begins");
 
@@ -528,6 +540,7 @@ if (typeof React === "undefined") {
         "version"               : "0.17.1",
 
 
+
         /**
          * <tt>createClass</tt> is a wrapper for <tt>react.createClass</tt> which
          * automatically adds the <tt>plumbing</tt> mixin to your control's spec,
@@ -542,16 +555,123 @@ if (typeof React === "undefined") {
         "createClass"           : createClass,
 
 
+
+        /**
+         * <tt>mount</tt> accepts a <tt>flocks config</tt> and an initial state,
+         * and then manages a root control for you.  <tt>mount</tt> returns to
+         * you a function which you can use from outside the control tree to
+         * update the <tt>flocks state</tt>.  From inside the control tree, a
+         * control decorated with the <tt>flocks plumbing</tt> has a member
+         * <tt>this.fctx</tt> which contains an up to date copy of the <tt>flocks
+         * state</tt>, and another member <tt>this.fset()</tt> which you can
+         * use to update the <tt>flocks state</tt>.
+         *
+         * To <tt>mount</tt> a control is to start the process by placing your
+         * top level control into the document through <tt>flocks</tt>.
+         *
+         * @method mount
+         */
+
         "mount"                 : create,
+
+
+
+        /**
+         * <tt>clone</tt> recursively deep-copies its argument.
+         *
+         * @method clone
+         */
+
         "clone"                 : clone,
 
+
+
+        /**
+         * <tt>isArray</tt> produces a boolean regarding whether its argument
+         * is a javascript <tt>Array</tt>.
+         *
+         * @method isArray
+         */
+
         "isArray"               : isArray,
+
+
+
+        /**
+         * <tt>isUndefined</tt> produces a boolean regarding whether its argument
+         * is the javascript value <tt>undefined</tt>.
+         *
+         * @method isUndefined
+         */
+
         "isUndefined"           : isUndefined,
+
+
+
+        /**
+         * <tt>isNonArrayObject</tt> produces a boolean regarding whether its
+         * argument is a javascript <tt>Object</tt>, but also goes to the effort
+         * to exclude javascript <tt>Array</tt>s.
+         *
+         * @method isNonArrayObject
+         */
+
         "isNonArrayObject"      : isNonArrayObject,
 
+
+
+        /**
+         * <tt>enforceString</tt> accepts a value argument and an optional
+         * explanation argument, and will throw if the value argument is not of
+         * type <tt>string</tt>.  The throw will be the explanation argument, or
+         * a default if the explanation is not present.
+         *
+         * @method enforceString
+         */
+
         "enforceString"         : enforceString,
+
+
+
+        /**
+         * <tt>enforceArray</tt> accepts a value argument and an optional
+         * explanation argument, and will throw if the value argument is not of
+         * type <tt>Array</tt>.  The throw will be the explanation argument, or
+         * a default if the explanation is not present.
+         *
+         * @method enforceArray
+         */
+
         "enforceArray"          : enforceArray,
+
+
+
+        /**
+         * <tt>enforceNonArrayObject</tt> accepts a value argument and an optional
+         * explanation argument, and will throw if the value argument is of
+         * type <tt>Array</tt>, or not of type <tt>Object</tt>.  The throw will be
+         * the explanation argument, or a default if the explanation is not present.
+         *
+         * @method enforceNonArrayObject
+         */
+
         "enforceNonArrayObject" : enforceNonArrayObject,
+
+
+
+        /**
+         * <tt>atLeastFlocks</tt> accepts a mixin set from a control spec, or
+         * the value <tt>undefined</tt>, and produces a mixin set in response,
+         * which contains the old mixin set if any, pre-pended with
+         * the <tt>flocks plumbing</tt> mixin, or a mixin set with just that
+         * mixin if the previous mixin set was empty or <tt>undefined</tt>.
+         * If the mixin set provided already contains flocks, it will be
+         * returned unaltered, in case the prior mixin set is order sensitive.
+         *
+         * This is not a method that the end user should expect to use.
+         *
+         * @method atLeastFlocks
+         */
 
         "atLeastFlocks"         : atLeastFlocks,
 
