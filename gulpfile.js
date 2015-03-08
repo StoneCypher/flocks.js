@@ -337,6 +337,14 @@ gulp.task("tag", ["default", "add"], function() {
 
 
 
+/**
+ * <tt>gulp push</tt> pushes <tt>origin</tt> to <tt>master</tt> on github.
+ *
+ * <tt>gulp push</tt> invokes <tt>tag</tt>.
+ *
+ * @method push
+ */
+
 gulp.task("push", ["tag"], function() {
 
   git.push("origin", "master", {"args" : "--tags"}, function(error) { if (error) { throw error; } });
