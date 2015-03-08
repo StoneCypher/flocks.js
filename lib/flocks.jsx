@@ -384,10 +384,10 @@ if (typeof React === "undefined") {
                 "unlock"   : unlock
             };
 
-        FlocksConfig["log_level"] = FlocksConfig["log_level"] || -1;
-        tagtype                   = FlocksConfig.control;
-        FlocksData.flocks2Config  = FlocksConfig;
-        nextFCtx                  = FlocksData;
+        FlocksConfig.log_level   = FlocksConfig.log_level || -1;
+        tagtype                  = FlocksConfig.control;
+        FlocksData.flocks2Config = FlocksConfig;
+        nextFCtx                 = FlocksData;
 
         flocksLog(1, "Flocks2 root creation begins");
 
@@ -528,6 +528,7 @@ if (typeof React === "undefined") {
         "version"               : "0.17.1",
 
 
+
         /**
          * <tt>createClass</tt> is a wrapper for <tt>react.createClass</tt> which
          * automatically adds the <tt>plumbing</tt> mixin to your control's spec,
@@ -541,6 +542,23 @@ if (typeof React === "undefined") {
 
         "createClass"           : createClass,
 
+
+
+        /**
+         * <tt>mount</tt> accepts a <tt>flocks config</tt> and an initial state,
+         * and then manages a root control for you.  <tt>mount</tt> returns to
+         * you a function which you can use from outside the control tree to
+         * update the <tt>flocks state</tt>.  From inside the control tree, a
+         * control decorated with the <tt>flocks plumbing</tt> has a member
+         * <tt>this.fctx</tt> which contains an up to date copy of the <tt>flocks
+         * state</tt>, and another member <tt>this.fset()</tt> which you can
+         * use to update the <tt>flocks state</tt>.
+         *
+         * To <tt>mount</tt> a control is to start the process by placing your
+         * top level control into the document through <tt>flocks</tt>.
+         *
+         * @method mount
+         */
 
         "mount"                 : create,
         "clone"                 : clone,
