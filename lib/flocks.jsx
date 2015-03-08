@@ -7,9 +7,9 @@
 /**
  * The Flocks library module.
  *
- * @module Flocks
- * @main   Flocks
- * @class  Flocks
+ * @module flocks
+ * @main   createClass
+ * @class  flocks
  */
 
 
@@ -514,10 +514,33 @@ if (typeof React === "undefined") {
 
     exports = {
 
-        "version"               : "0.17.0",
+        /**
+         * <tt>version</tt> is an exposed string on the <tt>module export</tt>
+         * which mentions the current library version.  This number should
+         * always be in sync with the <tt>package.json</tt> and <tt>bower.json</tt>
+         * version, the <tt>github tag</tt>, the <tt>npm version</tt>, and will
+         * define the paths available on <tt>cdnjs</tt>
+         *
+         * @property version
+         * @type {String}
+         */
 
-        "plumbing"              : Mixin,
+        "version"               : "0.17.1",
+
+
+        /**
+         * <tt>createClass</tt> is a wrapper for <tt>react.createClass</tt> which
+         * automatically adds the <tt>plumbing</tt> mixin to your control's spec,
+         * to keep visual noise down.  If you prefer, you can add the <tt>plumbing</tt>
+         * mixin manually, in the standard fashion, instead; that may be more
+         * convenient in situations where many mixins are in use, or where other
+         * wrappers of <tt>createClass</tt> are in use.
+         *
+         * @method createClass
+         */
+
         "createClass"           : createClass,
+
 
         "mount"                 : create,
         "clone"                 : clone,
@@ -530,7 +553,19 @@ if (typeof React === "undefined") {
         "enforceArray"          : enforceArray,
         "enforceNonArrayObject" : enforceNonArrayObject,
 
-        "atLeastFlocks"         : atLeastFlocks
+        "atLeastFlocks"         : atLeastFlocks,
+
+
+        /**
+         * <tt>plumbing</tt> is the <tt>flocks</tt> mixin which handles all of
+         * the behind-the-scenes work to make <tt>flocks</tt> function.  The
+         * mixin is automatically added by calling <tt>flocks.createClass</tt>,
+         * or you can add it yourself in the standard mixin fashion if you prefer.
+         *
+         * @class plumbing
+         */
+
+        "plumbing"              : Mixin
 
     };
 

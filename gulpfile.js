@@ -16,6 +16,7 @@
 
 
 
+
 /**
  * This unbound blockless step installs the node-jsx loader to convert statics.
  * This is not actually a method and cannot be called.
@@ -57,7 +58,7 @@ var gulp            = require("gulp"),
  *
  * <tt>clean</tt> has no dependencies.
  *
- * @method clean
+ * @event clean
  */
 
 gulp.task("clean", function() {
@@ -73,7 +74,7 @@ gulp.task("clean", function() {
  *
  * <tt>docs</tt> will invoke <tt>clean</tt> and <tt>bump</tt>.
  *
- * @method docs
+ * @event docs
  */
 
 gulp.task("docs", ["clean", "bump"], function() {
@@ -94,7 +95,7 @@ gulp.task("docs", ["clean", "bump"], function() {
  *
  * <tt>lint</tt> has no dependencies.
  *
- * @method lint
+ * @event lint
  */
 
 lint.gulpreg(gulp, {
@@ -111,7 +112,7 @@ lint.gulpreg(gulp, {
  *
  * <tt>minify</tt> will invoke <tt>clean</tt> and <tt>transpile</tt>.
  *
- * @method minify
+ * @event minify
  */
 
 gulp.task("minify", ["clean","transpile"], function() {
@@ -134,7 +135,7 @@ gulp.task("minify", ["clean","transpile"], function() {
  *
  * <tt>transpile</tt> will invoke <tt>clean</tt>.
  *
- * @method transpile
+ * @event transpile
  */
 
 gulp.task("transpile", ["clean"], function() {
@@ -160,7 +161,7 @@ gulp.task("transpile", ["clean"], function() {
  *
  * <tt>vows</tt> has no dependencies.
  *
- * @method vows
+ * @event vows
  */
 
 gulp.task("vows", shell.task("npm test"));
@@ -172,7 +173,7 @@ gulp.task("vows", shell.task("npm test"));
 /**
  * <tt>gulp test</tt> invokes <tt>build</tt>, <tt>vows</tt>, and <tt>lint</tt>.
  *
- * @method test
+ * @event test
  */
 
 gulp.task("test", ["build", "vows", "lint"]);
@@ -185,7 +186,7 @@ gulp.task("test", ["build", "vows", "lint"]);
  * <tt>gulp build</tt> invokes <tt>minify</tt>.  Other build steps will be here
  * soon.
  *
- * @method build
+ * @event build
  */
 
 gulp.task("build",  ["minify"]);
@@ -201,7 +202,7 @@ gulp.task("build",  ["minify"]);
  *
  * <tt>bump</tt> has no dependencies.
  *
- * @method bump
+ * @event bump
  */
 
 gulp.task("bump", function() {
@@ -224,7 +225,7 @@ gulp.task("bump", function() {
  *
  * <tt>sloc</tt> will invoke <tt>build</tt>.
  *
- * @method sloc
+ * @event sloc
  */
 
 gulp.task("sloc", ["build"], function() {
@@ -249,7 +250,7 @@ gulp.task("sloc", ["build"], function() {
  * <tt>gulp default</tt> (or just <tt>gulp</tt>) will invoke <tt>test</tt>, <tt>docs</tt>,
  * and <tt>sloc</tt>.
  *
- * @method default
+ * @event default
  */
 
 gulp.task("default", ["test", "docs", "sloc"]);
@@ -261,7 +262,7 @@ gulp.task("default", ["test", "docs", "sloc"]);
 /**
  * <tt>gulp publish</tt> invokes <tt>default</tt>, <tt>tag</tt>, and <tt>push</tt>.
  *
- * @method publish
+ * @event publish
  */
 
 gulp.task("publish", ["default", "tag", "push"], function() {
@@ -286,7 +287,7 @@ gulp.task("publish", ["default", "tag", "push"], function() {
  *
  * <tt>gulp add</tt> invokes <tt>default</tt>.
  *
- * @method add
+ * @event add
  */
 
 gulp.task("add", ["default"], function() {
@@ -319,7 +320,7 @@ gulp.task("add", ["default"], function() {
  *
  * <tt>gulp tag</tt> invokes <tt>default</tt> and <tt>add</tt>.
  *
- * @method tag
+ * @event tag
  */
 
 gulp.task("tag", ["default", "add"], function() {
@@ -342,7 +343,7 @@ gulp.task("tag", ["default", "add"], function() {
  *
  * <tt>gulp push</tt> invokes <tt>tag</tt>.
  *
- * @method push
+ * @event push
  */
 
 gulp.task("push", ["tag"], function() {
