@@ -561,10 +561,49 @@ if (typeof React === "undefined") {
          */
 
         "mount"                 : create,
+
+
+
+        /**
+         * <tt>clone</tt> recursively deep-copies its argument.
+         *
+         * @method clone
+         */
+
         "clone"                 : clone,
 
+
+
+        /**
+         * <tt>isArray</tt> produces a boolean regarding whether its argument
+         * is a javascript <tt>Array</tt>.
+         *
+         * @method isArray
+         */
+
         "isArray"               : isArray,
+
+
+
+        /**
+         * <tt>isUndefined</tt> produces a boolean regarding whether its argument
+         * is the javascript value <tt>undefined</tt>.
+         *
+         * @method isUndefined
+         */
+
         "isUndefined"           : isUndefined,
+
+
+
+        /**
+         * <tt>isNonArrayObject</tt> produces a boolean regarding whether its
+         * argument is a javascript <tt>Object</tt>, but also goes to the effort
+         * to exclude javascript <tt>Array</tt>s.
+         *
+         * @method isNonArrayObject
+         */
+
         "isNonArrayObject"      : isNonArrayObject,
 
         "enforceString"         : enforceString,
