@@ -284,6 +284,8 @@ gulp.task("publish", ["default", "tag", "push"], function() {
  * exclusion, is that the NPM path depth bug prevents the exclusion from working
  * correctly on windows (gee thanks node.)
  *
+ * <tt>gulp add</tt> invokes <tt>default</tt>.
+ *
  * @method add
  */
 
@@ -310,6 +312,15 @@ gulp.task("add", ["default"], function() {
 
 
 
+
+/**
+ * <tt>gulp tag</tt> issues a <tt>git tag</tt> matching the current <tt>flocks</tt>
+ * version, in order to support the auto-update scripts for <tt>cdnjs</tt>.
+ *
+ * <tt>gulp tag</tt> invokes <tt>default</tt> and <tt>add</tt>.
+ *
+ * @method tag
+ */
 
 gulp.task("tag", ["default", "add"], function() {
 
