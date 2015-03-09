@@ -163,8 +163,14 @@ Now, you just write your app as a single control, and keep state 100% *outside* 
 How is this better?
 -------------------
 
-Atomic, transactional, centralized, easier
+It's:
 
+ * Simpler
+ * Centralized
+ * Atomic
+ * Transactional
+
+## TODO: justify these
 
 
 
