@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>gulpfile</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title=""></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/flocks.html">flocks</a></li>
+            
+                <li><a href="../classes/gulpfile.html">gulpfile</a></li>
+            
+                <li><a href="../classes/plumbing.html">plumbing</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/flocks.html">flocks</a></li>
+            
+                <li><a href="../modules/gulpfile.html">gulpfile</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1>gulpfile Class</h1>
+<div class="box meta">
+    
+
+    
+
+    
+        <div class="foundat">
+            Defined in: <a href="../files/c:_projects_flocks.js_gulpfile.js.html#l6"><code>c:\projects\flocks.js\gulpfile.js:6</code></a>
+        </div>
+    
+
+    
+        
+            Module: <a href="../modules/gulpfile.html">gulpfile</a>
+        
+    
+
+    
+</div>
+
+
+
+<div class="box intro">
+    <p>Flocks gulpfile.</p>
+
+</div>
+
+
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+        
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+        
+        
+        
+        
+            <li class="api-class-tab events"><a href="#events">Events</a></li>
+        
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+            
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods">
+                        
+                            <li class="index-item method">
+                                <a href="#method_requireNodeJsx">requireNodeJsx</a>
+
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+
+            
+
+            
+
+            
+                <div class="index-section events">
+                    <h3>Events</h3>
+
+                    <ul class="index-list events">
+                        
+                            <li class="index-item event">
+                                <a href="#event_add">add</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_build">build</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_bump">bump</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_clean">clean</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_default">default</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_docs">docs</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_lint">lint</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_minify">minify</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_publish">publish</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_push">push</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_sloc">sloc</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_tag">tag</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_test">test</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_transpile">transpile</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_vows">vows</a>
+
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+        </div>
+
+        
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+                
+                    <div id="method_requireNodeJsx" class="method item">
+    <h3 class="name"><code>requireNodeJsx</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/c:_projects_flocks.js_gulpfile.js.html#l20"><code>c:\projects\flocks.js\gulpfile.js:20</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>This unbound blockless step installs the node-jsx loader to convert statics.
+This is not actually a method and cannot be called.</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+            </div>
+        
+
+        
+
+        
+
+        
+            <div id="events" class="api-class-tabpanel">
+                <h2 class="off-left">Events</h2>
+
+                
+                    <div id="event_add" class="events item">
+    <h3 class="name"><code>add</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/c:_projects_flocks.js_gulpfile.js.html#l278"><code>c:\projects\flocks.js\gulpfile.js:278</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p><tt>gulp add</tt> manually adds the <tt>./lib</tt>, the <tt>./dist</tt>,
+the <tt>./reports</tt>, and the <tt>./test</tt> trees, as well as the
+files <tt>gulpfile.js</tt>, <tt>bower.json</tt>, <tt>package.json</tt>,
+and the standard <tt>README</tt> and <tt>LICENSE</tt>.</p>
+<p>The reason for these monkeyshines, instead of an <tt>add .</tt> with an
+exclusion, is that the NPM path depth bug prevents the exclusion from working
+correctly on windows (gee thanks node.)</p>
+<p><tt>gulp add</tt> invokes <tt>default</tt>.</p>
+
+    </div>
+
+    
+
+
+    
+</div>
+
+                
+                    <div id="event_build" class="events item">
+    <h3 class="name"><code>build</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/c:_projects_flocks.js_gulpfile.js.html#l185"><code>c:\projects\flocks.js\gulpfile.js:185</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p><tt>gulp build</tt> invokes <tt>minify</tt>.  Other build steps will be here
+soon.</p>
+
+    </div>
+
+    
+
+
+    
+</div>
+
+                
+                    <div id="event_bump" class="events item">
+    <h3 class="name"><code>bump</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/c:_projects_flocks.js_gulpfile.js.html#l198"><code>c:\projects\flocks.js\gulpfile.js:198</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p><tt>gulp bump</tt> uses <tt>gulp-bump</tt> to set the version number of
+the <tt>package.json</tt> and <tt>bower.json</tt> files to match the version
+number emitted by the library.</p>
+<p><tt>bump</tt> has no dependencies.</p>
+
+    </div>
+
+    
+
+
+    
+</div>
+
+                
+                    <div id="event_clean" class="events item">
+    <h3 class="name"><code>clean</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/c:_projects_flocks.js_gulpfile.js.html#l54"><code>c:\projects\flocks.js\gulpfile.js:54</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p><tt>gulp clean</tt> will remove the <tt>./doc</tt>, <tt>./dist</tt>,
+and <tt>./reports</tt> directories, in the expectation that they will be
+remade by the gulp process.</p>
+<p><tt>clean</tt> has no dependencies.</p>
+
+    </div>
+
+    
+
+
+    
+</div>
+
+                
+                    <div id="event_default" class="events item">
+    <h3 class="name"><code>default</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/c:_projects_flocks.js_gulpfile.js.html#l249"><code>c:\projects\flocks.js\gulpfile.js:249</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p><tt>gulp default</tt> (or just <tt>gulp</tt>) will invoke <tt>test</tt>, <tt>docs</tt>,
+and <tt>sloc</tt>.</p>
+
+    </div>
+
+    
+
+
+    
+</div>
+
+                
+                    <div id="event_docs" class="events item">
+    <h3 class="name"><code>docs</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/c:_projects_flocks.js_gulpfile.js.html#l72"><code>c:\projects\flocks.js\gulpfile.js:72</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p><tt>gulp docs</tt> will generate the documentation through <tt>yuidoc</tt>.</p>
+<p><tt>docs</tt> will invoke <tt>clean</tt> and <tt>bump</tt>.</p>
+
+    </div>
+
+    
+
+
+    
+</div>
+
+                
+                    <div id="event_lint" class="events item">
+    <h3 class="name"><code>lint</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/c:_projects_flocks.js_gulpfile.js.html#l91"><code>c:\projects\flocks.js\gulpfile.js:91</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <tt>gulp lint</tt> will run the linting engine on the <tt>gulpfile</tt>,
+on <tt>lib/flocks.jsx</tt>, and on <tt>dist/flocks.js</tt>.  Obviously the
+minified version is not linted.  <tt>:D</tt>
+
+<p><tt>lint</tt> has no dependencies.</p>
+
+    </div>
+
+    
+
+
+    
+</div>
+
+                
+                    <div id="event_minify" class="events item">
+    <h3 class="name"><code>minify</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/c:_projects_flocks.js_gulpfile.js.html#l109"><code>c:\projects\flocks.js\gulpfile.js:109</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p><tt>gulp minify</tt> will run post-transpiled <tt>flocks.js</tt>
+through <tt>closure compiler</tt> to produce <tt>flocks.min.js</tt>.</p>
+<p><tt>minify</tt> will invoke <tt>clean</tt> and <tt>transpile</tt>.</p>
+
+    </div>
+
+    
+
+
+    
+</div>
+
+                
+                    <div id="event_publish" class="events item">
+    <h3 class="name"><code>publish</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/c:_projects_flocks.js_gulpfile.js.html#l262"><code>c:\projects\flocks.js\gulpfile.js:262</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p><tt>gulp publish</tt> invokes <tt>default</tt>, <tt>tag</tt>, and <tt>push</tt>.</p>
+
+    </div>
+
+    
+
+
+    
+</div>
+
+                
+                    <div id="event_push" class="events item">
+    <h3 class="name"><code>push</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/c:_projects_flocks.js_gulpfile.js.html#l341"><code>c:\projects\flocks.js\gulpfile.js:341</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p><tt>gulp push</tt> pushes <tt>origin</tt> to <tt>master</tt> on github.</p>
+<p><tt>gulp push</tt> invokes <tt>tag</tt>.</p>
+
+    </div>
+
+    
+
+
+    
+</div>
+
+                
+                    <div id="event_sloc" class="events item">
+    <h3 class="name"><code>sloc</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/c:_projects_flocks.js_gulpfile.js.html#l222"><code>c:\projects\flocks.js\gulpfile.js:222</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p><tt>gulp sloc</tt> runs the <tt>gulp-sloc</tt> plugin twice - once to show
+the sloc report, and once to dump it to disk in <tt>./reports</tt>.</p>
+<p><tt>sloc</tt> will invoke <tt>build</tt>.</p>
+
+    </div>
+
+    
+
+
+    
+</div>
+
+                
+                    <div id="event_tag" class="events item">
+    <h3 class="name"><code>tag</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/c:_projects_flocks.js_gulpfile.js.html#l317"><code>c:\projects\flocks.js\gulpfile.js:317</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p><tt>gulp tag</tt> issues a <tt>git tag</tt> matching the current <tt>flocks</tt>
+version, in order to support the auto-update scripts for <tt>cdnjs</tt>.</p>
+<p><tt>gulp tag</tt> invokes <tt>default</tt> and <tt>add</tt>.</p>
+
+    </div>
+
+    
+
+
+    
+</div>
+
+                
+                    <div id="event_test" class="events item">
+    <h3 class="name"><code>test</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/c:_projects_flocks.js_gulpfile.js.html#l173"><code>c:\projects\flocks.js\gulpfile.js:173</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p><tt>gulp test</tt> invokes <tt>build</tt>, <tt>vows</tt>, and <tt>lint</tt>.</p>
+
+    </div>
+
+    
+
+
+    
+</div>
+
+                
+                    <div id="event_transpile" class="events item">
+    <h3 class="name"><code>transpile</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/c:_projects_flocks.js_gulpfile.js.html#l131"><code>c:\projects\flocks.js\gulpfile.js:131</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p><tt>gulp transpile</tt> will use <tt>gulp-jsx</tt> to convert the flocks
+library <tt>flocks.jsx</tt> file to its <tt>flocks.js</tt> form for
+publishing on the CDN.</p>
+<p><tt>transpile</tt> will invoke <tt>clean</tt>.</p>
+
+    </div>
+
+    
+
+
+    
+</div>
+
+                
+                    <div id="event_vows" class="events item">
+    <h3 class="name"><code>vows</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/c:_projects_flocks.js_gulpfile.js.html#l154"><code>c:\projects\flocks.js\gulpfile.js:154</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p><tt>gulp vows</tt> will uses <tt>gulp-shell</tt> to issue the
+command <tt>npm test</tt> to run the <tt>vows</tt> tests on gulp.  This is
+done with an <tt>npm</tt> script so that other tooling will pick it up
+automatically.</p>
+<p>This is a support task; you should <tt>gulp test</tt> instead.</p>
+<p><tt>vows</tt> has no dependencies.</p>
+
+    </div>
+
+    
+
+
+    
+</div>
+
+                
+            </div>
+        
+    </div>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

@@ -1,5 +1,4 @@
 bump.sh
 node_modules/
 bower_components/
-doc/
 npm-debug.log
