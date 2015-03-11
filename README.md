@@ -170,7 +170,46 @@ It's:
  * Atomic
  * Transactional
 
-## TODO: justify these
+
+
+
+
+### Simpler
+
+Learn two functions and one member of `this`, and you're off to the races.
+
+Learn more tools as they become convenient.
+
+
+
+
+
+### Centralized
+
+Your entire render state - maybe your entire state, if you like - in one simple place.
+
+Read and write the whole thing at once, if convenient.  This is surprisingly often convenient.
+
+
+
+
+
+### Atomic
+
+Batch writes and locking let you prevent the rendering of intermediate states.
+
+All the convenience of piecewise and group update with none of the flash of content.
+
+
+
+
+
+### Transactional
+
+That's right, dust off your SQL brain, because you can write a function that invalidates and rejects application update sets.
+
+Imagine what this will do for your debugging. 😹
+
 
 
 

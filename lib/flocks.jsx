@@ -537,7 +537,7 @@ if (typeof React === "undefined") {
          * @type {String}
          */
 
-        "version"               : "0.17.2",
+        "version"               : "1.0.0",
 
 
 
