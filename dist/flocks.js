@@ -292,10 +292,24 @@ if (typeof React === "undefined") {
 
         flocksLog(3, " - Flocks2 multi-set");
 
-        if (typeof Key === "string")      { setByKey(Key, MaybeValue); }
-        else if (isArray(Key))            { setByPath(Key, MaybeValue); }
-//      else if (isNonArrayObject(Key))   { setByObject(Key); }              // todo
+        if (typeof Key === "string")      { return setByKey(Key, MaybeValue); }
+        else if (isArray(Key))            { return setByPath(Key, MaybeValue); }
+//      else if (isNonArrayObject(Key))   { return setByObject(Key); }              // todo
         else                              { throw "Flocks2 set/1,2 key must be a string or an array"; }
+
+    }
+
+
+
+
+
+    function get(Key) {
+
+        flocksLog(3, " - Flocks2 multi-get");
+
+        if (typeof Key === "string") { return getByKey(Key); }
+        else if (isArray(Key))       { return getByPath(Key); }
+        else                         { throw "Flocks2 get/1 key must be a string or an array"; }
 
     }
 
@@ -405,10 +419,10 @@ if (typeof React === "undefined") {
             stub         = function() { console.log("ERROR: stub called!"); attemptUpdate(); }, // todo
 
             updater      = {
-                "get"      : stub,          // todo
                 "override" : stub,          // todo
                 "clear"    : stub,          // todo
 
+                "get"      : get,
                 "get_key"  : getByKey,
                 "get_path" : getByPath,
                 "set"      : set,
@@ -494,6 +508,7 @@ if (typeof React === "undefined") {
             }
 
             this.fupdate  = function(Obj) { return update(Obj); };
+            this.fget     = function(K)   { return get(K); };
             this.fgetkey  = function(K)   { return getByKey(K); };
             this.fgetpath = function(P)   { return getByPath(P); };
             this.fset     = function(K,V) { return set(K,V); };
@@ -564,7 +579,7 @@ if (typeof React === "undefined") {
          * @type {String}
          */
 
-        "version"               : "1.3.0",
+        "version"               : "1.4.0",
 
 
 

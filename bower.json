@@ -1,6 +1,6 @@
 {
   "name": "flocks.js",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "dependencies": {
     "closure-compiler": "http://dl.google.com/closure-compiler/compiler-latest.zip"
   }
