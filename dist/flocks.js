@@ -303,7 +303,7 @@ if (typeof React === "undefined") {
 
 
 
-    function getByPath(Path, Target) {
+    function getByPathImpl(Path, Target) {
 
         var NextPath;
 
@@ -319,9 +319,17 @@ if (typeof React === "undefined") {
 
         if (["string","number"].indexOf(typeof Path[0]) !== -1) {
             NextPath = Path.splice(1, Number.MAX_VALUE);
-            return getByPath(NextPath, Target[Path[0]]);
+            return getByPathImpl(NextPath, Target[Path[0]]);
         }
 
+    }
+
+
+
+
+
+    function getByPath(Path) {
+        return getByPathImpl(Path, prevFCtx);
     }
 
 
@@ -545,7 +553,7 @@ if (typeof React === "undefined") {
          * @type {String}
          */
 
-        "version"               : "1.1.0",
+        "version"               : "1.2.0",
 
 
 

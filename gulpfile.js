@@ -328,7 +328,7 @@ gulp.task("tag", ["default", "add"], function() {
   var version = flocks.version,
       message = argv.m;
 
-  return gulp.src('./git-test/*')
+  return gulp.src("./git-test/*")
     .pipe(git.commit("Version " + version + ": " + message))
     .pipe(git.tag(version, version + ": " + message, function(error) { if (error) { throw error; } }));
 
