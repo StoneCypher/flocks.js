@@ -173,7 +173,12 @@ if (typeof React === "undefined") {
         prevFCtx = nextFCtx;
 
         flocksLog(3, "   - Flocks2 update passed");
-        React.render( React.createFactory(tagtype)( { "flocks2context" : nextFCtx } ), prevFCtx.flocks2Config.target );
+        if (prevFCtx.flocks2Config.target === 'detatched') {
+            flocksLog(3, "   - Flocks2 skipping render because explicitly detatched");
+        } else {
+            flocksLog(3, "   - Flocks2 rendering");
+            React.render( React.createFactory(tagtype)( { "flocks2context" : nextFCtx } ), prevFCtx.flocks2Config.target );
+        }
         dirty = false;
 
         flocksLog(3, "   - Flocks2 update complete; finalizing");
@@ -540,7 +545,7 @@ if (typeof React === "undefined") {
          * @type {String}
          */
 
-        "version"               : "1.0.2",
+        "version"               : "1.1.0",
 
 
 
