@@ -303,20 +303,6 @@ if (typeof React === "undefined") {
 
 
 
-    function get(Key) {
-
-        flocksLog(3, " - Flocks2 multi-get");
-
-        if (typeof Key === "string") { return getByKey(Key); }
-        else if (isArray(Key))       { return getByPath(Key); }
-        else                         { throw "Flocks2 get/1 key must be a string or an array"; }
-
-    }
-
-
-
-
-
     function getByKey(Key) {
         return prevFCtx[Key];
     }
@@ -352,6 +338,20 @@ if (typeof React === "undefined") {
 
     function getByPath(Path) {
         return getByPathImpl(Path, prevFCtx);
+    }
+
+
+
+
+
+    function get(Key) {
+
+        flocksLog(3, " - Flocks2 multi-get");
+
+        if (typeof Key === "string") { return getByKey(Key); }
+        else if (isArray(Key))       { return getByPath(Key); }
+        else                         { throw "Flocks2 get/1 key must be a string or an array"; }
+
     }
 
 

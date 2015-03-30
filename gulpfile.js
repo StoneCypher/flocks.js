@@ -228,7 +228,7 @@ gulp.task("bump", function() {
  * @event sloc
  */
 
-gulp.task("sloc", ["build"], function() {
+gulp.task("sloc", ["build", "clean"], function() {
 
   gulp.src(["gulpfile.js", "bower.json", "package.json", "lib/flocks.jsx", "test/specs/*.js"])
     .pipe(sloc({"tolerant" : true}));
