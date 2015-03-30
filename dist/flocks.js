@@ -303,6 +303,14 @@ if (typeof React === "undefined") {
 
 
 
+    function getByKey(Key) {
+        return prevFCtx[Key];
+    }
+
+
+
+
+
     function getByPathImpl(Path, Target) {
 
         var NextPath;
@@ -401,6 +409,7 @@ if (typeof React === "undefined") {
                 "override" : stub,          // todo
                 "clear"    : stub,          // todo
 
+                "get_key"  : getByKey,
                 "get_path" : getByPath,
                 "set"      : set,
                 "set_path" : setByPath,
@@ -444,6 +453,7 @@ if (typeof React === "undefined") {
         flocksLog(3, "Flocks2 expose updater");
         this.fupd     = updater;
         this.fset     = updater.set;
+        this.fgetkey  = updater.get_key;
         this.fgetpath = updater.get_path;
         this.flock    = updater.lock;
         this.funlock  = updater.unlock;
@@ -484,7 +494,8 @@ if (typeof React === "undefined") {
             }
 
             this.fupdate  = function(Obj) { return update(Obj); };
-            this.fgetpath = function(P,T) { return getByPath(P,T); };
+            this.fgetkey  = function(K)   { return getByKey(K); };
+            this.fgetpath = function(P)   { return getByPath(P); };
             this.fset     = function(K,V) { return set(K,V); };
             this.fsetpath = function(P,V) { return set(P,V); };
             this.flock    = function()    { return lock(); };
@@ -553,7 +564,7 @@ if (typeof React === "undefined") {
          * @type {String}
          */
 
-        "version"               : "1.2.0",
+        "version"               : "1.3.0",
 
 
 
