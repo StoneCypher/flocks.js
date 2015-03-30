@@ -173,7 +173,7 @@ if (typeof React === "undefined") {
         prevFCtx = nextFCtx;
 
         flocksLog(3, "   - Flocks2 update passed");
-        React.render( React.createFactory(tagtype)( { "flocks2context" : nextFCtx } ), document.body );
+        React.render( React.createFactory(tagtype)( { "flocks2context" : nextFCtx } ), prevFCtx.flocks2Config.target );
         dirty = false;
 
         flocksLog(3, "   - Flocks2 update complete; finalizing");
@@ -540,7 +540,7 @@ if (typeof React === "undefined") {
          * @type {String}
          */
 
-        "version"               : "1.0.1",
+        "version"               : "1.0.2",
 
 
 
