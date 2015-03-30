@@ -104,6 +104,15 @@ if (typeof React === "undefined") {
 
 
 
+    function isStringOfNonNegInt(maybeIntStr) {
+        if (typeof maybeIntStr !== "string") { return false; }
+        return /^(0|[1-9]\d*)$/.test(maybeIntStr);
+    }
+
+
+
+
+
     function isNonArrayObject(maybeArray) {
 
         if (typeof maybeArray !== "object")                                  { return false; }
@@ -579,7 +588,7 @@ if (typeof React === "undefined") {
          * @type {String}
          */
 
-        "version"               : "1.4.0",
+        "version"               : "1.5.0",
 
 
 
@@ -647,6 +656,21 @@ if (typeof React === "undefined") {
          */
 
         "isUndefined"           : isUndefined,
+
+
+
+        /**
+         * <tt>isStringOfNonNegInt</tt> produces a boolean regarding whether its
+         * argument is a javascript <tt>string</tt> whose contents are the
+         * decimal rendering of a positive integer or zero.  This function is
+         * not permissive: it does not accept alternate radices, extra leading
+         * zeroes, any mantissa, leading plusses, et cetera; it may only be a
+         * single zero, or a string of digits led by a not-zero.
+         *
+         * @method isStringOfNonNegInt
+         */
+
+        "isStringOfNonNegInt"   : isStringOfNonNegInt,
 
 
 
