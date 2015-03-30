@@ -66,6 +66,26 @@ vows.describe("Type identification clauses").addBatch({
   },
 
 
+  'isStringOfNonNegInt' : {
+
+    'Positive': {
+      '0'        : function(topic) { assert.equal (flocks.isStringOfNonNegInt('0'),        true); },
+      '1'        : function(topic) { assert.equal (flocks.isStringOfNonNegInt('1'),        true); },
+      '234'      : function(topic) { assert.equal (flocks.isStringOfNonNegInt('234'),      true); },
+      '56789021' : function(topic) { assert.equal (flocks.isStringOfNonNegInt('56789021'), true); }
+    },
+
+    'Negative': {
+      '-1'  : function(topic) { assert.equal (flocks.isStringOfNonNegInt('-1'),  false); },
+      '+1'  : function(topic) { assert.equal (flocks.isStringOfNonNegInt('+1'),  false); },
+      '00'  : function(topic) { assert.equal (flocks.isStringOfNonNegInt('00'),  false); },
+      '01'  : function(topic) { assert.equal (flocks.isStringOfNonNegInt('01'),  false); },
+      '1.0' : function(topic) { assert.equal (flocks.isStringOfNonNegInt('1.0'), false); }
+    }
+
+  },
+
+
   'isUndefined' : {
 
     'Positive': {
