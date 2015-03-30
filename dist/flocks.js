@@ -104,6 +104,15 @@ if (typeof React === "undefined") {
 
 
 
+    function isStringOfNonNegInt(maybeIntStr) {
+        if (typeof maybeIntStr !== "string") { return false; }
+        return /^(0|[1-9]\d*)$/.test(maybeIntStr);
+    }
+
+
+
+
+
     function isNonArrayObject(maybeArray) {
 
         if (typeof maybeArray !== "object")                                  { return false; }
@@ -579,7 +588,7 @@ if (typeof React === "undefined") {
          * @type {String}
          */
 
-        "version"               : "1.5.0",
+        "version"               : "1.6.0",
 
 
 
@@ -647,6 +656,21 @@ if (typeof React === "undefined") {
          */
 
         "isUndefined"           : isUndefined,
+
+
+
+        /**
+         * <tt>isStringOfNonNegInt</tt> will tell you whether a string contains
+         * a very strict interpretation of decimal non-negative integers: either
+         * the single character zero, or a sequence of digits not beginning with
+         * zero.  As such this does not allow alternative radices, scientific
+         * notation, leading zeroes, empty mantissas, leading plusses, negative
+         * numbers in general, or other non-strict variants.
+         *
+         * @method isStringOfNonNegInt
+         */
+
+        "isStringOfNonNegInt"   : isStringOfNonNegInt,
 
 
 
