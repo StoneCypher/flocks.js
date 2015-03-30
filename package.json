@@ -7,7 +7,7 @@
   "name": "flocks.js",
   "filename": "flocks.js",
   "description": "Simpler state management for React.js",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "homepage": "http://flocks.rocks/",
   "repository": {
     "url": "https://github.com/StoneCypher/flocks.js.git"
