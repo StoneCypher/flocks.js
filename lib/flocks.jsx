@@ -446,6 +446,9 @@ if (typeof React === "undefined") {
 
 
 
+    // because of YUIdoc limitations, the extracted docs for the mixin are far
+    // below.  search for the word "yuibama" to jump between these places.
+
     Mixin = {
 
         "contextTypes"       : flocks2Ctxs,
@@ -537,7 +540,7 @@ if (typeof React === "undefined") {
          * @type {String}
          */
 
-        "version"               : "1.0.0",
+        "version"               : "1.0.1",
 
 
 
@@ -683,6 +686,40 @@ if (typeof React === "undefined") {
          * or you can add it yourself in the standard mixin fashion if you prefer.
          *
          * @class plumbing
+         */
+
+        // grossest doc structure ever.  thanks yuibama.
+
+        /**
+         * Describes the context types accepted or required by any given React
+         * component; mixin hook notes the need for <tt>flocks2context : object</tt>
+         * as an incoming context to pay attention to.
+         *
+         * @property contextTypes
+         */
+
+        /**
+         * Describes the context types provided by the React component; mixin
+         * hook notes that this provides <tt>flocks2context : object</tt> to
+         * subordinate controls.
+         *
+         * @property childContextTypes
+         */
+
+        /**
+         * Called when the control is about to mount; mixin hooks this event to
+         * add the flocks context <tt>this.fctx</tt>, the flocks updater
+         * <tt>this.fset</tt>, and other flocks methods to the control object.
+         *
+         * @event componentWillMount
+         */
+
+        /**
+         * Called when the control is about to pass context to children; the
+         * plumbing mixin hooks this event to do the simple job of passing the
+         * flocks context data downwards.
+         *
+         * @event getChildContext
          */
 
         "plumbing"              : Mixin
