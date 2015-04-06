@@ -27,6 +27,8 @@ The primary goal of `flocks.js` is ***extreme simplicity***.
 
 There is a propaganda page developing at the website [http://flocks.rocks/](http://flocks.rocks/).
 
+You can be up and running in five minutes.  Try the [Flocks quick start](http://www.flocks.rocks/flocks_quick_start.html).
+
 
 
 What's the big deal
