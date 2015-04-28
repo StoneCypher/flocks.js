@@ -118,8 +118,9 @@ lint.gulpreg(gulp, {
 gulp.task("minify", ["clean","transpile"], function() {
   return gulp.src("dist/flocks.js")
     .pipe(closureCompiler({
-      "compilerPath" : "bower_components/closure-compiler/compiler.jar",
-      "fileName"     : "./dist/flocks.min.js"
+      "compilerPath"  : "bower_components/closure-compiler/compiler.jar",
+      "fileName"      : "./dist/flocks.min.js",
+      "compilerFlags" : { "compilation_level" : "ADVANCED_OPTIMIZATIONS" }
     }))
     .pipe(gulp.dest("."));
 });
