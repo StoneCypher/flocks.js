@@ -89,7 +89,7 @@
   "dependencies": {
     "react": "*"
   },
-  "main": "lib/flocks.js",
+  "main": "dist/flocks.js",
   "engines": {
     "node": "*"
   },
