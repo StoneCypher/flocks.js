@@ -14,8 +14,6 @@ A radically simpler alternative to Flux - opinionated React state and rendering 
 
 
 
-
-
 What the hell is this?
 -----------------
 
