@@ -52,12 +52,6 @@
       "url": "http://fullof.bs/"
     }
   ],
-  "repositories": [
-    {
-      "type": "git",
-      "url": "https://github.com/StoneCypher/flocks.js"
-    }
-  ],
   "autoupdate": {
     "source": "git",
     "target": "git://github.com/StoneCypher/flocks.js",
